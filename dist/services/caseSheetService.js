@@ -1,15 +1,6 @@
 "use strict";
 // import { PrismaClient } from "../../prisma/orm";
 // //import { PrismaClient } from "@prisma/client";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllCaseSheetsWithDetails = void 0;
 // const prisma = new PrismaClient();
@@ -39,8 +30,8 @@ exports.getAllCaseSheetsWithDetails = void 0;
 const orm_1 = require("../../prisma/orm");
 const prisma = new orm_1.PrismaClient();
 // Fetch all case sheets with detailed information
-const getAllCaseSheetsWithDetails = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield prisma.caseSheets.findMany({
+const getAllCaseSheetsWithDetails = async () => {
+    return await prisma.caseSheets.findMany({
         include: {
             MedicalRecord: {
                 include: {
@@ -56,5 +47,5 @@ const getAllCaseSheetsWithDetails = () => __awaiter(void 0, void 0, void 0, func
             }
         }
     });
-});
+};
 exports.getAllCaseSheetsWithDetails = getAllCaseSheetsWithDetails;
