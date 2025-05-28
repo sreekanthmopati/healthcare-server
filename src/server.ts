@@ -7,6 +7,7 @@ import caseSheetRoutes from "./routes/CaseSheetRoutes";
 import departmentRoutes from "./routes/DepartmentsRoute";
 import wardRoutes from "./routes/WardRoutes"
 import admissionRoutes from "./routes/AdmissionRoutes";
+import dischargeRoutes from "./routes/DischargeReasonsRoutes"
 
 dotenv.config();
 const cors = require("cors");
@@ -27,6 +28,7 @@ app.use("/casesheets", caseSheetRoutes);
 app.use("/depts", departmentRoutes);
 app.use("/accomdation",wardRoutes);
 app.use("/adms",admissionRoutes);
+app.use("/discharge",dischargeRoutes);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err); // Logs error to console

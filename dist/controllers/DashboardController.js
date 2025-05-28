@@ -14,15 +14,24 @@ class DashboardController {
     }
 }
 exports.DashboardController = DashboardController;
+// export const fetchDepartmentCounts = async (req: Request, res: Response) => {
+//     try {
+//       const counts = await getDepartmentCounts();
+//       console.log("At line 18: in DBC controller.ts", counts);
+//       res.status(200).json(counts);
+//     } catch (error) {
+//       console.error("Error in fetchDepartmentCounts:", error);
+//       res.status(500).json({ error: "Internal Server Error" });
+//     }
+//   };
 const fetchDepartmentCounts = async (req, res) => {
     try {
-        const counts = await (0, DashboardService_1.getDepartmentCounts)();
-        console.log("At line 18: in DBC controller.ts", counts);
-        res.status(200).json(counts);
+        const data = await (0, DashboardService_1.getDepartmentCounts)();
+        res.status(200).json(data);
     }
     catch (error) {
-        console.error("Error in fetchDepartmentCounts:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error("Error fetching admission counts:", error);
+        res.status(500).json({ error: "Failed to fetch admission counts by department" });
     }
 };
 exports.fetchDepartmentCounts = fetchDepartmentCounts;

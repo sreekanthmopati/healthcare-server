@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAvailableBedsHandler = exports.createBulkAdmissionsHandler = exports.checkBedAvailability = exports.fetchAllAdmissionsWithDetails = exports.deleteAdmissionById = exports.updateAdmissionById = exports.createNewAdmission = exports.fetchAdmissionById = exports.fetchAllAdmissions = void 0;
+exports.createBulkAdmissionsController = exports.fetchAllAdmissionsWithDetails = exports.deleteAdmissionById = exports.updateAdmissionById = exports.createNewAdmission = exports.fetchAdmissionById = exports.fetchAllAdmissions = void 0;
 const AdmissionService_1 = require("../services/AdmissionService");
 // 1. Get all admissions
 const fetchAllAdmissions = async (req, res) => {
@@ -90,68 +90,52 @@ const fetchAllAdmissionsWithDetails = async (req, res) => {
     }
 };
 exports.fetchAllAdmissionsWithDetails = fetchAllAdmissionsWithDetails;
-// Check bed availability for bulk admission
-const checkBedAvailability = async (req, res) => {
+const createBulkAdmissionsController = async (req, res) => {
     try {
-        const { bedIds } = req.body;
-        if (!Array.isArray(bedIds)) {
-            res.status(400).json({ message: "bedIds must be an array" });
+        const { admissions, admissionDate, remarks } = req.body;
+        if (!Array.isArray(admissions) || admissions.length === 0) {
+            res.status(400).json({
+                success: false,
+                message: "Invalid admissions data",
+            });
+            return;
         }
-        const result = await (0, AdmissionService_1.checkBulkBedAvailability)(bedIds);
-        res.json(result);
+        // Validate and prepare admission data
+        const admissionData = admissions.map((adm) => ({
+            departmentId: Number(adm.departmentId),
+            wardId: Number(adm.wardId),
+            diagnosisId: Number(adm.diagnosisId),
+            count: Number(adm.count),
+            admissionDate: new Date(admissionDate),
+            remarks: remarks || "Bulk admission",
+        }));
+        const results = await (0, AdmissionService_1.createBulkAdmissions)(admissionData);
+        // Calculate totals
+        const totalSuccess = results.reduce((sum, r) => sum + (r.success || 0), 0);
+        const totalFailed = results.reduce((sum, r) => sum + (r.failed || 0), 0);
+        if (totalFailed > 0) {
+            res.status(207).json({
+                success: true,
+                totalSuccess,
+                totalFailed,
+                results,
+                message: `Bulk admission completed with partial success (${totalSuccess} succeeded, ${totalFailed} failed)`,
+            });
+            return;
+        }
+        res.status(201).json({
+            success: true,
+            totalSuccess,
+            results,
+            message: "All admissions processed successfully",
+        });
     }
     catch (error) {
-        console.error("Error checking bed availability:", error);
+        console.error("Error in bulk admission:", error);
         res.status(500).json({
-            message: "Failed to check bed availability",
-            error: error.message
+            success: false,
+            message: "Failed to process bulk admissions",
         });
     }
 };
-exports.checkBedAvailability = checkBedAvailability;
-// Create bulk admissions
-const createBulkAdmissionsHandler = async (req, res) => {
-    try {
-        const admissionsData = req.body;
-        if (!Array.isArray(admissionsData)) {
-            res.status(400).json({ message: "Request body must be an array" });
-        }
-        // Validate each admission data
-        for (const data of admissionsData) {
-            if (!data.PatientID || !data.bed_id || !data.admission_date || !data.diagnosis_id) {
-                res.status(400).json({
-                    message: "Each admission must include PatientID, bed_id, admission_date, and diagnosis_id"
-                });
-            }
-        }
-        const result = await (0, AdmissionService_1.createBulkAdmissions)(admissionsData);
-        res.status(201).json(result);
-    }
-    catch (error) {
-        console.error("Error creating bulk admissions:", error);
-        res.status(500).json({
-            message: "Failed to create bulk admissions",
-            error: error.message
-        });
-    }
-};
-exports.createBulkAdmissionsHandler = createBulkAdmissionsHandler;
-// Get available beds by room
-const getAvailableBedsHandler = async (req, res) => {
-    try {
-        const roomId = parseInt(req.params.roomId);
-        if (isNaN(roomId)) {
-            res.status(400).json({ message: "Invalid room ID" });
-        }
-        const beds = await (0, AdmissionService_1.getAvailableBedsByRoom)(roomId);
-        res.json(beds);
-    }
-    catch (error) {
-        console.error("Error fetching available beds:", error);
-        res.status(500).json({
-            message: "Failed to fetch available beds",
-            error: error.message
-        });
-    }
-};
-exports.getAvailableBedsHandler = getAvailableBedsHandler;
+exports.createBulkAdmissionsController = createBulkAdmissionsController;

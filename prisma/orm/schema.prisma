@@ -35,6 +35,7 @@ model Departments {
   DepartmentName String      @unique(map: "UQ__Departme__D949CC3474BFA9FE") @db.NVarChar(100)
   Diagnoses      Diagnoses[]
   Doctors        Doctors[]
+  Patients       Patients[]  @relation("DepartmentToPatients")
 }
 
 model Diagnoses {
@@ -98,18 +99,19 @@ model Users {
 }
 
 model Patients {
-  PatientID               String    @id(map: "PK__Patients__970EC346E85DA0C6") @db.NVarChar(50)
-  Name                    String    @db.NVarChar(50)
-  Age                     String    @db.NVarChar(50)
-  Gender                  String    @db.VarChar(10)
-  ContactNumber           String?   @db.VarChar(15)
-  Address                 String?   @db.NVarChar(255)
-  CreatedAt               DateTime? @default(now(), map: "DF__Patients__Create__66603565") @db.DateTime
-  UpdatedAt               DateTime? @default(now(), map: "DF__Patients__Update__6754599E") @db.DateTime
-  DepartmentName          String?   @default("N'General Medicine'", map: "DF_Patients_DepartmentName") @db.NVarChar(50)
-  Status                  String?   @default("N'True'", map: "DF_Patients_Status") @db.NVarChar(10)
-  PatientRegistrationDate DateTime  @db.DateTime
-  Ptype                   String?   @db.VarChar(50)
+  PatientID               String       @id(map: "PK__Patients__970EC346E85DA0C6") @db.NVarChar(50)
+  Name                    String       @db.NVarChar(50)
+  Age                     String       @db.NVarChar(50)
+  Gender                  String       @db.VarChar(10)
+  ContactNumber           String?      @db.VarChar(15)
+  Address                 String?      @db.NVarChar(255)
+  CreatedAt               DateTime?    @default(now(), map: "DF__Patients__Create__66603565") @db.DateTime
+  UpdatedAt               DateTime?    @default(now(), map: "DF__Patients__Update__6754599E") @db.DateTime
+  Status                  String?      @default("N'True'", map: "DF_Patients_Status") @db.NVarChar(10)
+  PatientRegistrationDate DateTime     @db.DateTime
+  Ptype                   String?      @db.VarChar(50)
+  DepartmentID            Int?         @map("DepartmentID")
+  Department              Departments? @relation("DepartmentToPatients", fields: [DepartmentID], references: [DepartmentID])
 
   Email           String?   @db.VarChar(100)
   AlternateNumber String?   @db.VarChar(15)
@@ -157,19 +159,26 @@ model Bed {
 }
 
 model Admissions {
-  admission_id     Int       @id @default(autoincrement())
-  admission_no     Int       @unique
-  PatientID        String    @db.NVarChar(50)
-  bed_id           Int
-  diagnosis_id     Int
-  admission_date   DateTime
-  discharge_date   DateTime?
-  discharge_reason String?   @db.VarChar(255)
-  treatment_plan   String?   @db.VarChar(255)
-  remarks          String?   @db.VarChar(255)
+  admission_id      Int       @id @default(autoincrement())
+  admission_no      Int       @unique
+  PatientID         String    @db.NVarChar(50)
+  bed_id            Int
+  diagnosis_id      Int
+  admission_date    DateTime
+  discharge_date    DateTime?
+  dischargeReasonId Int? // ← New foreign key field
+  treatment_plan    String?   @db.VarChar(255)
+  remarks           String?   @db.VarChar(255)
 
-  patient        Patients         @relation(fields: [PatientID], references: [PatientID])
-  bed            Bed              @relation(fields: [bed_id], references: [bed_id])
-  diagnosis      Diagnoses        @relation(fields: [diagnosis_id], references: [DiagnosisID])
-  MedicalRecords MedicalRecords[]
+  patient         Patients         @relation(fields: [PatientID], references: [PatientID])
+  bed             Bed              @relation(fields: [bed_id], references: [bed_id])
+  diagnosis       Diagnoses        @relation(fields: [diagnosis_id], references: [DiagnosisID])
+  dischargeReason DischargeReason? @relation(fields: [dischargeReasonId], references: [id]) // ← New relation
+  MedicalRecords  MedicalRecords[]
+}
+
+model DischargeReason {
+  id         Int          @id @default(autoincrement())
+  reason     String       @unique @db.VarChar(255)
+  admissions Admissions[]
 }

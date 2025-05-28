@@ -8,7 +8,8 @@ import {
   getBedsByRoomId,
   getBedById,
   vacateBed,
-  occupyBed
+  occupyBed,
+  getAvailableBedCount
 } from "../services/WardService";
 
 // 1. Get all wards
@@ -226,6 +227,36 @@ export const updateBedToVacant = async (
     });
   } catch (error) {
     next(error);
+  }
+};
+
+
+
+
+
+export const getAvailableBedCountController = async (req: Request, res: Response) => {
+  try {
+    const wardId = Number(req.params.wardId);
+
+    if (isNaN(wardId)) {
+       res.status(400).json({
+        success: false,
+        message: 'Invalid ward ID',
+      });
+    }
+
+    const count = await getAvailableBedCount(wardId);
+
+     res.status(200).json({
+      success: true,
+      availableBeds: count,
+    });
+  } catch (error) {
+    console.error("Error fetching available bed count:", error);
+     res.status(500).json({
+      success: false,
+      message: 'Failed to fetch available bed count',
+    });
   }
 };
 

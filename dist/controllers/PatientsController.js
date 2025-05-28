@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPatientApi = exports.getPatientRecords = exports.getAllPatients = void 0;
+exports.getTodaysPatientCountsByDepartmentController = exports.createPatientApi = exports.getPatientRecords = exports.getAllPatients = void 0;
 const PatientsService_1 = require("../services/PatientsService"); // ✅ Correct import
 const getAllPatients = async (req, res) => {
     try {
@@ -64,6 +64,17 @@ exports.createPatientApi = createPatientApi;
 //     res.status(500).json({ message: "Failed to create patient" });
 //   }
 // };
+const getTodaysPatientCountsByDepartmentController = async (req, res) => {
+    try {
+        const counts = await (0, PatientsService_1.getTodaysPatientCountsByDepartment)();
+        res.status(200).json(counts); // Just send the counts directly
+    }
+    catch (error) {
+        console.error("Error fetching patient counts:", error);
+        res.status(500).json({ error: "Failed to fetch today's patient counts by department" });
+    }
+};
+exports.getTodaysPatientCountsByDepartmentController = getTodaysPatientCountsByDepartmentController;
 // export const createPatientApi = async (req: Request, res: Response) => {
 //   try {
 //     const patientData = req.body;

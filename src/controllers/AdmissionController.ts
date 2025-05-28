@@ -6,9 +6,9 @@ import {
   updateAdmission,
   deleteAdmission,
   getAllAdmissionsWithDetails,
-  checkBulkBedAvailability,
   createBulkAdmissions,
-  getAvailableBedsByRoom
+  bulkDischargeAdmissions,
+  dischargeAdmission
 } from "../services/AdmissionService";
 
 // 1. Get all admissions
@@ -123,73 +123,135 @@ export const fetchAllAdmissionsWithDetails = async (req: Request, res: Response)
 
 
 
-
-// Check bed availability for bulk admission
-export const checkBedAvailability = async (req: Request, res: Response) => {
+export const createBulkAdmissionsController = async (req: Request, res: Response) => {
   try {
-    const { bedIds } = req.body;
-    if (!Array.isArray(bedIds)) {
-       res.status(400).json({ message: "bedIds must be an array" });
+    const { admissions, admissionDate, remarks } = req.body;
+
+    if (!Array.isArray(admissions) || admissions.length === 0) {
+       res.status(400).json({
+        success: false,
+        message: "Invalid admissions data",
+      });
+      return;
     }
 
-    const result = await checkBulkBedAvailability(bedIds);
-    res.json(result);
+    // Validate and prepare admission data
+    const admissionData = admissions.map((adm: any) => ({
+      departmentId: Number(adm.departmentId),
+      wardId: Number(adm.wardId),
+      diagnosisId: Number(adm.diagnosisId),
+      count: Number(adm.count),
+      admissionDate: new Date(admissionDate),
+      remarks: remarks || "Bulk admission",
+    }));
+
+    const results = await createBulkAdmissions(admissionData);
+
+    // Calculate totals
+    const totalSuccess = results.reduce((sum, r) => sum + (r.success || 0), 0);
+    const totalFailed = results.reduce((sum, r) => sum + (r.failed || 0), 0);
+
+    if (totalFailed > 0) {
+       res.status(207).json({
+        success: true,
+        totalSuccess,
+        totalFailed,
+        results,
+        message: `Bulk admission completed with partial success (${totalSuccess} succeeded, ${totalFailed} failed)`,
+      });
+      return;
+    }
+
+     res.status(201).json({
+      success: true,
+      totalSuccess,
+      results,
+      message: "All admissions processed successfully",
+    });
   } catch (error) {
-    console.error("Error checking bed availability:", error);
-    res.status(500).json({ 
-      message: "Failed to check bed availability",
-      error: (error as Error).message 
+    console.error("Error in bulk admission:", error);
+     res.status(500).json({
+      success: false,
+      message: "Failed to process bulk admissions",
     });
   }
 };
 
-// Create bulk admissions
-export const createBulkAdmissionsHandler = async (req: Request, res: Response) => {
+
+
+
+
+
+
+
+
+export const dischargeBulkAdmissions = async (req: Request, res: Response) => {
   try {
-    const admissionsData = req.body;
-    
-    if (!Array.isArray(admissionsData)) {
-       res.status(400).json({ message: "Request body must be an array" });
+    const { admissionIds } = req.body;
+
+    if (!Array.isArray(admissionIds) || admissionIds.length === 0) {
+       res.status(400).json({ message: "Invalid or empty admissionIds array" });
+       return;
     }
 
-    // Validate each admission data
-    for (const data of admissionsData) {
-      if (!data.PatientID || !data.bed_id || !data.admission_date || !data.diagnosis_id) {
-         res.status(400).json({ 
-          message: "Each admission must include PatientID, bed_id, admission_date, and diagnosis_id" 
-        });
-      }
-    }
+    const result = await bulkDischargeAdmissions(admissionIds);
 
-    const result = await createBulkAdmissions(admissionsData);
-    res.status(201).json(result);
-  } catch (error) {
-    console.error("Error creating bulk admissions:", error);
-    res.status(500).json({ 
-      message: "Failed to create bulk admissions",
-      error: (error as Error).message 
+    res.status(200).json({
+      message: "Admissions discharged successfully",
+      dischargedCount: result.length,
+      data: result,
     });
+  } catch (error) {
+    console.error("Error in bulk discharging admissions:", error);
+    res.status(500).json({ message: "Failed to bulk discharge admissions" });
   }
 };
 
-// Get available beds by room
-export const getAvailableBedsHandler = async (req: Request, res: Response) => {
+
+
+
+
+
+
+
+// Discharge a single admission
+export const dischargeSingleAdmission = async (req: Request, res: Response) => {
   try {
-    const roomId = parseInt(req.params.roomId);
-    if (isNaN(roomId)) {
-       res.status(400).json({ message: "Invalid room ID" });
+    const admissionId = parseInt(req.params.admissionId);
+    const { dischargeReasonId } = req.body;
+
+    if (isNaN(admissionId)) {
+       res.status(400).json({ message: "Invalid admission ID" });
+       return;
     }
 
-    const beds = await getAvailableBedsByRoom(roomId);
-    res.json(beds);
-  } catch (error) {
-    console.error("Error fetching available beds:", error);
-    res.status(500).json({ 
-      message: "Failed to fetch available beds",
-      error: (error as Error).message 
+    if (!dischargeReasonId || isNaN(dischargeReasonId)) {
+       res.status(400).json({ message: "Invalid discharge reason ID" });
+       return;
+    }
+
+    const result = await dischargeAdmission(admissionId, dischargeReasonId);
+
+    res.status(200).json({
+      message: "Admission discharged successfully",
+      data: result,
     });
+  } catch (error) {
+    console.error("Error discharging admission:", error);
+    res.status(500).json({ message: "Failed to discharge admission" });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
 
 
 

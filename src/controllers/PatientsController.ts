@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getPatients, getPatientWithRecords, createPatient} from "../services/PatientsService"; // ✅ Correct import
+import { getPatients, getPatientWithRecords, createPatient, getTodaysPatientCountsByDepartment} from "../services/PatientsService"; // ✅ Correct import
 import { PrismaClient } from "../../prisma/orm"; 
 
 export const getAllPatients = async (req: Request, res: Response) => {
@@ -73,7 +73,15 @@ export const createPatientApi = async (req: Request, res: Response) => {
 
 
 
-
+export const getTodaysPatientCountsByDepartmentController = async (req: Request, res: Response) => {
+  try {
+    const counts = await getTodaysPatientCountsByDepartment();
+    res.status(200).json(counts); // Just send the counts directly
+  } catch (error) {
+    console.error("Error fetching patient counts:", error);
+    res.status(500).json({ error: "Failed to fetch today's patient counts by department" });
+  }
+};
 
 
 

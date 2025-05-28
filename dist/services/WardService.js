@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.vacateBed = exports.occupyBed = exports.getBedById = exports.getBedsByRoomId = exports.getRoomsByWardId = exports.getAllBeds = exports.getAllRooms = exports.getAllWards = void 0;
+exports.getAvailableBedCount = exports.vacateBed = exports.occupyBed = exports.getBedById = exports.getBedsByRoomId = exports.getRoomsByWardId = exports.getAllBeds = exports.getAllRooms = exports.getAllWards = void 0;
 const orm_1 = require("../../prisma/orm");
 const prisma = new orm_1.PrismaClient();
 // 1. Get all wards
@@ -59,3 +59,13 @@ const vacateBed = async (bedId) => {
     });
 };
 exports.vacateBed = vacateBed;
+// Get available beds count in a ward
+const getAvailableBedCount = async (wardId) => {
+    return await prisma.bed.count({
+        where: {
+            room: { ward_id: wardId },
+            occupied_status: "Vacant"
+        }
+    });
+};
+exports.getAvailableBedCount = getAvailableBedCount;

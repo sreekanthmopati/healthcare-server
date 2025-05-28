@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPatientWithRecords = exports.createPatient = exports.getPatients = void 0;
+exports.getTodaysPatientCountsByDepartment = exports.getPatientWithRecords = exports.createPatient = exports.getPatients = void 0;
 const orm_1 = require("../../prisma/orm");
 //  import axios from "axios";
 const prisma = new orm_1.PrismaClient();
@@ -11,7 +11,7 @@ const getPatients = async (DepartmentName) => {
     try {
         const whereCondition = DepartmentName ? { DepartmentName } : {}; // Filter by department if provided
         console.log("ps.ts at line 12: in ps services.ts", whereCondition);
-        const patients = await prisma.patients.findMany({ where: whereCondition });
+        const patients = await prisma.patients.findMany({});
         return patients;
     }
     catch (error) {
@@ -61,7 +61,7 @@ const createPatient = async (patientData) => {
                 Gender: patientData.Gender,
                 ContactNumber: patientData.ContactNumber,
                 Address: patientData.Address,
-                DepartmentName: patientData.DepartmentName ?? "General Medicine", // Default to "General Medicine"
+                DepartmentID: patientData.DepartmentID, // Default to "General Medicine"
                 Status: patientData.Status ?? "True", // Default to "True"
                 PatientRegistrationDate: patientData.PatientRegistrationDate,
                 Ptype: patientData.Ptype,
@@ -97,4 +97,37 @@ const getPatientWithRecords = async (id) => {
     return { patient, medicalRecords };
 };
 exports.getPatientWithRecords = getPatientWithRecords;
-// Create a new patient
+const getTodaysPatientCountsByDepartment = async () => {
+    try {
+        const todayStart = new Date();
+        todayStart.setHours(0, 0, 0, 0);
+        const todayEnd = new Date();
+        todayEnd.setHours(23, 59, 59, 999);
+        const result = await prisma.patients.groupBy({
+            by: ['DepartmentID'],
+            where: {
+                PatientRegistrationDate: {
+                    gte: todayStart,
+                    lte: todayEnd
+                },
+                Ptype: 'OP',
+            },
+            _count: {
+                PatientID: true
+            }
+        });
+        // Convert result to { DepartmentID: count } while skipping nulls
+        const departmentCounts = result.reduce((acc, { DepartmentID, _count }) => {
+            if (DepartmentID !== null) {
+                acc[DepartmentID] = _count.PatientID;
+            }
+            return acc;
+        }, {});
+        return departmentCounts;
+    }
+    catch (error) {
+        console.error("Error fetching patient counts by department:", error);
+        throw new Error("Failed to fetch patient counts by department");
+    }
+};
+exports.getTodaysPatientCountsByDepartment = getTodaysPatientCountsByDepartment;

@@ -83,6 +83,11 @@ export type Bed = $Result.DefaultSelection<Prisma.$BedPayload>
  * 
  */
 export type Admissions = $Result.DefaultSelection<Prisma.$AdmissionsPayload>
+/**
+ * Model DischargeReason
+ * 
+ */
+export type DischargeReason = $Result.DefaultSelection<Prisma.$DischargeReasonPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -348,6 +353,16 @@ export class PrismaClient<
     * ```
     */
   get admissions(): Prisma.AdmissionsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dischargeReason`: Exposes CRUD operations for the **DischargeReason** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DischargeReasons
+    * const dischargeReasons = await prisma.dischargeReason.findMany()
+    * ```
+    */
+  get dischargeReason(): Prisma.DischargeReasonDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -801,7 +816,8 @@ export namespace Prisma {
     Ward: 'Ward',
     Room: 'Room',
     Bed: 'Bed',
-    Admissions: 'Admissions'
+    Admissions: 'Admissions',
+    DischargeReason: 'DischargeReason'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -820,7 +836,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "appointments" | "bills" | "departments" | "diagnoses" | "doctors" | "medicalRecords" | "caseSheets" | "services" | "users" | "patients" | "ward" | "room" | "bed" | "admissions"
+      modelProps: "appointments" | "bills" | "departments" | "diagnoses" | "doctors" | "medicalRecords" | "caseSheets" | "services" | "users" | "patients" | "ward" | "room" | "bed" | "admissions" | "dischargeReason"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1748,6 +1764,72 @@ export namespace Prisma {
           }
         }
       }
+      DischargeReason: {
+        payload: Prisma.$DischargeReasonPayload<ExtArgs>
+        fields: Prisma.DischargeReasonFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DischargeReasonFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DischargeReasonPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DischargeReasonFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DischargeReasonPayload>
+          }
+          findFirst: {
+            args: Prisma.DischargeReasonFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DischargeReasonPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DischargeReasonFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DischargeReasonPayload>
+          }
+          findMany: {
+            args: Prisma.DischargeReasonFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DischargeReasonPayload>[]
+          }
+          create: {
+            args: Prisma.DischargeReasonCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DischargeReasonPayload>
+          }
+          createMany: {
+            args: Prisma.DischargeReasonCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.DischargeReasonDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DischargeReasonPayload>
+          }
+          update: {
+            args: Prisma.DischargeReasonUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DischargeReasonPayload>
+          }
+          deleteMany: {
+            args: Prisma.DischargeReasonDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DischargeReasonUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DischargeReasonUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DischargeReasonPayload>
+          }
+          aggregate: {
+            args: Prisma.DischargeReasonAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDischargeReason>
+          }
+          groupBy: {
+            args: Prisma.DischargeReasonGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DischargeReasonGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DischargeReasonCountArgs<ExtArgs>
+            result: $Utils.Optional<DischargeReasonCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1846,6 +1928,7 @@ export namespace Prisma {
     room?: RoomOmit
     bed?: BedOmit
     admissions?: AdmissionsOmit
+    dischargeReason?: DischargeReasonOmit
   }
 
   /* Types for Logging */
@@ -1942,11 +2025,13 @@ export namespace Prisma {
   export type DepartmentsCountOutputType = {
     Diagnoses: number
     Doctors: number
+    Patients: number
   }
 
   export type DepartmentsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Diagnoses?: boolean | DepartmentsCountOutputTypeCountDiagnosesArgs
     Doctors?: boolean | DepartmentsCountOutputTypeCountDoctorsArgs
+    Patients?: boolean | DepartmentsCountOutputTypeCountPatientsArgs
   }
 
   // Custom InputTypes
@@ -1972,6 +2057,13 @@ export namespace Prisma {
    */
   export type DepartmentsCountOutputTypeCountDoctorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DoctorsWhereInput
+  }
+
+  /**
+   * DepartmentsCountOutputType without action
+   */
+  export type DepartmentsCountOutputTypeCountPatientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PatientsWhereInput
   }
 
 
@@ -2216,6 +2308,37 @@ export namespace Prisma {
    */
   export type AdmissionsCountOutputTypeCountMedicalRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MedicalRecordsWhereInput
+  }
+
+
+  /**
+   * Count Type DischargeReasonCountOutputType
+   */
+
+  export type DischargeReasonCountOutputType = {
+    admissions: number
+  }
+
+  export type DischargeReasonCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    admissions?: boolean | DischargeReasonCountOutputTypeCountAdmissionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DischargeReasonCountOutputType without action
+   */
+  export type DischargeReasonCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReasonCountOutputType
+     */
+    select?: DischargeReasonCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DischargeReasonCountOutputType without action
+   */
+  export type DischargeReasonCountOutputTypeCountAdmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmissionsWhereInput
   }
 
 
@@ -4368,6 +4491,7 @@ export namespace Prisma {
     DepartmentName?: boolean
     Diagnoses?: boolean | Departments$DiagnosesArgs<ExtArgs>
     Doctors?: boolean | Departments$DoctorsArgs<ExtArgs>
+    Patients?: boolean | Departments$PatientsArgs<ExtArgs>
     _count?: boolean | DepartmentsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["departments"]>
 
@@ -4382,6 +4506,7 @@ export namespace Prisma {
   export type DepartmentsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Diagnoses?: boolean | Departments$DiagnosesArgs<ExtArgs>
     Doctors?: boolean | Departments$DoctorsArgs<ExtArgs>
+    Patients?: boolean | Departments$PatientsArgs<ExtArgs>
     _count?: boolean | DepartmentsCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -4390,6 +4515,7 @@ export namespace Prisma {
     objects: {
       Diagnoses: Prisma.$DiagnosesPayload<ExtArgs>[]
       Doctors: Prisma.$DoctorsPayload<ExtArgs>[]
+      Patients: Prisma.$PatientsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       DepartmentID: number
@@ -4736,6 +4862,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Diagnoses<T extends Departments$DiagnosesArgs<ExtArgs> = {}>(args?: Subset<T, Departments$DiagnosesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DiagnosesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Doctors<T extends Departments$DoctorsArgs<ExtArgs> = {}>(args?: Subset<T, Departments$DoctorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DoctorsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Patients<T extends Departments$PatientsArgs<ExtArgs> = {}>(args?: Subset<T, Departments$PatientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PatientsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5154,6 +5281,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DoctorsScalarFieldEnum | DoctorsScalarFieldEnum[]
+  }
+
+  /**
+   * Departments.Patients
+   */
+  export type Departments$PatientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Patients
+     */
+    select?: PatientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Patients
+     */
+    omit?: PatientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PatientsInclude<ExtArgs> | null
+    where?: PatientsWhereInput
+    orderBy?: PatientsOrderByWithRelationInput | PatientsOrderByWithRelationInput[]
+    cursor?: PatientsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PatientsScalarFieldEnum | PatientsScalarFieldEnum[]
   }
 
   /**
@@ -10983,8 +11134,18 @@ export namespace Prisma {
 
   export type AggregatePatients = {
     _count: PatientsCountAggregateOutputType | null
+    _avg: PatientsAvgAggregateOutputType | null
+    _sum: PatientsSumAggregateOutputType | null
     _min: PatientsMinAggregateOutputType | null
     _max: PatientsMaxAggregateOutputType | null
+  }
+
+  export type PatientsAvgAggregateOutputType = {
+    DepartmentID: number | null
+  }
+
+  export type PatientsSumAggregateOutputType = {
+    DepartmentID: number | null
   }
 
   export type PatientsMinAggregateOutputType = {
@@ -10996,10 +11157,10 @@ export namespace Prisma {
     Address: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
-    DepartmentName: string | null
     Status: string | null
     PatientRegistrationDate: Date | null
     Ptype: string | null
+    DepartmentID: number | null
     Email: string | null
     AlternateNumber: string | null
     DOB: Date | null
@@ -11015,10 +11176,10 @@ export namespace Prisma {
     Address: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
-    DepartmentName: string | null
     Status: string | null
     PatientRegistrationDate: Date | null
     Ptype: string | null
+    DepartmentID: number | null
     Email: string | null
     AlternateNumber: string | null
     DOB: Date | null
@@ -11034,10 +11195,10 @@ export namespace Prisma {
     Address: number
     CreatedAt: number
     UpdatedAt: number
-    DepartmentName: number
     Status: number
     PatientRegistrationDate: number
     Ptype: number
+    DepartmentID: number
     Email: number
     AlternateNumber: number
     DOB: number
@@ -11045,6 +11206,14 @@ export namespace Prisma {
     _all: number
   }
 
+
+  export type PatientsAvgAggregateInputType = {
+    DepartmentID?: true
+  }
+
+  export type PatientsSumAggregateInputType = {
+    DepartmentID?: true
+  }
 
   export type PatientsMinAggregateInputType = {
     PatientID?: true
@@ -11055,10 +11224,10 @@ export namespace Prisma {
     Address?: true
     CreatedAt?: true
     UpdatedAt?: true
-    DepartmentName?: true
     Status?: true
     PatientRegistrationDate?: true
     Ptype?: true
+    DepartmentID?: true
     Email?: true
     AlternateNumber?: true
     DOB?: true
@@ -11074,10 +11243,10 @@ export namespace Prisma {
     Address?: true
     CreatedAt?: true
     UpdatedAt?: true
-    DepartmentName?: true
     Status?: true
     PatientRegistrationDate?: true
     Ptype?: true
+    DepartmentID?: true
     Email?: true
     AlternateNumber?: true
     DOB?: true
@@ -11093,10 +11262,10 @@ export namespace Prisma {
     Address?: true
     CreatedAt?: true
     UpdatedAt?: true
-    DepartmentName?: true
     Status?: true
     PatientRegistrationDate?: true
     Ptype?: true
+    DepartmentID?: true
     Email?: true
     AlternateNumber?: true
     DOB?: true
@@ -11142,6 +11311,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: PatientsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PatientsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: PatientsMinAggregateInputType
@@ -11172,6 +11353,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: PatientsCountAggregateInputType | true
+    _avg?: PatientsAvgAggregateInputType
+    _sum?: PatientsSumAggregateInputType
     _min?: PatientsMinAggregateInputType
     _max?: PatientsMaxAggregateInputType
   }
@@ -11185,15 +11368,17 @@ export namespace Prisma {
     Address: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
-    DepartmentName: string | null
     Status: string | null
     PatientRegistrationDate: Date
     Ptype: string | null
+    DepartmentID: number | null
     Email: string | null
     AlternateNumber: string | null
     DOB: Date | null
     BloodGroup: string | null
     _count: PatientsCountAggregateOutputType | null
+    _avg: PatientsAvgAggregateOutputType | null
+    _sum: PatientsSumAggregateOutputType | null
     _min: PatientsMinAggregateOutputType | null
     _max: PatientsMaxAggregateOutputType | null
   }
@@ -11221,14 +11406,15 @@ export namespace Prisma {
     Address?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
-    DepartmentName?: boolean
     Status?: boolean
     PatientRegistrationDate?: boolean
     Ptype?: boolean
+    DepartmentID?: boolean
     Email?: boolean
     AlternateNumber?: boolean
     DOB?: boolean
     BloodGroup?: boolean
+    Department?: boolean | Patients$DepartmentArgs<ExtArgs>
     Appointments?: boolean | Patients$AppointmentsArgs<ExtArgs>
     Bills?: boolean | Patients$BillsArgs<ExtArgs>
     MedicalRecords?: boolean | Patients$MedicalRecordsArgs<ExtArgs>
@@ -11247,18 +11433,19 @@ export namespace Prisma {
     Address?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
-    DepartmentName?: boolean
     Status?: boolean
     PatientRegistrationDate?: boolean
     Ptype?: boolean
+    DepartmentID?: boolean
     Email?: boolean
     AlternateNumber?: boolean
     DOB?: boolean
     BloodGroup?: boolean
   }
 
-  export type PatientsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"PatientID" | "Name" | "Age" | "Gender" | "ContactNumber" | "Address" | "CreatedAt" | "UpdatedAt" | "DepartmentName" | "Status" | "PatientRegistrationDate" | "Ptype" | "Email" | "AlternateNumber" | "DOB" | "BloodGroup", ExtArgs["result"]["patients"]>
+  export type PatientsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"PatientID" | "Name" | "Age" | "Gender" | "ContactNumber" | "Address" | "CreatedAt" | "UpdatedAt" | "Status" | "PatientRegistrationDate" | "Ptype" | "DepartmentID" | "Email" | "AlternateNumber" | "DOB" | "BloodGroup", ExtArgs["result"]["patients"]>
   export type PatientsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Department?: boolean | Patients$DepartmentArgs<ExtArgs>
     Appointments?: boolean | Patients$AppointmentsArgs<ExtArgs>
     Bills?: boolean | Patients$BillsArgs<ExtArgs>
     MedicalRecords?: boolean | Patients$MedicalRecordsArgs<ExtArgs>
@@ -11269,6 +11456,7 @@ export namespace Prisma {
   export type $PatientsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Patients"
     objects: {
+      Department: Prisma.$DepartmentsPayload<ExtArgs> | null
       Appointments: Prisma.$AppointmentsPayload<ExtArgs>[]
       Bills: Prisma.$BillsPayload<ExtArgs>[]
       MedicalRecords: Prisma.$MedicalRecordsPayload<ExtArgs>[]
@@ -11283,10 +11471,10 @@ export namespace Prisma {
       Address: string | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
-      DepartmentName: string | null
       Status: string | null
       PatientRegistrationDate: Date
       Ptype: string | null
+      DepartmentID: number | null
       Email: string | null
       AlternateNumber: string | null
       DOB: Date | null
@@ -11631,6 +11819,7 @@ export namespace Prisma {
    */
   export interface Prisma__PatientsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    Department<T extends Patients$DepartmentArgs<ExtArgs> = {}>(args?: Subset<T, Patients$DepartmentArgs<ExtArgs>>): Prisma__DepartmentsClient<$Result.GetResult<Prisma.$DepartmentsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     Appointments<T extends Patients$AppointmentsArgs<ExtArgs> = {}>(args?: Subset<T, Patients$AppointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Bills<T extends Patients$BillsArgs<ExtArgs> = {}>(args?: Subset<T, Patients$BillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BillsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     MedicalRecords<T extends Patients$MedicalRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Patients$MedicalRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MedicalRecordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -11672,10 +11861,10 @@ export namespace Prisma {
     readonly Address: FieldRef<"Patients", 'String'>
     readonly CreatedAt: FieldRef<"Patients", 'DateTime'>
     readonly UpdatedAt: FieldRef<"Patients", 'DateTime'>
-    readonly DepartmentName: FieldRef<"Patients", 'String'>
     readonly Status: FieldRef<"Patients", 'String'>
     readonly PatientRegistrationDate: FieldRef<"Patients", 'DateTime'>
     readonly Ptype: FieldRef<"Patients", 'String'>
+    readonly DepartmentID: FieldRef<"Patients", 'Int'>
     readonly Email: FieldRef<"Patients", 'String'>
     readonly AlternateNumber: FieldRef<"Patients", 'String'>
     readonly DOB: FieldRef<"Patients", 'DateTime'>
@@ -12019,6 +12208,25 @@ export namespace Prisma {
      * Limit how many Patients to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Patients.Department
+   */
+  export type Patients$DepartmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Departments
+     */
+    select?: DepartmentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Departments
+     */
+    omit?: DepartmentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DepartmentsInclude<ExtArgs> | null
+    where?: DepartmentsWhereInput
   }
 
   /**
@@ -15185,6 +15393,7 @@ export namespace Prisma {
     admission_no: number | null
     bed_id: number | null
     diagnosis_id: number | null
+    dischargeReasonId: number | null
   }
 
   export type AdmissionsSumAggregateOutputType = {
@@ -15192,6 +15401,7 @@ export namespace Prisma {
     admission_no: number | null
     bed_id: number | null
     diagnosis_id: number | null
+    dischargeReasonId: number | null
   }
 
   export type AdmissionsMinAggregateOutputType = {
@@ -15202,7 +15412,7 @@ export namespace Prisma {
     diagnosis_id: number | null
     admission_date: Date | null
     discharge_date: Date | null
-    discharge_reason: string | null
+    dischargeReasonId: number | null
     treatment_plan: string | null
     remarks: string | null
   }
@@ -15215,7 +15425,7 @@ export namespace Prisma {
     diagnosis_id: number | null
     admission_date: Date | null
     discharge_date: Date | null
-    discharge_reason: string | null
+    dischargeReasonId: number | null
     treatment_plan: string | null
     remarks: string | null
   }
@@ -15228,7 +15438,7 @@ export namespace Prisma {
     diagnosis_id: number
     admission_date: number
     discharge_date: number
-    discharge_reason: number
+    dischargeReasonId: number
     treatment_plan: number
     remarks: number
     _all: number
@@ -15240,6 +15450,7 @@ export namespace Prisma {
     admission_no?: true
     bed_id?: true
     diagnosis_id?: true
+    dischargeReasonId?: true
   }
 
   export type AdmissionsSumAggregateInputType = {
@@ -15247,6 +15458,7 @@ export namespace Prisma {
     admission_no?: true
     bed_id?: true
     diagnosis_id?: true
+    dischargeReasonId?: true
   }
 
   export type AdmissionsMinAggregateInputType = {
@@ -15257,7 +15469,7 @@ export namespace Prisma {
     diagnosis_id?: true
     admission_date?: true
     discharge_date?: true
-    discharge_reason?: true
+    dischargeReasonId?: true
     treatment_plan?: true
     remarks?: true
   }
@@ -15270,7 +15482,7 @@ export namespace Prisma {
     diagnosis_id?: true
     admission_date?: true
     discharge_date?: true
-    discharge_reason?: true
+    dischargeReasonId?: true
     treatment_plan?: true
     remarks?: true
   }
@@ -15283,7 +15495,7 @@ export namespace Prisma {
     diagnosis_id?: true
     admission_date?: true
     discharge_date?: true
-    discharge_reason?: true
+    dischargeReasonId?: true
     treatment_plan?: true
     remarks?: true
     _all?: true
@@ -15383,7 +15595,7 @@ export namespace Prisma {
     diagnosis_id: number
     admission_date: Date
     discharge_date: Date | null
-    discharge_reason: string | null
+    dischargeReasonId: number | null
     treatment_plan: string | null
     remarks: string | null
     _count: AdmissionsCountAggregateOutputType | null
@@ -15415,12 +15627,13 @@ export namespace Prisma {
     diagnosis_id?: boolean
     admission_date?: boolean
     discharge_date?: boolean
-    discharge_reason?: boolean
+    dischargeReasonId?: boolean
     treatment_plan?: boolean
     remarks?: boolean
     patient?: boolean | PatientsDefaultArgs<ExtArgs>
     bed?: boolean | BedDefaultArgs<ExtArgs>
     diagnosis?: boolean | DiagnosesDefaultArgs<ExtArgs>
+    dischargeReason?: boolean | Admissions$dischargeReasonArgs<ExtArgs>
     MedicalRecords?: boolean | Admissions$MedicalRecordsArgs<ExtArgs>
     _count?: boolean | AdmissionsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["admissions"]>
@@ -15435,16 +15648,17 @@ export namespace Prisma {
     diagnosis_id?: boolean
     admission_date?: boolean
     discharge_date?: boolean
-    discharge_reason?: boolean
+    dischargeReasonId?: boolean
     treatment_plan?: boolean
     remarks?: boolean
   }
 
-  export type AdmissionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"admission_id" | "admission_no" | "PatientID" | "bed_id" | "diagnosis_id" | "admission_date" | "discharge_date" | "discharge_reason" | "treatment_plan" | "remarks", ExtArgs["result"]["admissions"]>
+  export type AdmissionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"admission_id" | "admission_no" | "PatientID" | "bed_id" | "diagnosis_id" | "admission_date" | "discharge_date" | "dischargeReasonId" | "treatment_plan" | "remarks", ExtArgs["result"]["admissions"]>
   export type AdmissionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     patient?: boolean | PatientsDefaultArgs<ExtArgs>
     bed?: boolean | BedDefaultArgs<ExtArgs>
     diagnosis?: boolean | DiagnosesDefaultArgs<ExtArgs>
+    dischargeReason?: boolean | Admissions$dischargeReasonArgs<ExtArgs>
     MedicalRecords?: boolean | Admissions$MedicalRecordsArgs<ExtArgs>
     _count?: boolean | AdmissionsCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -15455,6 +15669,7 @@ export namespace Prisma {
       patient: Prisma.$PatientsPayload<ExtArgs>
       bed: Prisma.$BedPayload<ExtArgs>
       diagnosis: Prisma.$DiagnosesPayload<ExtArgs>
+      dischargeReason: Prisma.$DischargeReasonPayload<ExtArgs> | null
       MedicalRecords: Prisma.$MedicalRecordsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -15465,7 +15680,7 @@ export namespace Prisma {
       diagnosis_id: number
       admission_date: Date
       discharge_date: Date | null
-      discharge_reason: string | null
+      dischargeReasonId: number | null
       treatment_plan: string | null
       remarks: string | null
     }, ExtArgs["result"]["admissions"]>
@@ -15811,6 +16026,7 @@ export namespace Prisma {
     patient<T extends PatientsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PatientsDefaultArgs<ExtArgs>>): Prisma__PatientsClient<$Result.GetResult<Prisma.$PatientsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     bed<T extends BedDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BedDefaultArgs<ExtArgs>>): Prisma__BedClient<$Result.GetResult<Prisma.$BedPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     diagnosis<T extends DiagnosesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DiagnosesDefaultArgs<ExtArgs>>): Prisma__DiagnosesClient<$Result.GetResult<Prisma.$DiagnosesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dischargeReason<T extends Admissions$dischargeReasonArgs<ExtArgs> = {}>(args?: Subset<T, Admissions$dischargeReasonArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     MedicalRecords<T extends Admissions$MedicalRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Admissions$MedicalRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MedicalRecordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -15848,7 +16064,7 @@ export namespace Prisma {
     readonly diagnosis_id: FieldRef<"Admissions", 'Int'>
     readonly admission_date: FieldRef<"Admissions", 'DateTime'>
     readonly discharge_date: FieldRef<"Admissions", 'DateTime'>
-    readonly discharge_reason: FieldRef<"Admissions", 'String'>
+    readonly dischargeReasonId: FieldRef<"Admissions", 'Int'>
     readonly treatment_plan: FieldRef<"Admissions", 'String'>
     readonly remarks: FieldRef<"Admissions", 'String'>
   }
@@ -16193,6 +16409,25 @@ export namespace Prisma {
   }
 
   /**
+   * Admissions.dischargeReason
+   */
+  export type Admissions$dischargeReasonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    where?: DischargeReasonWhereInput
+  }
+
+  /**
    * Admissions.MedicalRecords
    */
   export type Admissions$MedicalRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16232,6 +16467,961 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: AdmissionsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DischargeReason
+   */
+
+  export type AggregateDischargeReason = {
+    _count: DischargeReasonCountAggregateOutputType | null
+    _avg: DischargeReasonAvgAggregateOutputType | null
+    _sum: DischargeReasonSumAggregateOutputType | null
+    _min: DischargeReasonMinAggregateOutputType | null
+    _max: DischargeReasonMaxAggregateOutputType | null
+  }
+
+  export type DischargeReasonAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DischargeReasonSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DischargeReasonMinAggregateOutputType = {
+    id: number | null
+    reason: string | null
+  }
+
+  export type DischargeReasonMaxAggregateOutputType = {
+    id: number | null
+    reason: string | null
+  }
+
+  export type DischargeReasonCountAggregateOutputType = {
+    id: number
+    reason: number
+    _all: number
+  }
+
+
+  export type DischargeReasonAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type DischargeReasonSumAggregateInputType = {
+    id?: true
+  }
+
+  export type DischargeReasonMinAggregateInputType = {
+    id?: true
+    reason?: true
+  }
+
+  export type DischargeReasonMaxAggregateInputType = {
+    id?: true
+    reason?: true
+  }
+
+  export type DischargeReasonCountAggregateInputType = {
+    id?: true
+    reason?: true
+    _all?: true
+  }
+
+  export type DischargeReasonAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DischargeReason to aggregate.
+     */
+    where?: DischargeReasonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DischargeReasons to fetch.
+     */
+    orderBy?: DischargeReasonOrderByWithRelationInput | DischargeReasonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DischargeReasonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DischargeReasons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DischargeReasons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DischargeReasons
+    **/
+    _count?: true | DischargeReasonCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DischargeReasonAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DischargeReasonSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DischargeReasonMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DischargeReasonMaxAggregateInputType
+  }
+
+  export type GetDischargeReasonAggregateType<T extends DischargeReasonAggregateArgs> = {
+        [P in keyof T & keyof AggregateDischargeReason]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDischargeReason[P]>
+      : GetScalarType<T[P], AggregateDischargeReason[P]>
+  }
+
+
+
+
+  export type DischargeReasonGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DischargeReasonWhereInput
+    orderBy?: DischargeReasonOrderByWithAggregationInput | DischargeReasonOrderByWithAggregationInput[]
+    by: DischargeReasonScalarFieldEnum[] | DischargeReasonScalarFieldEnum
+    having?: DischargeReasonScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DischargeReasonCountAggregateInputType | true
+    _avg?: DischargeReasonAvgAggregateInputType
+    _sum?: DischargeReasonSumAggregateInputType
+    _min?: DischargeReasonMinAggregateInputType
+    _max?: DischargeReasonMaxAggregateInputType
+  }
+
+  export type DischargeReasonGroupByOutputType = {
+    id: number
+    reason: string
+    _count: DischargeReasonCountAggregateOutputType | null
+    _avg: DischargeReasonAvgAggregateOutputType | null
+    _sum: DischargeReasonSumAggregateOutputType | null
+    _min: DischargeReasonMinAggregateOutputType | null
+    _max: DischargeReasonMaxAggregateOutputType | null
+  }
+
+  type GetDischargeReasonGroupByPayload<T extends DischargeReasonGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DischargeReasonGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DischargeReasonGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DischargeReasonGroupByOutputType[P]>
+            : GetScalarType<T[P], DischargeReasonGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DischargeReasonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reason?: boolean
+    admissions?: boolean | DischargeReason$admissionsArgs<ExtArgs>
+    _count?: boolean | DischargeReasonCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dischargeReason"]>
+
+
+
+  export type DischargeReasonSelectScalar = {
+    id?: boolean
+    reason?: boolean
+  }
+
+  export type DischargeReasonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reason", ExtArgs["result"]["dischargeReason"]>
+  export type DischargeReasonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    admissions?: boolean | DischargeReason$admissionsArgs<ExtArgs>
+    _count?: boolean | DischargeReasonCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $DischargeReasonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DischargeReason"
+    objects: {
+      admissions: Prisma.$AdmissionsPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      reason: string
+    }, ExtArgs["result"]["dischargeReason"]>
+    composites: {}
+  }
+
+  type DischargeReasonGetPayload<S extends boolean | null | undefined | DischargeReasonDefaultArgs> = $Result.GetResult<Prisma.$DischargeReasonPayload, S>
+
+  type DischargeReasonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DischargeReasonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DischargeReasonCountAggregateInputType | true
+    }
+
+  export interface DischargeReasonDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DischargeReason'], meta: { name: 'DischargeReason' } }
+    /**
+     * Find zero or one DischargeReason that matches the filter.
+     * @param {DischargeReasonFindUniqueArgs} args - Arguments to find a DischargeReason
+     * @example
+     * // Get one DischargeReason
+     * const dischargeReason = await prisma.dischargeReason.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DischargeReasonFindUniqueArgs>(args: SelectSubset<T, DischargeReasonFindUniqueArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DischargeReason that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DischargeReasonFindUniqueOrThrowArgs} args - Arguments to find a DischargeReason
+     * @example
+     * // Get one DischargeReason
+     * const dischargeReason = await prisma.dischargeReason.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DischargeReasonFindUniqueOrThrowArgs>(args: SelectSubset<T, DischargeReasonFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DischargeReason that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DischargeReasonFindFirstArgs} args - Arguments to find a DischargeReason
+     * @example
+     * // Get one DischargeReason
+     * const dischargeReason = await prisma.dischargeReason.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DischargeReasonFindFirstArgs>(args?: SelectSubset<T, DischargeReasonFindFirstArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DischargeReason that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DischargeReasonFindFirstOrThrowArgs} args - Arguments to find a DischargeReason
+     * @example
+     * // Get one DischargeReason
+     * const dischargeReason = await prisma.dischargeReason.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DischargeReasonFindFirstOrThrowArgs>(args?: SelectSubset<T, DischargeReasonFindFirstOrThrowArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DischargeReasons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DischargeReasonFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DischargeReasons
+     * const dischargeReasons = await prisma.dischargeReason.findMany()
+     * 
+     * // Get first 10 DischargeReasons
+     * const dischargeReasons = await prisma.dischargeReason.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dischargeReasonWithIdOnly = await prisma.dischargeReason.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DischargeReasonFindManyArgs>(args?: SelectSubset<T, DischargeReasonFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DischargeReason.
+     * @param {DischargeReasonCreateArgs} args - Arguments to create a DischargeReason.
+     * @example
+     * // Create one DischargeReason
+     * const DischargeReason = await prisma.dischargeReason.create({
+     *   data: {
+     *     // ... data to create a DischargeReason
+     *   }
+     * })
+     * 
+     */
+    create<T extends DischargeReasonCreateArgs>(args: SelectSubset<T, DischargeReasonCreateArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DischargeReasons.
+     * @param {DischargeReasonCreateManyArgs} args - Arguments to create many DischargeReasons.
+     * @example
+     * // Create many DischargeReasons
+     * const dischargeReason = await prisma.dischargeReason.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DischargeReasonCreateManyArgs>(args?: SelectSubset<T, DischargeReasonCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a DischargeReason.
+     * @param {DischargeReasonDeleteArgs} args - Arguments to delete one DischargeReason.
+     * @example
+     * // Delete one DischargeReason
+     * const DischargeReason = await prisma.dischargeReason.delete({
+     *   where: {
+     *     // ... filter to delete one DischargeReason
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DischargeReasonDeleteArgs>(args: SelectSubset<T, DischargeReasonDeleteArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DischargeReason.
+     * @param {DischargeReasonUpdateArgs} args - Arguments to update one DischargeReason.
+     * @example
+     * // Update one DischargeReason
+     * const dischargeReason = await prisma.dischargeReason.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DischargeReasonUpdateArgs>(args: SelectSubset<T, DischargeReasonUpdateArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DischargeReasons.
+     * @param {DischargeReasonDeleteManyArgs} args - Arguments to filter DischargeReasons to delete.
+     * @example
+     * // Delete a few DischargeReasons
+     * const { count } = await prisma.dischargeReason.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DischargeReasonDeleteManyArgs>(args?: SelectSubset<T, DischargeReasonDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DischargeReasons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DischargeReasonUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DischargeReasons
+     * const dischargeReason = await prisma.dischargeReason.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DischargeReasonUpdateManyArgs>(args: SelectSubset<T, DischargeReasonUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DischargeReason.
+     * @param {DischargeReasonUpsertArgs} args - Arguments to update or create a DischargeReason.
+     * @example
+     * // Update or create a DischargeReason
+     * const dischargeReason = await prisma.dischargeReason.upsert({
+     *   create: {
+     *     // ... data to create a DischargeReason
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DischargeReason we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DischargeReasonUpsertArgs>(args: SelectSubset<T, DischargeReasonUpsertArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DischargeReasons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DischargeReasonCountArgs} args - Arguments to filter DischargeReasons to count.
+     * @example
+     * // Count the number of DischargeReasons
+     * const count = await prisma.dischargeReason.count({
+     *   where: {
+     *     // ... the filter for the DischargeReasons we want to count
+     *   }
+     * })
+    **/
+    count<T extends DischargeReasonCountArgs>(
+      args?: Subset<T, DischargeReasonCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DischargeReasonCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DischargeReason.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DischargeReasonAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DischargeReasonAggregateArgs>(args: Subset<T, DischargeReasonAggregateArgs>): Prisma.PrismaPromise<GetDischargeReasonAggregateType<T>>
+
+    /**
+     * Group by DischargeReason.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DischargeReasonGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DischargeReasonGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DischargeReasonGroupByArgs['orderBy'] }
+        : { orderBy?: DischargeReasonGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DischargeReasonGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDischargeReasonGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DischargeReason model
+   */
+  readonly fields: DischargeReasonFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DischargeReason.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DischargeReasonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    admissions<T extends DischargeReason$admissionsArgs<ExtArgs> = {}>(args?: Subset<T, DischargeReason$admissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DischargeReason model
+   */ 
+  interface DischargeReasonFieldRefs {
+    readonly id: FieldRef<"DischargeReason", 'Int'>
+    readonly reason: FieldRef<"DischargeReason", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DischargeReason findUnique
+   */
+  export type DischargeReasonFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    /**
+     * Filter, which DischargeReason to fetch.
+     */
+    where: DischargeReasonWhereUniqueInput
+  }
+
+  /**
+   * DischargeReason findUniqueOrThrow
+   */
+  export type DischargeReasonFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    /**
+     * Filter, which DischargeReason to fetch.
+     */
+    where: DischargeReasonWhereUniqueInput
+  }
+
+  /**
+   * DischargeReason findFirst
+   */
+  export type DischargeReasonFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    /**
+     * Filter, which DischargeReason to fetch.
+     */
+    where?: DischargeReasonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DischargeReasons to fetch.
+     */
+    orderBy?: DischargeReasonOrderByWithRelationInput | DischargeReasonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DischargeReasons.
+     */
+    cursor?: DischargeReasonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DischargeReasons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DischargeReasons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DischargeReasons.
+     */
+    distinct?: DischargeReasonScalarFieldEnum | DischargeReasonScalarFieldEnum[]
+  }
+
+  /**
+   * DischargeReason findFirstOrThrow
+   */
+  export type DischargeReasonFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    /**
+     * Filter, which DischargeReason to fetch.
+     */
+    where?: DischargeReasonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DischargeReasons to fetch.
+     */
+    orderBy?: DischargeReasonOrderByWithRelationInput | DischargeReasonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DischargeReasons.
+     */
+    cursor?: DischargeReasonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DischargeReasons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DischargeReasons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DischargeReasons.
+     */
+    distinct?: DischargeReasonScalarFieldEnum | DischargeReasonScalarFieldEnum[]
+  }
+
+  /**
+   * DischargeReason findMany
+   */
+  export type DischargeReasonFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    /**
+     * Filter, which DischargeReasons to fetch.
+     */
+    where?: DischargeReasonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DischargeReasons to fetch.
+     */
+    orderBy?: DischargeReasonOrderByWithRelationInput | DischargeReasonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DischargeReasons.
+     */
+    cursor?: DischargeReasonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DischargeReasons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DischargeReasons.
+     */
+    skip?: number
+    distinct?: DischargeReasonScalarFieldEnum | DischargeReasonScalarFieldEnum[]
+  }
+
+  /**
+   * DischargeReason create
+   */
+  export type DischargeReasonCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DischargeReason.
+     */
+    data: XOR<DischargeReasonCreateInput, DischargeReasonUncheckedCreateInput>
+  }
+
+  /**
+   * DischargeReason createMany
+   */
+  export type DischargeReasonCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DischargeReasons.
+     */
+    data: DischargeReasonCreateManyInput | DischargeReasonCreateManyInput[]
+  }
+
+  /**
+   * DischargeReason update
+   */
+  export type DischargeReasonUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DischargeReason.
+     */
+    data: XOR<DischargeReasonUpdateInput, DischargeReasonUncheckedUpdateInput>
+    /**
+     * Choose, which DischargeReason to update.
+     */
+    where: DischargeReasonWhereUniqueInput
+  }
+
+  /**
+   * DischargeReason updateMany
+   */
+  export type DischargeReasonUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DischargeReasons.
+     */
+    data: XOR<DischargeReasonUpdateManyMutationInput, DischargeReasonUncheckedUpdateManyInput>
+    /**
+     * Filter which DischargeReasons to update
+     */
+    where?: DischargeReasonWhereInput
+    /**
+     * Limit how many DischargeReasons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DischargeReason upsert
+   */
+  export type DischargeReasonUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DischargeReason to update in case it exists.
+     */
+    where: DischargeReasonWhereUniqueInput
+    /**
+     * In case the DischargeReason found by the `where` argument doesn't exist, create a new DischargeReason with this data.
+     */
+    create: XOR<DischargeReasonCreateInput, DischargeReasonUncheckedCreateInput>
+    /**
+     * In case the DischargeReason was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DischargeReasonUpdateInput, DischargeReasonUncheckedUpdateInput>
+  }
+
+  /**
+   * DischargeReason delete
+   */
+  export type DischargeReasonDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
+    /**
+     * Filter which DischargeReason to delete.
+     */
+    where: DischargeReasonWhereUniqueInput
+  }
+
+  /**
+   * DischargeReason deleteMany
+   */
+  export type DischargeReasonDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DischargeReasons to delete
+     */
+    where?: DischargeReasonWhereInput
+    /**
+     * Limit how many DischargeReasons to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DischargeReason.admissions
+   */
+  export type DischargeReason$admissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admissions
+     */
+    select?: AdmissionsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admissions
+     */
+    omit?: AdmissionsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdmissionsInclude<ExtArgs> | null
+    where?: AdmissionsWhereInput
+    orderBy?: AdmissionsOrderByWithRelationInput | AdmissionsOrderByWithRelationInput[]
+    cursor?: AdmissionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdmissionsScalarFieldEnum | AdmissionsScalarFieldEnum[]
+  }
+
+  /**
+   * DischargeReason without action
+   */
+  export type DischargeReasonDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DischargeReason
+     */
+    select?: DischargeReasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DischargeReason
+     */
+    omit?: DischargeReasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DischargeReasonInclude<ExtArgs> | null
   }
 
 
@@ -16362,10 +17552,10 @@ export namespace Prisma {
     Address: 'Address',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt',
-    DepartmentName: 'DepartmentName',
     Status: 'Status',
     PatientRegistrationDate: 'PatientRegistrationDate',
     Ptype: 'Ptype',
+    DepartmentID: 'DepartmentID',
     Email: 'Email',
     AlternateNumber: 'AlternateNumber',
     DOB: 'DOB',
@@ -16420,12 +17610,20 @@ export namespace Prisma {
     diagnosis_id: 'diagnosis_id',
     admission_date: 'admission_date',
     discharge_date: 'discharge_date',
-    discharge_reason: 'discharge_reason',
+    dischargeReasonId: 'dischargeReasonId',
     treatment_plan: 'treatment_plan',
     remarks: 'remarks'
   };
 
   export type AdmissionsScalarFieldEnum = (typeof AdmissionsScalarFieldEnum)[keyof typeof AdmissionsScalarFieldEnum]
+
+
+  export const DischargeReasonScalarFieldEnum: {
+    id: 'id',
+    reason: 'reason'
+  };
+
+  export type DischargeReasonScalarFieldEnum = (typeof DischargeReasonScalarFieldEnum)[keyof typeof DischargeReasonScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -16627,6 +17825,7 @@ export namespace Prisma {
     DepartmentName?: StringFilter<"Departments"> | string
     Diagnoses?: DiagnosesListRelationFilter
     Doctors?: DoctorsListRelationFilter
+    Patients?: PatientsListRelationFilter
   }
 
   export type DepartmentsOrderByWithRelationInput = {
@@ -16634,6 +17833,7 @@ export namespace Prisma {
     DepartmentName?: SortOrder
     Diagnoses?: DiagnosesOrderByRelationAggregateInput
     Doctors?: DoctorsOrderByRelationAggregateInput
+    Patients?: PatientsOrderByRelationAggregateInput
   }
 
   export type DepartmentsWhereUniqueInput = Prisma.AtLeast<{
@@ -16644,6 +17844,7 @@ export namespace Prisma {
     NOT?: DepartmentsWhereInput | DepartmentsWhereInput[]
     Diagnoses?: DiagnosesListRelationFilter
     Doctors?: DoctorsListRelationFilter
+    Patients?: PatientsListRelationFilter
   }, "DepartmentID" | "DepartmentName">
 
   export type DepartmentsOrderByWithAggregationInput = {
@@ -17042,14 +18243,15 @@ export namespace Prisma {
     Address?: StringNullableFilter<"Patients"> | string | null
     CreatedAt?: DateTimeNullableFilter<"Patients"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"Patients"> | Date | string | null
-    DepartmentName?: StringNullableFilter<"Patients"> | string | null
     Status?: StringNullableFilter<"Patients"> | string | null
     PatientRegistrationDate?: DateTimeFilter<"Patients"> | Date | string
     Ptype?: StringNullableFilter<"Patients"> | string | null
+    DepartmentID?: IntNullableFilter<"Patients"> | number | null
     Email?: StringNullableFilter<"Patients"> | string | null
     AlternateNumber?: StringNullableFilter<"Patients"> | string | null
     DOB?: DateTimeNullableFilter<"Patients"> | Date | string | null
     BloodGroup?: StringNullableFilter<"Patients"> | string | null
+    Department?: XOR<DepartmentsNullableScalarRelationFilter, DepartmentsWhereInput> | null
     Appointments?: AppointmentsListRelationFilter
     Bills?: BillsListRelationFilter
     MedicalRecords?: MedicalRecordsListRelationFilter
@@ -17065,14 +18267,15 @@ export namespace Prisma {
     Address?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
-    DepartmentName?: SortOrderInput | SortOrder
     Status?: SortOrderInput | SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrderInput | SortOrder
+    DepartmentID?: SortOrderInput | SortOrder
     Email?: SortOrderInput | SortOrder
     AlternateNumber?: SortOrderInput | SortOrder
     DOB?: SortOrderInput | SortOrder
     BloodGroup?: SortOrderInput | SortOrder
+    Department?: DepartmentsOrderByWithRelationInput
     Appointments?: AppointmentsOrderByRelationAggregateInput
     Bills?: BillsOrderByRelationAggregateInput
     MedicalRecords?: MedicalRecordsOrderByRelationAggregateInput
@@ -17091,14 +18294,15 @@ export namespace Prisma {
     Address?: StringNullableFilter<"Patients"> | string | null
     CreatedAt?: DateTimeNullableFilter<"Patients"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"Patients"> | Date | string | null
-    DepartmentName?: StringNullableFilter<"Patients"> | string | null
     Status?: StringNullableFilter<"Patients"> | string | null
     PatientRegistrationDate?: DateTimeFilter<"Patients"> | Date | string
     Ptype?: StringNullableFilter<"Patients"> | string | null
+    DepartmentID?: IntNullableFilter<"Patients"> | number | null
     Email?: StringNullableFilter<"Patients"> | string | null
     AlternateNumber?: StringNullableFilter<"Patients"> | string | null
     DOB?: DateTimeNullableFilter<"Patients"> | Date | string | null
     BloodGroup?: StringNullableFilter<"Patients"> | string | null
+    Department?: XOR<DepartmentsNullableScalarRelationFilter, DepartmentsWhereInput> | null
     Appointments?: AppointmentsListRelationFilter
     Bills?: BillsListRelationFilter
     MedicalRecords?: MedicalRecordsListRelationFilter
@@ -17114,17 +18318,19 @@ export namespace Prisma {
     Address?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
-    DepartmentName?: SortOrderInput | SortOrder
     Status?: SortOrderInput | SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrderInput | SortOrder
+    DepartmentID?: SortOrderInput | SortOrder
     Email?: SortOrderInput | SortOrder
     AlternateNumber?: SortOrderInput | SortOrder
     DOB?: SortOrderInput | SortOrder
     BloodGroup?: SortOrderInput | SortOrder
     _count?: PatientsCountOrderByAggregateInput
+    _avg?: PatientsAvgOrderByAggregateInput
     _max?: PatientsMaxOrderByAggregateInput
     _min?: PatientsMinOrderByAggregateInput
+    _sum?: PatientsSumOrderByAggregateInput
   }
 
   export type PatientsScalarWhereWithAggregatesInput = {
@@ -17139,10 +18345,10 @@ export namespace Prisma {
     Address?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"Patients"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"Patients"> | Date | string | null
-    DepartmentName?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     Status?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     PatientRegistrationDate?: DateTimeWithAggregatesFilter<"Patients"> | Date | string
     Ptype?: StringNullableWithAggregatesFilter<"Patients"> | string | null
+    DepartmentID?: IntNullableWithAggregatesFilter<"Patients"> | number | null
     Email?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     AlternateNumber?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     DOB?: DateTimeNullableWithAggregatesFilter<"Patients"> | Date | string | null
@@ -17357,12 +18563,13 @@ export namespace Prisma {
     diagnosis_id?: IntFilter<"Admissions"> | number
     admission_date?: DateTimeFilter<"Admissions"> | Date | string
     discharge_date?: DateTimeNullableFilter<"Admissions"> | Date | string | null
-    discharge_reason?: StringNullableFilter<"Admissions"> | string | null
+    dischargeReasonId?: IntNullableFilter<"Admissions"> | number | null
     treatment_plan?: StringNullableFilter<"Admissions"> | string | null
     remarks?: StringNullableFilter<"Admissions"> | string | null
     patient?: XOR<PatientsScalarRelationFilter, PatientsWhereInput>
     bed?: XOR<BedScalarRelationFilter, BedWhereInput>
     diagnosis?: XOR<DiagnosesScalarRelationFilter, DiagnosesWhereInput>
+    dischargeReason?: XOR<DischargeReasonNullableScalarRelationFilter, DischargeReasonWhereInput> | null
     MedicalRecords?: MedicalRecordsListRelationFilter
   }
 
@@ -17374,12 +18581,13 @@ export namespace Prisma {
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
     discharge_date?: SortOrderInput | SortOrder
-    discharge_reason?: SortOrderInput | SortOrder
+    dischargeReasonId?: SortOrderInput | SortOrder
     treatment_plan?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
     patient?: PatientsOrderByWithRelationInput
     bed?: BedOrderByWithRelationInput
     diagnosis?: DiagnosesOrderByWithRelationInput
+    dischargeReason?: DischargeReasonOrderByWithRelationInput
     MedicalRecords?: MedicalRecordsOrderByRelationAggregateInput
   }
 
@@ -17394,12 +18602,13 @@ export namespace Prisma {
     diagnosis_id?: IntFilter<"Admissions"> | number
     admission_date?: DateTimeFilter<"Admissions"> | Date | string
     discharge_date?: DateTimeNullableFilter<"Admissions"> | Date | string | null
-    discharge_reason?: StringNullableFilter<"Admissions"> | string | null
+    dischargeReasonId?: IntNullableFilter<"Admissions"> | number | null
     treatment_plan?: StringNullableFilter<"Admissions"> | string | null
     remarks?: StringNullableFilter<"Admissions"> | string | null
     patient?: XOR<PatientsScalarRelationFilter, PatientsWhereInput>
     bed?: XOR<BedScalarRelationFilter, BedWhereInput>
     diagnosis?: XOR<DiagnosesScalarRelationFilter, DiagnosesWhereInput>
+    dischargeReason?: XOR<DischargeReasonNullableScalarRelationFilter, DischargeReasonWhereInput> | null
     MedicalRecords?: MedicalRecordsListRelationFilter
   }, "admission_id" | "admission_no">
 
@@ -17411,7 +18620,7 @@ export namespace Prisma {
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
     discharge_date?: SortOrderInput | SortOrder
-    discharge_reason?: SortOrderInput | SortOrder
+    dischargeReasonId?: SortOrderInput | SortOrder
     treatment_plan?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
     _count?: AdmissionsCountOrderByAggregateInput
@@ -17432,9 +18641,51 @@ export namespace Prisma {
     diagnosis_id?: IntWithAggregatesFilter<"Admissions"> | number
     admission_date?: DateTimeWithAggregatesFilter<"Admissions"> | Date | string
     discharge_date?: DateTimeNullableWithAggregatesFilter<"Admissions"> | Date | string | null
-    discharge_reason?: StringNullableWithAggregatesFilter<"Admissions"> | string | null
+    dischargeReasonId?: IntNullableWithAggregatesFilter<"Admissions"> | number | null
     treatment_plan?: StringNullableWithAggregatesFilter<"Admissions"> | string | null
     remarks?: StringNullableWithAggregatesFilter<"Admissions"> | string | null
+  }
+
+  export type DischargeReasonWhereInput = {
+    AND?: DischargeReasonWhereInput | DischargeReasonWhereInput[]
+    OR?: DischargeReasonWhereInput[]
+    NOT?: DischargeReasonWhereInput | DischargeReasonWhereInput[]
+    id?: IntFilter<"DischargeReason"> | number
+    reason?: StringFilter<"DischargeReason"> | string
+    admissions?: AdmissionsListRelationFilter
+  }
+
+  export type DischargeReasonOrderByWithRelationInput = {
+    id?: SortOrder
+    reason?: SortOrder
+    admissions?: AdmissionsOrderByRelationAggregateInput
+  }
+
+  export type DischargeReasonWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    reason?: string
+    AND?: DischargeReasonWhereInput | DischargeReasonWhereInput[]
+    OR?: DischargeReasonWhereInput[]
+    NOT?: DischargeReasonWhereInput | DischargeReasonWhereInput[]
+    admissions?: AdmissionsListRelationFilter
+  }, "id" | "reason">
+
+  export type DischargeReasonOrderByWithAggregationInput = {
+    id?: SortOrder
+    reason?: SortOrder
+    _count?: DischargeReasonCountOrderByAggregateInput
+    _avg?: DischargeReasonAvgOrderByAggregateInput
+    _max?: DischargeReasonMaxOrderByAggregateInput
+    _min?: DischargeReasonMinOrderByAggregateInput
+    _sum?: DischargeReasonSumOrderByAggregateInput
+  }
+
+  export type DischargeReasonScalarWhereWithAggregatesInput = {
+    AND?: DischargeReasonScalarWhereWithAggregatesInput | DischargeReasonScalarWhereWithAggregatesInput[]
+    OR?: DischargeReasonScalarWhereWithAggregatesInput[]
+    NOT?: DischargeReasonScalarWhereWithAggregatesInput | DischargeReasonScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DischargeReason"> | number
+    reason?: StringWithAggregatesFilter<"DischargeReason"> | string
   }
 
   export type AppointmentsCreateInput = {
@@ -17563,6 +18814,7 @@ export namespace Prisma {
     DepartmentName: string
     Diagnoses?: DiagnosesCreateNestedManyWithoutDepartmentsInput
     Doctors?: DoctorsCreateNestedManyWithoutDepartmentsInput
+    Patients?: PatientsCreateNestedManyWithoutDepartmentInput
   }
 
   export type DepartmentsUncheckedCreateInput = {
@@ -17570,12 +18822,14 @@ export namespace Prisma {
     DepartmentName: string
     Diagnoses?: DiagnosesUncheckedCreateNestedManyWithoutDepartmentsInput
     Doctors?: DoctorsUncheckedCreateNestedManyWithoutDepartmentsInput
+    Patients?: PatientsUncheckedCreateNestedManyWithoutDepartmentInput
   }
 
   export type DepartmentsUpdateInput = {
     DepartmentName?: StringFieldUpdateOperationsInput | string
     Diagnoses?: DiagnosesUpdateManyWithoutDepartmentsNestedInput
     Doctors?: DoctorsUpdateManyWithoutDepartmentsNestedInput
+    Patients?: PatientsUpdateManyWithoutDepartmentNestedInput
   }
 
   export type DepartmentsUncheckedUpdateInput = {
@@ -17583,6 +18837,7 @@ export namespace Prisma {
     DepartmentName?: StringFieldUpdateOperationsInput | string
     Diagnoses?: DiagnosesUncheckedUpdateManyWithoutDepartmentsNestedInput
     Doctors?: DoctorsUncheckedUpdateManyWithoutDepartmentsNestedInput
+    Patients?: PatientsUncheckedUpdateManyWithoutDepartmentNestedInput
   }
 
   export type DepartmentsCreateManyInput = {
@@ -17962,7 +19217,6 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
@@ -17970,6 +19224,7 @@ export namespace Prisma {
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
     Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
     Bills?: BillsCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
@@ -17985,10 +19240,10 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
+    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
@@ -18008,7 +19263,6 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18016,6 +19270,7 @@ export namespace Prisma {
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
     Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
     Bills?: BillsUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
@@ -18031,10 +19286,10 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -18054,10 +19309,10 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
+    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
@@ -18073,7 +19328,6 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18092,10 +19346,10 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -18300,12 +19554,12 @@ export namespace Prisma {
     admission_no: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
     treatment_plan?: string | null
     remarks?: string | null
     patient: PatientsCreateNestedOneWithoutAdmissionsInput
     bed: BedCreateNestedOneWithoutAdmissionsInput
     diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
+    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
   }
 
@@ -18317,7 +19571,7 @@ export namespace Prisma {
     diagnosis_id: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
+    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
@@ -18327,12 +19581,12 @@ export namespace Prisma {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
     bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
     diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
+    dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -18344,7 +19598,7 @@ export namespace Prisma {
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
@@ -18357,7 +19611,7 @@ export namespace Prisma {
     diagnosis_id: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
+    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
   }
@@ -18366,7 +19620,6 @@ export namespace Prisma {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -18379,9 +19632,44 @@ export namespace Prisma {
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DischargeReasonCreateInput = {
+    reason: string
+    admissions?: AdmissionsCreateNestedManyWithoutDischargeReasonInput
+  }
+
+  export type DischargeReasonUncheckedCreateInput = {
+    id?: number
+    reason: string
+    admissions?: AdmissionsUncheckedCreateNestedManyWithoutDischargeReasonInput
+  }
+
+  export type DischargeReasonUpdateInput = {
+    reason?: StringFieldUpdateOperationsInput | string
+    admissions?: AdmissionsUpdateManyWithoutDischargeReasonNestedInput
+  }
+
+  export type DischargeReasonUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    admissions?: AdmissionsUncheckedUpdateManyWithoutDischargeReasonNestedInput
+  }
+
+  export type DischargeReasonCreateManyInput = {
+    reason: string
+  }
+
+  export type DischargeReasonUpdateManyMutationInput = {
+    reason?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DischargeReasonUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -18654,11 +19942,21 @@ export namespace Prisma {
     none?: DoctorsWhereInput
   }
 
+  export type PatientsListRelationFilter = {
+    every?: PatientsWhereInput
+    some?: PatientsWhereInput
+    none?: PatientsWhereInput
+  }
+
   export type DiagnosesOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type DoctorsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PatientsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18952,6 +20250,11 @@ export namespace Prisma {
     UserID?: SortOrder
   }
 
+  export type DepartmentsNullableScalarRelationFilter = {
+    is?: DepartmentsWhereInput | null
+    isNot?: DepartmentsWhereInput | null
+  }
+
   export type BillsListRelationFilter = {
     every?: BillsWhereInput
     some?: BillsWhereInput
@@ -18981,14 +20284,18 @@ export namespace Prisma {
     Address?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
-    DepartmentName?: SortOrder
     Status?: SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrder
+    DepartmentID?: SortOrder
     Email?: SortOrder
     AlternateNumber?: SortOrder
     DOB?: SortOrder
     BloodGroup?: SortOrder
+  }
+
+  export type PatientsAvgOrderByAggregateInput = {
+    DepartmentID?: SortOrder
   }
 
   export type PatientsMaxOrderByAggregateInput = {
@@ -19000,10 +20307,10 @@ export namespace Prisma {
     Address?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
-    DepartmentName?: SortOrder
     Status?: SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrder
+    DepartmentID?: SortOrder
     Email?: SortOrder
     AlternateNumber?: SortOrder
     DOB?: SortOrder
@@ -19019,14 +20326,18 @@ export namespace Prisma {
     Address?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
-    DepartmentName?: SortOrder
     Status?: SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrder
+    DepartmentID?: SortOrder
     Email?: SortOrder
     AlternateNumber?: SortOrder
     DOB?: SortOrder
     BloodGroup?: SortOrder
+  }
+
+  export type PatientsSumOrderByAggregateInput = {
+    DepartmentID?: SortOrder
   }
 
   export type RoomListRelationFilter = {
@@ -19185,6 +20496,11 @@ export namespace Prisma {
     isNot?: DiagnosesWhereInput
   }
 
+  export type DischargeReasonNullableScalarRelationFilter = {
+    is?: DischargeReasonWhereInput | null
+    isNot?: DischargeReasonWhereInput | null
+  }
+
   export type AdmissionsCountOrderByAggregateInput = {
     admission_id?: SortOrder
     admission_no?: SortOrder
@@ -19193,7 +20509,7 @@ export namespace Prisma {
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
     discharge_date?: SortOrder
-    discharge_reason?: SortOrder
+    dischargeReasonId?: SortOrder
     treatment_plan?: SortOrder
     remarks?: SortOrder
   }
@@ -19203,6 +20519,7 @@ export namespace Prisma {
     admission_no?: SortOrder
     bed_id?: SortOrder
     diagnosis_id?: SortOrder
+    dischargeReasonId?: SortOrder
   }
 
   export type AdmissionsMaxOrderByAggregateInput = {
@@ -19213,7 +20530,7 @@ export namespace Prisma {
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
     discharge_date?: SortOrder
-    discharge_reason?: SortOrder
+    dischargeReasonId?: SortOrder
     treatment_plan?: SortOrder
     remarks?: SortOrder
   }
@@ -19226,7 +20543,7 @@ export namespace Prisma {
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
     discharge_date?: SortOrder
-    discharge_reason?: SortOrder
+    dischargeReasonId?: SortOrder
     treatment_plan?: SortOrder
     remarks?: SortOrder
   }
@@ -19236,6 +20553,30 @@ export namespace Prisma {
     admission_no?: SortOrder
     bed_id?: SortOrder
     diagnosis_id?: SortOrder
+    dischargeReasonId?: SortOrder
+  }
+
+  export type DischargeReasonCountOrderByAggregateInput = {
+    id?: SortOrder
+    reason?: SortOrder
+  }
+
+  export type DischargeReasonAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type DischargeReasonMaxOrderByAggregateInput = {
+    id?: SortOrder
+    reason?: SortOrder
+  }
+
+  export type DischargeReasonMinOrderByAggregateInput = {
+    id?: SortOrder
+    reason?: SortOrder
+  }
+
+  export type DischargeReasonSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type DoctorsCreateNestedOneWithoutAppointmentsInput = {
@@ -19326,6 +20667,13 @@ export namespace Prisma {
     connect?: DoctorsWhereUniqueInput | DoctorsWhereUniqueInput[]
   }
 
+  export type PatientsCreateNestedManyWithoutDepartmentInput = {
+    create?: XOR<PatientsCreateWithoutDepartmentInput, PatientsUncheckedCreateWithoutDepartmentInput> | PatientsCreateWithoutDepartmentInput[] | PatientsUncheckedCreateWithoutDepartmentInput[]
+    connectOrCreate?: PatientsCreateOrConnectWithoutDepartmentInput | PatientsCreateOrConnectWithoutDepartmentInput[]
+    createMany?: PatientsCreateManyDepartmentInputEnvelope
+    connect?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
+  }
+
   export type DiagnosesUncheckedCreateNestedManyWithoutDepartmentsInput = {
     create?: XOR<DiagnosesCreateWithoutDepartmentsInput, DiagnosesUncheckedCreateWithoutDepartmentsInput> | DiagnosesCreateWithoutDepartmentsInput[] | DiagnosesUncheckedCreateWithoutDepartmentsInput[]
     connectOrCreate?: DiagnosesCreateOrConnectWithoutDepartmentsInput | DiagnosesCreateOrConnectWithoutDepartmentsInput[]
@@ -19338,6 +20686,13 @@ export namespace Prisma {
     connectOrCreate?: DoctorsCreateOrConnectWithoutDepartmentsInput | DoctorsCreateOrConnectWithoutDepartmentsInput[]
     createMany?: DoctorsCreateManyDepartmentsInputEnvelope
     connect?: DoctorsWhereUniqueInput | DoctorsWhereUniqueInput[]
+  }
+
+  export type PatientsUncheckedCreateNestedManyWithoutDepartmentInput = {
+    create?: XOR<PatientsCreateWithoutDepartmentInput, PatientsUncheckedCreateWithoutDepartmentInput> | PatientsCreateWithoutDepartmentInput[] | PatientsUncheckedCreateWithoutDepartmentInput[]
+    connectOrCreate?: PatientsCreateOrConnectWithoutDepartmentInput | PatientsCreateOrConnectWithoutDepartmentInput[]
+    createMany?: PatientsCreateManyDepartmentInputEnvelope
+    connect?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
   }
 
   export type DiagnosesUpdateManyWithoutDepartmentsNestedInput = {
@@ -19368,6 +20723,20 @@ export namespace Prisma {
     deleteMany?: DoctorsScalarWhereInput | DoctorsScalarWhereInput[]
   }
 
+  export type PatientsUpdateManyWithoutDepartmentNestedInput = {
+    create?: XOR<PatientsCreateWithoutDepartmentInput, PatientsUncheckedCreateWithoutDepartmentInput> | PatientsCreateWithoutDepartmentInput[] | PatientsUncheckedCreateWithoutDepartmentInput[]
+    connectOrCreate?: PatientsCreateOrConnectWithoutDepartmentInput | PatientsCreateOrConnectWithoutDepartmentInput[]
+    upsert?: PatientsUpsertWithWhereUniqueWithoutDepartmentInput | PatientsUpsertWithWhereUniqueWithoutDepartmentInput[]
+    createMany?: PatientsCreateManyDepartmentInputEnvelope
+    set?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
+    disconnect?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
+    delete?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
+    connect?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
+    update?: PatientsUpdateWithWhereUniqueWithoutDepartmentInput | PatientsUpdateWithWhereUniqueWithoutDepartmentInput[]
+    updateMany?: PatientsUpdateManyWithWhereWithoutDepartmentInput | PatientsUpdateManyWithWhereWithoutDepartmentInput[]
+    deleteMany?: PatientsScalarWhereInput | PatientsScalarWhereInput[]
+  }
+
   export type DiagnosesUncheckedUpdateManyWithoutDepartmentsNestedInput = {
     create?: XOR<DiagnosesCreateWithoutDepartmentsInput, DiagnosesUncheckedCreateWithoutDepartmentsInput> | DiagnosesCreateWithoutDepartmentsInput[] | DiagnosesUncheckedCreateWithoutDepartmentsInput[]
     connectOrCreate?: DiagnosesCreateOrConnectWithoutDepartmentsInput | DiagnosesCreateOrConnectWithoutDepartmentsInput[]
@@ -19394,6 +20763,20 @@ export namespace Prisma {
     update?: DoctorsUpdateWithWhereUniqueWithoutDepartmentsInput | DoctorsUpdateWithWhereUniqueWithoutDepartmentsInput[]
     updateMany?: DoctorsUpdateManyWithWhereWithoutDepartmentsInput | DoctorsUpdateManyWithWhereWithoutDepartmentsInput[]
     deleteMany?: DoctorsScalarWhereInput | DoctorsScalarWhereInput[]
+  }
+
+  export type PatientsUncheckedUpdateManyWithoutDepartmentNestedInput = {
+    create?: XOR<PatientsCreateWithoutDepartmentInput, PatientsUncheckedCreateWithoutDepartmentInput> | PatientsCreateWithoutDepartmentInput[] | PatientsUncheckedCreateWithoutDepartmentInput[]
+    connectOrCreate?: PatientsCreateOrConnectWithoutDepartmentInput | PatientsCreateOrConnectWithoutDepartmentInput[]
+    upsert?: PatientsUpsertWithWhereUniqueWithoutDepartmentInput | PatientsUpsertWithWhereUniqueWithoutDepartmentInput[]
+    createMany?: PatientsCreateManyDepartmentInputEnvelope
+    set?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
+    disconnect?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
+    delete?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
+    connect?: PatientsWhereUniqueInput | PatientsWhereUniqueInput[]
+    update?: PatientsUpdateWithWhereUniqueWithoutDepartmentInput | PatientsUpdateWithWhereUniqueWithoutDepartmentInput[]
+    updateMany?: PatientsUpdateManyWithWhereWithoutDepartmentInput | PatientsUpdateManyWithWhereWithoutDepartmentInput[]
+    deleteMany?: PatientsScalarWhereInput | PatientsScalarWhereInput[]
   }
 
   export type DepartmentsCreateNestedOneWithoutDiagnosesInput = {
@@ -19592,6 +20975,12 @@ export namespace Prisma {
     update?: XOR<XOR<MedicalRecordsUpdateToOneWithWhereWithoutCaseSheetsInput, MedicalRecordsUpdateWithoutCaseSheetsInput>, MedicalRecordsUncheckedUpdateWithoutCaseSheetsInput>
   }
 
+  export type DepartmentsCreateNestedOneWithoutPatientsInput = {
+    create?: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
+    connectOrCreate?: DepartmentsCreateOrConnectWithoutPatientsInput
+    connect?: DepartmentsWhereUniqueInput
+  }
+
   export type AppointmentsCreateNestedManyWithoutPatientsInput = {
     create?: XOR<AppointmentsCreateWithoutPatientsInput, AppointmentsUncheckedCreateWithoutPatientsInput> | AppointmentsCreateWithoutPatientsInput[] | AppointmentsUncheckedCreateWithoutPatientsInput[]
     connectOrCreate?: AppointmentsCreateOrConnectWithoutPatientsInput | AppointmentsCreateOrConnectWithoutPatientsInput[]
@@ -19646,6 +21035,16 @@ export namespace Prisma {
     connectOrCreate?: AdmissionsCreateOrConnectWithoutPatientInput | AdmissionsCreateOrConnectWithoutPatientInput[]
     createMany?: AdmissionsCreateManyPatientInputEnvelope
     connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+  }
+
+  export type DepartmentsUpdateOneWithoutPatientsNestedInput = {
+    create?: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
+    connectOrCreate?: DepartmentsCreateOrConnectWithoutPatientsInput
+    upsert?: DepartmentsUpsertWithoutPatientsInput
+    disconnect?: DepartmentsWhereInput | boolean
+    delete?: DepartmentsWhereInput | boolean
+    connect?: DepartmentsWhereUniqueInput
+    update?: XOR<XOR<DepartmentsUpdateToOneWithWhereWithoutPatientsInput, DepartmentsUpdateWithoutPatientsInput>, DepartmentsUncheckedUpdateWithoutPatientsInput>
   }
 
   export type AppointmentsUpdateManyWithoutPatientsNestedInput = {
@@ -19932,6 +21331,12 @@ export namespace Prisma {
     connect?: DiagnosesWhereUniqueInput
   }
 
+  export type DischargeReasonCreateNestedOneWithoutAdmissionsInput = {
+    create?: XOR<DischargeReasonCreateWithoutAdmissionsInput, DischargeReasonUncheckedCreateWithoutAdmissionsInput>
+    connectOrCreate?: DischargeReasonCreateOrConnectWithoutAdmissionsInput
+    connect?: DischargeReasonWhereUniqueInput
+  }
+
   export type MedicalRecordsCreateNestedManyWithoutAdmissionsInput = {
     create?: XOR<MedicalRecordsCreateWithoutAdmissionsInput, MedicalRecordsUncheckedCreateWithoutAdmissionsInput> | MedicalRecordsCreateWithoutAdmissionsInput[] | MedicalRecordsUncheckedCreateWithoutAdmissionsInput[]
     connectOrCreate?: MedicalRecordsCreateOrConnectWithoutAdmissionsInput | MedicalRecordsCreateOrConnectWithoutAdmissionsInput[]
@@ -19970,6 +21375,16 @@ export namespace Prisma {
     update?: XOR<XOR<DiagnosesUpdateToOneWithWhereWithoutAdmissionsInput, DiagnosesUpdateWithoutAdmissionsInput>, DiagnosesUncheckedUpdateWithoutAdmissionsInput>
   }
 
+  export type DischargeReasonUpdateOneWithoutAdmissionsNestedInput = {
+    create?: XOR<DischargeReasonCreateWithoutAdmissionsInput, DischargeReasonUncheckedCreateWithoutAdmissionsInput>
+    connectOrCreate?: DischargeReasonCreateOrConnectWithoutAdmissionsInput
+    upsert?: DischargeReasonUpsertWithoutAdmissionsInput
+    disconnect?: DischargeReasonWhereInput | boolean
+    delete?: DischargeReasonWhereInput | boolean
+    connect?: DischargeReasonWhereUniqueInput
+    update?: XOR<XOR<DischargeReasonUpdateToOneWithWhereWithoutAdmissionsInput, DischargeReasonUpdateWithoutAdmissionsInput>, DischargeReasonUncheckedUpdateWithoutAdmissionsInput>
+  }
+
   export type MedicalRecordsUpdateManyWithoutAdmissionsNestedInput = {
     create?: XOR<MedicalRecordsCreateWithoutAdmissionsInput, MedicalRecordsUncheckedCreateWithoutAdmissionsInput> | MedicalRecordsCreateWithoutAdmissionsInput[] | MedicalRecordsUncheckedCreateWithoutAdmissionsInput[]
     connectOrCreate?: MedicalRecordsCreateOrConnectWithoutAdmissionsInput | MedicalRecordsCreateOrConnectWithoutAdmissionsInput[]
@@ -19996,6 +21411,48 @@ export namespace Prisma {
     update?: MedicalRecordsUpdateWithWhereUniqueWithoutAdmissionsInput | MedicalRecordsUpdateWithWhereUniqueWithoutAdmissionsInput[]
     updateMany?: MedicalRecordsUpdateManyWithWhereWithoutAdmissionsInput | MedicalRecordsUpdateManyWithWhereWithoutAdmissionsInput[]
     deleteMany?: MedicalRecordsScalarWhereInput | MedicalRecordsScalarWhereInput[]
+  }
+
+  export type AdmissionsCreateNestedManyWithoutDischargeReasonInput = {
+    create?: XOR<AdmissionsCreateWithoutDischargeReasonInput, AdmissionsUncheckedCreateWithoutDischargeReasonInput> | AdmissionsCreateWithoutDischargeReasonInput[] | AdmissionsUncheckedCreateWithoutDischargeReasonInput[]
+    connectOrCreate?: AdmissionsCreateOrConnectWithoutDischargeReasonInput | AdmissionsCreateOrConnectWithoutDischargeReasonInput[]
+    createMany?: AdmissionsCreateManyDischargeReasonInputEnvelope
+    connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+  }
+
+  export type AdmissionsUncheckedCreateNestedManyWithoutDischargeReasonInput = {
+    create?: XOR<AdmissionsCreateWithoutDischargeReasonInput, AdmissionsUncheckedCreateWithoutDischargeReasonInput> | AdmissionsCreateWithoutDischargeReasonInput[] | AdmissionsUncheckedCreateWithoutDischargeReasonInput[]
+    connectOrCreate?: AdmissionsCreateOrConnectWithoutDischargeReasonInput | AdmissionsCreateOrConnectWithoutDischargeReasonInput[]
+    createMany?: AdmissionsCreateManyDischargeReasonInputEnvelope
+    connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+  }
+
+  export type AdmissionsUpdateManyWithoutDischargeReasonNestedInput = {
+    create?: XOR<AdmissionsCreateWithoutDischargeReasonInput, AdmissionsUncheckedCreateWithoutDischargeReasonInput> | AdmissionsCreateWithoutDischargeReasonInput[] | AdmissionsUncheckedCreateWithoutDischargeReasonInput[]
+    connectOrCreate?: AdmissionsCreateOrConnectWithoutDischargeReasonInput | AdmissionsCreateOrConnectWithoutDischargeReasonInput[]
+    upsert?: AdmissionsUpsertWithWhereUniqueWithoutDischargeReasonInput | AdmissionsUpsertWithWhereUniqueWithoutDischargeReasonInput[]
+    createMany?: AdmissionsCreateManyDischargeReasonInputEnvelope
+    set?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    disconnect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    delete?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    update?: AdmissionsUpdateWithWhereUniqueWithoutDischargeReasonInput | AdmissionsUpdateWithWhereUniqueWithoutDischargeReasonInput[]
+    updateMany?: AdmissionsUpdateManyWithWhereWithoutDischargeReasonInput | AdmissionsUpdateManyWithWhereWithoutDischargeReasonInput[]
+    deleteMany?: AdmissionsScalarWhereInput | AdmissionsScalarWhereInput[]
+  }
+
+  export type AdmissionsUncheckedUpdateManyWithoutDischargeReasonNestedInput = {
+    create?: XOR<AdmissionsCreateWithoutDischargeReasonInput, AdmissionsUncheckedCreateWithoutDischargeReasonInput> | AdmissionsCreateWithoutDischargeReasonInput[] | AdmissionsUncheckedCreateWithoutDischargeReasonInput[]
+    connectOrCreate?: AdmissionsCreateOrConnectWithoutDischargeReasonInput | AdmissionsCreateOrConnectWithoutDischargeReasonInput[]
+    upsert?: AdmissionsUpsertWithWhereUniqueWithoutDischargeReasonInput | AdmissionsUpsertWithWhereUniqueWithoutDischargeReasonInput[]
+    createMany?: AdmissionsCreateManyDischargeReasonInputEnvelope
+    set?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    disconnect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    delete?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    update?: AdmissionsUpdateWithWhereUniqueWithoutDischargeReasonInput | AdmissionsUpdateWithWhereUniqueWithoutDischargeReasonInput[]
+    updateMany?: AdmissionsUpdateManyWithWhereWithoutDischargeReasonInput | AdmissionsUpdateManyWithWhereWithoutDischargeReasonInput[]
+    deleteMany?: AdmissionsScalarWhereInput | AdmissionsScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -20248,7 +21705,6 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
@@ -20256,6 +21712,7 @@ export namespace Prisma {
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
     Bills?: BillsCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
     Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
@@ -20270,10 +21727,10 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
+    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
@@ -20340,7 +21797,6 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20348,6 +21804,7 @@ export namespace Prisma {
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
     Bills?: BillsUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
     Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
@@ -20362,10 +21819,10 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -20384,7 +21841,6 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
@@ -20392,6 +21848,7 @@ export namespace Prisma {
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
     Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
     Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
@@ -20406,10 +21863,10 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
+    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
@@ -20444,7 +21901,6 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20452,6 +21908,7 @@ export namespace Prisma {
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
     Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
     Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
@@ -20466,10 +21923,10 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -20531,6 +21988,59 @@ export namespace Prisma {
     data: DoctorsCreateManyDepartmentsInput | DoctorsCreateManyDepartmentsInput[]
   }
 
+  export type PatientsCreateWithoutDepartmentInput = {
+    PatientID: string
+    Name: string
+    Age: string
+    Gender: string
+    ContactNumber?: string | null
+    Address?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Status?: string | null
+    PatientRegistrationDate: Date | string
+    Ptype?: string | null
+    Email?: string | null
+    AlternateNumber?: string | null
+    DOB?: Date | string | null
+    BloodGroup?: string | null
+    Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
+    Bills?: BillsCreateNestedManyWithoutPatientsInput
+    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
+    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
+  }
+
+  export type PatientsUncheckedCreateWithoutDepartmentInput = {
+    PatientID: string
+    Name: string
+    Age: string
+    Gender: string
+    ContactNumber?: string | null
+    Address?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Status?: string | null
+    PatientRegistrationDate: Date | string
+    Ptype?: string | null
+    Email?: string | null
+    AlternateNumber?: string | null
+    DOB?: Date | string | null
+    BloodGroup?: string | null
+    Appointments?: AppointmentsUncheckedCreateNestedManyWithoutPatientsInput
+    Bills?: BillsUncheckedCreateNestedManyWithoutPatientsInput
+    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutPatientsInput
+    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
+  }
+
+  export type PatientsCreateOrConnectWithoutDepartmentInput = {
+    where: PatientsWhereUniqueInput
+    create: XOR<PatientsCreateWithoutDepartmentInput, PatientsUncheckedCreateWithoutDepartmentInput>
+  }
+
+  export type PatientsCreateManyDepartmentInputEnvelope = {
+    data: PatientsCreateManyDepartmentInput | PatientsCreateManyDepartmentInput[]
+  }
+
   export type DiagnosesUpsertWithWhereUniqueWithoutDepartmentsInput = {
     where: DiagnosesWhereUniqueInput
     update: XOR<DiagnosesUpdateWithoutDepartmentsInput, DiagnosesUncheckedUpdateWithoutDepartmentsInput>
@@ -20587,15 +22097,55 @@ export namespace Prisma {
     UpdatedAt?: DateTimeNullableFilter<"Doctors"> | Date | string | null
   }
 
+  export type PatientsUpsertWithWhereUniqueWithoutDepartmentInput = {
+    where: PatientsWhereUniqueInput
+    update: XOR<PatientsUpdateWithoutDepartmentInput, PatientsUncheckedUpdateWithoutDepartmentInput>
+    create: XOR<PatientsCreateWithoutDepartmentInput, PatientsUncheckedCreateWithoutDepartmentInput>
+  }
+
+  export type PatientsUpdateWithWhereUniqueWithoutDepartmentInput = {
+    where: PatientsWhereUniqueInput
+    data: XOR<PatientsUpdateWithoutDepartmentInput, PatientsUncheckedUpdateWithoutDepartmentInput>
+  }
+
+  export type PatientsUpdateManyWithWhereWithoutDepartmentInput = {
+    where: PatientsScalarWhereInput
+    data: XOR<PatientsUpdateManyMutationInput, PatientsUncheckedUpdateManyWithoutDepartmentInput>
+  }
+
+  export type PatientsScalarWhereInput = {
+    AND?: PatientsScalarWhereInput | PatientsScalarWhereInput[]
+    OR?: PatientsScalarWhereInput[]
+    NOT?: PatientsScalarWhereInput | PatientsScalarWhereInput[]
+    PatientID?: StringFilter<"Patients"> | string
+    Name?: StringFilter<"Patients"> | string
+    Age?: StringFilter<"Patients"> | string
+    Gender?: StringFilter<"Patients"> | string
+    ContactNumber?: StringNullableFilter<"Patients"> | string | null
+    Address?: StringNullableFilter<"Patients"> | string | null
+    CreatedAt?: DateTimeNullableFilter<"Patients"> | Date | string | null
+    UpdatedAt?: DateTimeNullableFilter<"Patients"> | Date | string | null
+    Status?: StringNullableFilter<"Patients"> | string | null
+    PatientRegistrationDate?: DateTimeFilter<"Patients"> | Date | string
+    Ptype?: StringNullableFilter<"Patients"> | string | null
+    DepartmentID?: IntNullableFilter<"Patients"> | number | null
+    Email?: StringNullableFilter<"Patients"> | string | null
+    AlternateNumber?: StringNullableFilter<"Patients"> | string | null
+    DOB?: DateTimeNullableFilter<"Patients"> | Date | string | null
+    BloodGroup?: StringNullableFilter<"Patients"> | string | null
+  }
+
   export type DepartmentsCreateWithoutDiagnosesInput = {
     DepartmentName: string
     Doctors?: DoctorsCreateNestedManyWithoutDepartmentsInput
+    Patients?: PatientsCreateNestedManyWithoutDepartmentInput
   }
 
   export type DepartmentsUncheckedCreateWithoutDiagnosesInput = {
     DepartmentID?: number
     DepartmentName: string
     Doctors?: DoctorsUncheckedCreateNestedManyWithoutDepartmentsInput
+    Patients?: PatientsUncheckedCreateNestedManyWithoutDepartmentInput
   }
 
   export type DepartmentsCreateOrConnectWithoutDiagnosesInput = {
@@ -20607,11 +22157,11 @@ export namespace Prisma {
     admission_no: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
     treatment_plan?: string | null
     remarks?: string | null
     patient: PatientsCreateNestedOneWithoutAdmissionsInput
     bed: BedCreateNestedOneWithoutAdmissionsInput
+    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
   }
 
@@ -20622,7 +22172,7 @@ export namespace Prisma {
     bed_id: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
+    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
@@ -20651,12 +22201,14 @@ export namespace Prisma {
   export type DepartmentsUpdateWithoutDiagnosesInput = {
     DepartmentName?: StringFieldUpdateOperationsInput | string
     Doctors?: DoctorsUpdateManyWithoutDepartmentsNestedInput
+    Patients?: PatientsUpdateManyWithoutDepartmentNestedInput
   }
 
   export type DepartmentsUncheckedUpdateWithoutDiagnosesInput = {
     DepartmentID?: IntFieldUpdateOperationsInput | number
     DepartmentName?: StringFieldUpdateOperationsInput | string
     Doctors?: DoctorsUncheckedUpdateManyWithoutDepartmentsNestedInput
+    Patients?: PatientsUncheckedUpdateManyWithoutDepartmentNestedInput
   }
 
   export type AdmissionsUpsertWithWhereUniqueWithoutDiagnosisInput = {
@@ -20686,7 +22238,7 @@ export namespace Prisma {
     diagnosis_id?: IntFilter<"Admissions"> | number
     admission_date?: DateTimeFilter<"Admissions"> | Date | string
     discharge_date?: DateTimeNullableFilter<"Admissions"> | Date | string | null
-    discharge_reason?: StringNullableFilter<"Admissions"> | string | null
+    dischargeReasonId?: IntNullableFilter<"Admissions"> | number | null
     treatment_plan?: StringNullableFilter<"Admissions"> | string | null
     remarks?: StringNullableFilter<"Admissions"> | string | null
   }
@@ -20722,12 +22274,14 @@ export namespace Prisma {
   export type DepartmentsCreateWithoutDoctorsInput = {
     DepartmentName: string
     Diagnoses?: DiagnosesCreateNestedManyWithoutDepartmentsInput
+    Patients?: PatientsCreateNestedManyWithoutDepartmentInput
   }
 
   export type DepartmentsUncheckedCreateWithoutDoctorsInput = {
     DepartmentID?: number
     DepartmentName: string
     Diagnoses?: DiagnosesUncheckedCreateNestedManyWithoutDepartmentsInput
+    Patients?: PatientsUncheckedCreateNestedManyWithoutDepartmentInput
   }
 
   export type DepartmentsCreateOrConnectWithoutDoctorsInput = {
@@ -20779,12 +22333,14 @@ export namespace Prisma {
   export type DepartmentsUpdateWithoutDoctorsInput = {
     DepartmentName?: StringFieldUpdateOperationsInput | string
     Diagnoses?: DiagnosesUpdateManyWithoutDepartmentsNestedInput
+    Patients?: PatientsUpdateManyWithoutDepartmentNestedInput
   }
 
   export type DepartmentsUncheckedUpdateWithoutDoctorsInput = {
     DepartmentID?: IntFieldUpdateOperationsInput | number
     DepartmentName?: StringFieldUpdateOperationsInput | string
     Diagnoses?: DiagnosesUncheckedUpdateManyWithoutDepartmentsNestedInput
+    Patients?: PatientsUncheckedUpdateManyWithoutDepartmentNestedInput
   }
 
   export type PatientsCreateWithoutMedicalRecordsInput = {
@@ -20796,7 +22352,6 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
@@ -20804,6 +22359,7 @@ export namespace Prisma {
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
     Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
     Bills?: BillsCreateNestedManyWithoutPatientsInput
     Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
@@ -20818,10 +22374,10 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
+    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
@@ -20855,12 +22411,12 @@ export namespace Prisma {
     admission_no: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
     treatment_plan?: string | null
     remarks?: string | null
     patient: PatientsCreateNestedOneWithoutAdmissionsInput
     bed: BedCreateNestedOneWithoutAdmissionsInput
     diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
+    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
   }
 
   export type AdmissionsUncheckedCreateWithoutMedicalRecordsInput = {
@@ -20871,7 +22427,7 @@ export namespace Prisma {
     diagnosis_id: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
+    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
   }
@@ -20901,7 +22457,6 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20909,6 +22464,7 @@ export namespace Prisma {
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
     Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
     Bills?: BillsUpdateManyWithoutPatientsNestedInput
     Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
@@ -20923,10 +22479,10 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -20972,12 +22528,12 @@ export namespace Prisma {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
     bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
     diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
+    dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
   }
 
   export type AdmissionsUncheckedUpdateWithoutMedicalRecordsInput = {
@@ -20988,7 +22544,7 @@ export namespace Prisma {
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -21055,6 +22611,24 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     admission_no?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DepartmentsCreateWithoutPatientsInput = {
+    DepartmentName: string
+    Diagnoses?: DiagnosesCreateNestedManyWithoutDepartmentsInput
+    Doctors?: DoctorsCreateNestedManyWithoutDepartmentsInput
+  }
+
+  export type DepartmentsUncheckedCreateWithoutPatientsInput = {
+    DepartmentID?: number
+    DepartmentName: string
+    Diagnoses?: DiagnosesUncheckedCreateNestedManyWithoutDepartmentsInput
+    Doctors?: DoctorsUncheckedCreateNestedManyWithoutDepartmentsInput
+  }
+
+  export type DepartmentsCreateOrConnectWithoutPatientsInput = {
+    where: DepartmentsWhereUniqueInput
+    create: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
   }
 
   export type AppointmentsCreateWithoutPatientsInput = {
@@ -21144,11 +22718,11 @@ export namespace Prisma {
     admission_no: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
     treatment_plan?: string | null
     remarks?: string | null
     bed: BedCreateNestedOneWithoutAdmissionsInput
     diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
+    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
   }
 
@@ -21159,7 +22733,7 @@ export namespace Prisma {
     diagnosis_id: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
+    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
@@ -21172,6 +22746,30 @@ export namespace Prisma {
 
   export type AdmissionsCreateManyPatientInputEnvelope = {
     data: AdmissionsCreateManyPatientInput | AdmissionsCreateManyPatientInput[]
+  }
+
+  export type DepartmentsUpsertWithoutPatientsInput = {
+    update: XOR<DepartmentsUpdateWithoutPatientsInput, DepartmentsUncheckedUpdateWithoutPatientsInput>
+    create: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
+    where?: DepartmentsWhereInput
+  }
+
+  export type DepartmentsUpdateToOneWithWhereWithoutPatientsInput = {
+    where?: DepartmentsWhereInput
+    data: XOR<DepartmentsUpdateWithoutPatientsInput, DepartmentsUncheckedUpdateWithoutPatientsInput>
+  }
+
+  export type DepartmentsUpdateWithoutPatientsInput = {
+    DepartmentName?: StringFieldUpdateOperationsInput | string
+    Diagnoses?: DiagnosesUpdateManyWithoutDepartmentsNestedInput
+    Doctors?: DoctorsUpdateManyWithoutDepartmentsNestedInput
+  }
+
+  export type DepartmentsUncheckedUpdateWithoutPatientsInput = {
+    DepartmentID?: IntFieldUpdateOperationsInput | number
+    DepartmentName?: StringFieldUpdateOperationsInput | string
+    Diagnoses?: DiagnosesUncheckedUpdateManyWithoutDepartmentsNestedInput
+    Doctors?: DoctorsUncheckedUpdateManyWithoutDepartmentsNestedInput
   }
 
   export type AppointmentsUpsertWithWhereUniqueWithoutPatientsInput = {
@@ -21453,11 +23051,11 @@ export namespace Prisma {
     admission_no: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
     treatment_plan?: string | null
     remarks?: string | null
     patient: PatientsCreateNestedOneWithoutAdmissionsInput
     diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
+    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
   }
 
@@ -21468,7 +23066,7 @@ export namespace Prisma {
     diagnosis_id: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
+    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
@@ -21538,7 +23136,6 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
@@ -21546,6 +23143,7 @@ export namespace Prisma {
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
     Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
     Bills?: BillsCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
@@ -21560,10 +23158,10 @@ export namespace Prisma {
     Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    DepartmentName?: string | null
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
+    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
@@ -21616,6 +23214,20 @@ export namespace Prisma {
   export type DiagnosesCreateOrConnectWithoutAdmissionsInput = {
     where: DiagnosesWhereUniqueInput
     create: XOR<DiagnosesCreateWithoutAdmissionsInput, DiagnosesUncheckedCreateWithoutAdmissionsInput>
+  }
+
+  export type DischargeReasonCreateWithoutAdmissionsInput = {
+    reason: string
+  }
+
+  export type DischargeReasonUncheckedCreateWithoutAdmissionsInput = {
+    id?: number
+    reason: string
+  }
+
+  export type DischargeReasonCreateOrConnectWithoutAdmissionsInput = {
+    where: DischargeReasonWhereUniqueInput
+    create: XOR<DischargeReasonCreateWithoutAdmissionsInput, DischargeReasonUncheckedCreateWithoutAdmissionsInput>
   }
 
   export type MedicalRecordsCreateWithoutAdmissionsInput = {
@@ -21671,7 +23283,6 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21679,6 +23290,7 @@ export namespace Prisma {
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
     Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
     Bills?: BillsUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
@@ -21693,10 +23305,10 @@ export namespace Prisma {
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    DepartmentName?: NullableStringFieldUpdateOperationsInput | string | null
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21758,6 +23370,26 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type DischargeReasonUpsertWithoutAdmissionsInput = {
+    update: XOR<DischargeReasonUpdateWithoutAdmissionsInput, DischargeReasonUncheckedUpdateWithoutAdmissionsInput>
+    create: XOR<DischargeReasonCreateWithoutAdmissionsInput, DischargeReasonUncheckedCreateWithoutAdmissionsInput>
+    where?: DischargeReasonWhereInput
+  }
+
+  export type DischargeReasonUpdateToOneWithWhereWithoutAdmissionsInput = {
+    where?: DischargeReasonWhereInput
+    data: XOR<DischargeReasonUpdateWithoutAdmissionsInput, DischargeReasonUncheckedUpdateWithoutAdmissionsInput>
+  }
+
+  export type DischargeReasonUpdateWithoutAdmissionsInput = {
+    reason?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DischargeReasonUncheckedUpdateWithoutAdmissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+  }
+
   export type MedicalRecordsUpsertWithWhereUniqueWithoutAdmissionsInput = {
     where: MedicalRecordsWhereUniqueInput
     update: XOR<MedicalRecordsUpdateWithoutAdmissionsInput, MedicalRecordsUncheckedUpdateWithoutAdmissionsInput>
@@ -21774,6 +23406,56 @@ export namespace Prisma {
     data: XOR<MedicalRecordsUpdateManyMutationInput, MedicalRecordsUncheckedUpdateManyWithoutAdmissionsInput>
   }
 
+  export type AdmissionsCreateWithoutDischargeReasonInput = {
+    admission_no: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+    patient: PatientsCreateNestedOneWithoutAdmissionsInput
+    bed: BedCreateNestedOneWithoutAdmissionsInput
+    diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
+    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
+  }
+
+  export type AdmissionsUncheckedCreateWithoutDischargeReasonInput = {
+    admission_id?: number
+    admission_no: number
+    PatientID: string
+    bed_id: number
+    diagnosis_id: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
+  }
+
+  export type AdmissionsCreateOrConnectWithoutDischargeReasonInput = {
+    where: AdmissionsWhereUniqueInput
+    create: XOR<AdmissionsCreateWithoutDischargeReasonInput, AdmissionsUncheckedCreateWithoutDischargeReasonInput>
+  }
+
+  export type AdmissionsCreateManyDischargeReasonInputEnvelope = {
+    data: AdmissionsCreateManyDischargeReasonInput | AdmissionsCreateManyDischargeReasonInput[]
+  }
+
+  export type AdmissionsUpsertWithWhereUniqueWithoutDischargeReasonInput = {
+    where: AdmissionsWhereUniqueInput
+    update: XOR<AdmissionsUpdateWithoutDischargeReasonInput, AdmissionsUncheckedUpdateWithoutDischargeReasonInput>
+    create: XOR<AdmissionsCreateWithoutDischargeReasonInput, AdmissionsUncheckedCreateWithoutDischargeReasonInput>
+  }
+
+  export type AdmissionsUpdateWithWhereUniqueWithoutDischargeReasonInput = {
+    where: AdmissionsWhereUniqueInput
+    data: XOR<AdmissionsUpdateWithoutDischargeReasonInput, AdmissionsUncheckedUpdateWithoutDischargeReasonInput>
+  }
+
+  export type AdmissionsUpdateManyWithWhereWithoutDischargeReasonInput = {
+    where: AdmissionsScalarWhereInput
+    data: XOR<AdmissionsUpdateManyMutationInput, AdmissionsUncheckedUpdateManyWithoutDischargeReasonInput>
+  }
+
   export type DiagnosesCreateManyDepartmentsInput = {
     DiagnosisName: string
     CreatedAt?: Date | string | null
@@ -21786,6 +23468,24 @@ export namespace Prisma {
     Email?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+  }
+
+  export type PatientsCreateManyDepartmentInput = {
+    PatientID: string
+    Name: string
+    Age: string
+    Gender: string
+    ContactNumber?: string | null
+    Address?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Status?: string | null
+    PatientRegistrationDate: Date | string
+    Ptype?: string | null
+    Email?: string | null
+    AlternateNumber?: string | null
+    DOB?: Date | string | null
+    BloodGroup?: string | null
   }
 
   export type DiagnosesUpdateWithoutDepartmentsInput = {
@@ -21838,13 +23538,75 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type PatientsUpdateWithoutDepartmentInput = {
+    PatientID?: StringFieldUpdateOperationsInput | string
+    Name?: StringFieldUpdateOperationsInput | string
+    Age?: StringFieldUpdateOperationsInput | string
+    Gender?: StringFieldUpdateOperationsInput | string
+    ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    Address?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Status?: NullableStringFieldUpdateOperationsInput | string | null
+    PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    Email?: NullableStringFieldUpdateOperationsInput | string | null
+    AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
+    Bills?: BillsUpdateManyWithoutPatientsNestedInput
+    MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
+    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
+  }
+
+  export type PatientsUncheckedUpdateWithoutDepartmentInput = {
+    PatientID?: StringFieldUpdateOperationsInput | string
+    Name?: StringFieldUpdateOperationsInput | string
+    Age?: StringFieldUpdateOperationsInput | string
+    Gender?: StringFieldUpdateOperationsInput | string
+    ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    Address?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Status?: NullableStringFieldUpdateOperationsInput | string | null
+    PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    Email?: NullableStringFieldUpdateOperationsInput | string | null
+    AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Appointments?: AppointmentsUncheckedUpdateManyWithoutPatientsNestedInput
+    Bills?: BillsUncheckedUpdateManyWithoutPatientsNestedInput
+    MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutPatientsNestedInput
+    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
+  }
+
+  export type PatientsUncheckedUpdateManyWithoutDepartmentInput = {
+    PatientID?: StringFieldUpdateOperationsInput | string
+    Name?: StringFieldUpdateOperationsInput | string
+    Age?: StringFieldUpdateOperationsInput | string
+    Gender?: StringFieldUpdateOperationsInput | string
+    ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    Address?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Status?: NullableStringFieldUpdateOperationsInput | string | null
+    PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    Email?: NullableStringFieldUpdateOperationsInput | string | null
+    AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type AdmissionsCreateManyDiagnosisInput = {
     admission_no: number
     PatientID: string
     bed_id: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
+    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
   }
@@ -21853,11 +23615,11 @@ export namespace Prisma {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
     bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
+    dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -21868,7 +23630,7 @@ export namespace Prisma {
     bed_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
@@ -21881,7 +23643,7 @@ export namespace Prisma {
     bed_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -21956,7 +23718,7 @@ export namespace Prisma {
     diagnosis_id: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
+    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
   }
@@ -22049,11 +23811,11 @@ export namespace Prisma {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
     diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
+    dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -22064,7 +23826,7 @@ export namespace Prisma {
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
@@ -22077,7 +23839,7 @@ export namespace Prisma {
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -22156,7 +23918,7 @@ export namespace Prisma {
     diagnosis_id: number
     admission_date: Date | string
     discharge_date?: Date | string | null
-    discharge_reason?: string | null
+    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
   }
@@ -22165,11 +23927,11 @@ export namespace Prisma {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
     diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
+    dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -22180,7 +23942,7 @@ export namespace Prisma {
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
@@ -22193,7 +23955,7 @@ export namespace Prisma {
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    discharge_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -22242,6 +24004,54 @@ export namespace Prisma {
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AdmissionsCreateManyDischargeReasonInput = {
+    admission_no: number
+    PatientID: string
+    bed_id: number
+    diagnosis_id: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+  }
+
+  export type AdmissionsUpdateWithoutDischargeReasonInput = {
+    admission_no?: IntFieldUpdateOperationsInput | number
+    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
+    bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
+    diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
+    MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
+  }
+
+  export type AdmissionsUncheckedUpdateWithoutDischargeReasonInput = {
+    admission_id?: IntFieldUpdateOperationsInput | number
+    admission_no?: IntFieldUpdateOperationsInput | number
+    PatientID?: StringFieldUpdateOperationsInput | string
+    bed_id?: IntFieldUpdateOperationsInput | number
+    diagnosis_id?: IntFieldUpdateOperationsInput | number
+    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
+  }
+
+  export type AdmissionsUncheckedUpdateManyWithoutDischargeReasonInput = {
+    admission_id?: IntFieldUpdateOperationsInput | number
+    admission_no?: IntFieldUpdateOperationsInput | number
+    PatientID?: StringFieldUpdateOperationsInput | string
+    bed_id?: IntFieldUpdateOperationsInput | number
+    diagnosis_id?: IntFieldUpdateOperationsInput | number
+    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

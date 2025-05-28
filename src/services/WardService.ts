@@ -59,3 +59,16 @@ export const getBedById = async (bedId: number) => {
     });
   };
   
+
+
+
+
+  // Get available beds count in a ward
+  export const getAvailableBedCount = async (wardId: number) => {
+    return await prisma.bed.count({
+      where: {
+        room: { ward_id: wardId },
+        occupied_status: "Vacant"
+      }
+    });
+  };

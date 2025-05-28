@@ -6,7 +6,8 @@ import {
   fetchRoomsByWardId,
   fetchBedsByRoomId,
   updateBedToOccupied,
-  updateBedToVacant
+  updateBedToVacant,
+  getAvailableBedCountController
 } from "../controllers/WardController";
 
 const router = express.Router();
@@ -17,6 +18,7 @@ router.get("/rooms", fetchAllRooms);
 router.get("/beds", fetchAllBeds);
 
 // Simplified routes
+router.get('/:wardId/available-beds', getAvailableBedCountController);
 router.get("/rooms-by-ward/:wardId", fetchRoomsByWardId);
 router.get("/beds-by-room/:roomId", fetchBedsByRoomId);
 router.patch("/occupy/:bedId", updateBedToOccupied);

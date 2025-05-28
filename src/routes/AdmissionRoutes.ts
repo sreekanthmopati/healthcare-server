@@ -6,12 +6,19 @@ import {
   updateAdmissionById,
   deleteAdmissionById,
   fetchAllAdmissionsWithDetails,
-  checkBedAvailability,
-  createBulkAdmissionsHandler,
-  getAvailableBedsHandler
+   createBulkAdmissionsController,
+   dischargeBulkAdmissions,
+   dischargeSingleAdmission
 } from "../controllers/AdmissionController";
 
 const router = Router();
+
+//discharging
+router.post("/discharge-bulk", dischargeBulkAdmissions);
+
+router.put("/dischargesingle/:admissionId", dischargeSingleAdmission);
+
+router.post("/bulk",createBulkAdmissionsController);
 
 // GET all admissions
 router.get("/", fetchAllAdmissions);
@@ -32,25 +39,6 @@ router.put("/:id", updateAdmissionById);
 
 // DELETE admission
 router.delete("/:id", deleteAdmissionById);
-
-
-
-
-
-
-
-
-
-router.post("/check-beds", checkBedAvailability);
-
-// POST create bulk admissions
-router.post("/bulk-admitting", createBulkAdmissionsHandler);
-
-// GET available beds by room
-router.get("/available-beds/:roomId", getAvailableBedsHandler);
-
-
-
 
 
 

@@ -203,10 +203,10 @@ exports.Prisma.PatientsScalarFieldEnum = {
   Address: 'Address',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt',
-  DepartmentName: 'DepartmentName',
   Status: 'Status',
   PatientRegistrationDate: 'PatientRegistrationDate',
   Ptype: 'Ptype',
+  DepartmentID: 'DepartmentID',
   Email: 'Email',
   AlternateNumber: 'AlternateNumber',
   DOB: 'DOB',
@@ -249,9 +249,14 @@ exports.Prisma.AdmissionsScalarFieldEnum = {
   diagnosis_id: 'diagnosis_id',
   admission_date: 'admission_date',
   discharge_date: 'discharge_date',
-  discharge_reason: 'discharge_reason',
+  dischargeReasonId: 'dischargeReasonId',
   treatment_plan: 'treatment_plan',
   remarks: 'remarks'
+};
+
+exports.Prisma.DischargeReasonScalarFieldEnum = {
+  id: 'id',
+  reason: 'reason'
 };
 
 exports.Prisma.SortOrder = {
@@ -279,7 +284,8 @@ exports.Prisma.ModelName = {
   Ward: 'Ward',
   Room: 'Room',
   Bed: 'Bed',
-  Admissions: 'Admissions'
+  Admissions: 'Admissions',
+  DischargeReason: 'DischargeReason'
 };
 
 /**

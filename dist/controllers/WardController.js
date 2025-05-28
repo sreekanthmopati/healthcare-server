@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateBedToVacant = exports.updateBedToOccupied = exports.fetchBedsByRoomId = exports.fetchRoomsByWardId = exports.fetchAllBeds = exports.fetchAllRooms = exports.fetchAllWards = void 0;
+exports.getAvailableBedCountController = exports.updateBedToVacant = exports.updateBedToOccupied = exports.fetchBedsByRoomId = exports.fetchRoomsByWardId = exports.fetchAllBeds = exports.fetchAllRooms = exports.fetchAllWards = void 0;
 const WardService_1 = require("../services/WardService");
 // 1. Get all wards
 const fetchAllWards = async (req, res) => {
@@ -130,3 +130,27 @@ const updateBedToVacant = async (req, res, next) => {
     }
 };
 exports.updateBedToVacant = updateBedToVacant;
+const getAvailableBedCountController = async (req, res) => {
+    try {
+        const wardId = Number(req.params.wardId);
+        if (isNaN(wardId)) {
+            res.status(400).json({
+                success: false,
+                message: 'Invalid ward ID',
+            });
+        }
+        const count = await (0, WardService_1.getAvailableBedCount)(wardId);
+        res.status(200).json({
+            success: true,
+            availableBeds: count,
+        });
+    }
+    catch (error) {
+        console.error("Error fetching available bed count:", error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch available bed count',
+        });
+    }
+};
+exports.getAvailableBedCountController = getAvailableBedCountController;

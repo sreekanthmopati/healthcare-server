@@ -11,6 +11,7 @@ router.get("/wards", WardController_1.fetchAllWards);
 router.get("/rooms", WardController_1.fetchAllRooms);
 router.get("/beds", WardController_1.fetchAllBeds);
 // Simplified routes
+router.get('/:wardId/available-beds', WardController_1.getAvailableBedCountController);
 router.get("/rooms-by-ward/:wardId", WardController_1.fetchRoomsByWardId);
 router.get("/beds-by-room/:roomId", WardController_1.fetchBedsByRoomId);
 router.patch("/occupy/:bedId", WardController_1.updateBedToOccupied);
