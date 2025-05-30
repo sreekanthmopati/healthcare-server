@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const AdmissionController_1 = require("../controllers/AdmissionController");
 const router = (0, express_1.Router)();
+router.put("/discharge/:id", AdmissionController_1.dischargeSingleAdmission);
+router.put("/discharge/bulk", AdmissionController_1.dischargeMultipleAdmissions);
 router.post("/bulk", AdmissionController_1.createBulkAdmissionsController);
 // GET all admissions
 router.get("/", AdmissionController_1.fetchAllAdmissions);

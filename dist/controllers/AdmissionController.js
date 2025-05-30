@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createBulkAdmissionsController = exports.fetchAllAdmissionsWithDetails = exports.deleteAdmissionById = exports.updateAdmissionById = exports.createNewAdmission = exports.fetchAdmissionById = exports.fetchAllAdmissions = void 0;
+exports.dischargeMultipleAdmissions = exports.dischargeSingleAdmission = exports.createBulkAdmissionsController = exports.fetchAllAdmissionsWithDetails = exports.deleteAdmissionById = exports.updateAdmissionById = exports.createNewAdmission = exports.fetchAdmissionById = exports.fetchAllAdmissions = void 0;
 const AdmissionService_1 = require("../services/AdmissionService");
 // 1. Get all admissions
 const fetchAllAdmissions = async (req, res) => {
@@ -139,3 +139,30 @@ const createBulkAdmissionsController = async (req, res) => {
     }
 };
 exports.createBulkAdmissionsController = createBulkAdmissionsController;
+// ✅ 1. Single discharge
+const dischargeSingleAdmission = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const { dischargeReasonId } = req.body;
+        const updatedAdmission = await (0, AdmissionService_1.dischargeAdmission)(id, dischargeReasonId);
+        res.json(updatedAdmission);
+    }
+    catch (error) {
+        console.error("Error discharging admission:", error);
+        res.status(500).json({ message: "Failed to discharge admission" });
+    }
+};
+exports.dischargeSingleAdmission = dischargeSingleAdmission;
+// ✅ 2. Bulk discharge
+const dischargeMultipleAdmissions = async (req, res) => {
+    try {
+        const { admissionIds } = req.body; // [1, 2, 3]
+        const result = await (0, AdmissionService_1.bulkDischargeAdmissions)(admissionIds);
+        res.json(result);
+    }
+    catch (error) {
+        console.error("Error in bulk discharge:", error);
+        res.status(500).json({ message: "Failed to discharge admissions in bulk" });
+    }
+};
+exports.dischargeMultipleAdmissions = dischargeMultipleAdmissions;

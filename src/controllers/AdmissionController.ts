@@ -7,8 +7,8 @@ import {
   deleteAdmission,
   getAllAdmissionsWithDetails,
   createBulkAdmissions,
-  bulkDischargeAdmissions,
-  dischargeAdmission
+ dischargeAdmission,
+ dischargeBulkAdmissions
 } from "../services/AdmissionService";
 
 // 1. Get all admissions
@@ -179,63 +179,13 @@ export const createBulkAdmissionsController = async (req: Request, res: Response
 
 
 
-
-
-
-
-
-
-export const dischargeBulkAdmissions = async (req: Request, res: Response) => {
-  try {
-    const { admissionIds } = req.body;
-
-    if (!Array.isArray(admissionIds) || admissionIds.length === 0) {
-       res.status(400).json({ message: "Invalid or empty admissionIds array" });
-       return;
-    }
-
-    const result = await bulkDischargeAdmissions(admissionIds);
-
-    res.status(200).json({
-      message: "Admissions discharged successfully",
-      dischargedCount: result.length,
-      data: result,
-    });
-  } catch (error) {
-    console.error("Error in bulk discharging admissions:", error);
-    res.status(500).json({ message: "Failed to bulk discharge admissions" });
-  }
-};
-
-
-
-
-
-
-
-
-// Discharge a single admission
 export const dischargeSingleAdmission = async (req: Request, res: Response) => {
   try {
-    const admissionId = parseInt(req.params.admissionId);
+    const id = parseInt(req.params.id);
     const { dischargeReasonId } = req.body;
 
-    if (isNaN(admissionId)) {
-       res.status(400).json({ message: "Invalid admission ID" });
-       return;
-    }
-
-    if (!dischargeReasonId || isNaN(dischargeReasonId)) {
-       res.status(400).json({ message: "Invalid discharge reason ID" });
-       return;
-    }
-
-    const result = await dischargeAdmission(admissionId, dischargeReasonId);
-
-    res.status(200).json({
-      message: "Admission discharged successfully",
-      data: result,
-    });
+    const updatedAdmission = await dischargeAdmission(id, dischargeReasonId);
+    res.json(updatedAdmission);
   } catch (error) {
     console.error("Error discharging admission:", error);
     res.status(500).json({ message: "Failed to discharge admission" });
@@ -243,13 +193,22 @@ export const dischargeSingleAdmission = async (req: Request, res: Response) => {
 };
 
 
+export const dischargeMultipleAdmissions = async (req: Request, res: Response) => {
+  try {
+    const { admissionIds } = req.body;
 
+    if (!Array.isArray(admissionIds) || !admissionIds.every(id => typeof id === "number")) {
+      res.status(400).json({ error: "admissionIds must be an array of numbers" });
+      return;
+    }
 
-
-
-
-
-
+    const result = await dischargeBulkAdmissions(admissionIds);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error during bulk discharge:", error);
+    res.status(500).json({ error: "Bulk discharge failed" });
+  }
+};
 
 
 

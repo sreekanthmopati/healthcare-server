@@ -163,13 +163,13 @@ exports.Prisma.DoctorsScalarFieldEnum = {
 exports.Prisma.MedicalRecordsScalarFieldEnum = {
   RecordID: 'RecordID',
   PatientID: 'PatientID',
+  admission_no: 'admission_no',
   DiagnosisDetails: 'DiagnosisDetails',
   TreatmentPlan: 'TreatmentPlan',
   medication: 'medication',
   RecordDate: 'RecordDate',
   CreatedAt: 'CreatedAt',
-  UpdatedAt: 'UpdatedAt',
-  admission_no: 'admission_no'
+  UpdatedAt: 'UpdatedAt'
 };
 
 exports.Prisma.CaseSheetsScalarFieldEnum = {
@@ -206,6 +206,7 @@ exports.Prisma.PatientsScalarFieldEnum = {
   Status: 'Status',
   PatientRegistrationDate: 'PatientRegistrationDate',
   Ptype: 'Ptype',
+  Sponsor: 'Sponsor',
   DepartmentID: 'DepartmentID',
   Email: 'Email',
   AlternateNumber: 'AlternateNumber',
@@ -248,6 +249,7 @@ exports.Prisma.AdmissionsScalarFieldEnum = {
   bed_id: 'bed_id',
   diagnosis_id: 'diagnosis_id',
   admission_date: 'admission_date',
+  is_discharged: 'is_discharged',
   discharge_date: 'discharge_date',
   dischargeReasonId: 'dischargeReasonId',
   treatment_plan: 'treatment_plan',

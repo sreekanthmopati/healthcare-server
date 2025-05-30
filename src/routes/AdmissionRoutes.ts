@@ -7,16 +7,17 @@ import {
   deleteAdmissionById,
   fetchAllAdmissionsWithDetails,
    createBulkAdmissionsController,
-   dischargeBulkAdmissions,
-   dischargeSingleAdmission
+   dischargeSingleAdmission,
+   dischargeMultipleAdmissions
+   
 } from "../controllers/AdmissionController";
 
 const router = Router();
+router.put("/discharge/bulk", dischargeMultipleAdmissions);
+router.put("/discharge/:id", dischargeSingleAdmission);
 
-//discharging
-router.post("/discharge-bulk", dischargeBulkAdmissions);
 
-router.put("/dischargesingle/:admissionId", dischargeSingleAdmission);
+
 
 router.post("/bulk",createBulkAdmissionsController);
 

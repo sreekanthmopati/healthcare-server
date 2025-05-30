@@ -330,76 +330,71 @@ export const createBulkAdmissions = async (
 
 
 
+// Utility to generate random discharge reason
+const getRandomDischargeReasonId = async () => {
+  const reasons = await prisma.dischargeReason.findMany({ select: { id: true } });
+  const randomIndex = Math.floor(Math.random() * reasons.length);
+  return reasons[randomIndex]?.id || null;
+};
 
+// ✅ Single discharge
+export const dischargeAdmission = async (admissionId: number, dischargeReasonId: number) => {
+  const admission = await prisma.admissions.update({
+    where: { admission_id: admissionId },
+    data: {
+      discharge_date: new Date(),
+      dischargeReason: { connect: { id: dischargeReasonId } },
+      is_discharged: true,
+    },
+  });
 
+  await prisma.bed.update({
+    where: { bed_id: admission.bed_id },
+    data: { occupied_status: "Vacant" },
+  });
 
+  return admission;
+};
 
+// Bulk discharge using random dischargeReasonId for each admission
+export const dischargeBulkAdmissions = async (admissionIds: number[]) => {
+  if (!admissionIds.length) return [];
 
-
-
-
-
-
-
-
-
-export const bulkDischargeAdmissions = async (admissionIds: number[]) => {
-  // Get the max discharge reason ID to use for randomization
-  const reasons = await prisma.dischargeReason.findMany({
+  // Fetch all discharge reasons
+  const dischargeReasons = await prisma.dischargeReason.findMany({
     select: { id: true }
   });
 
-  if (!reasons.length) {
-    throw new Error("No discharge reasons available");
+  if (dischargeReasons.length === 0) {
+    throw new Error("No discharge reasons available in the database.");
   }
 
-  const reasonIds = reasons.map(r => r.id);
+  const dischargedAdmissions = [];
 
-  const updates = admissionIds.map(async (id) => {
-    const randomReasonId = reasonIds[Math.floor(Math.random() * reasonIds.length)];
+  for (const admissionId of admissionIds) {
+    const randomReason =
+      dischargeReasons[Math.floor(Math.random() * dischargeReasons.length)];
 
-    return await prisma.admissions.update({
-      where: { admission_id: id },
-      data: {
-        discharge_date: new Date(),
-        dischargeReasonId: randomReasonId,
-      }
+    const result = await prisma.$transaction(async (tx) => {
+      const updatedAdmission = await tx.admissions.update({
+        where: { admission_id: admissionId },
+        data: {
+          discharge_date: new Date(),
+          dischargeReasonId: randomReason.id,
+          is_discharged: true,
+        },
+      });
+
+      await tx.bed.update({
+        where: { bed_id: updatedAdmission.bed_id },
+        data: { occupied_status: "Vacant" },
+      });
+
+      return updatedAdmission;
     });
-  });
 
-  return await Promise.all(updates);
+    dischargedAdmissions.push(result);
+  }
+
+  return dischargedAdmissions;
 };
-
-
-
-
-
-
-export const dischargeAdmission = async (admissionId: number, dischargeReasonId: number) => {
-  return await prisma.admissions.update({
-    where: { admission_id: admissionId },
-    data: {
-      discharge_date: new Date(),               // Set discharge date to now
-      dischargeReasonId: dischargeReasonId,     // Set selected discharge reason
-    },
-    include: {
-      patient: true,
-      bed: true,
-      diagnosis: true,
-      dischargeReason: true,
-    }
-  });
-};
-
-
-
-
-
-
-
-
-
-
-
-
-

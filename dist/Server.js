@@ -12,6 +12,7 @@ const CaseSheetRoutes_1 = __importDefault(require("./routes/CaseSheetRoutes"));
 const DepartmentsRoute_1 = __importDefault(require("./routes/DepartmentsRoute"));
 const WardRoutes_1 = __importDefault(require("./routes/WardRoutes"));
 const AdmissionRoutes_1 = __importDefault(require("./routes/AdmissionRoutes"));
+const DischargeReasonsRoutes_1 = __importDefault(require("./routes/DischargeReasonsRoutes"));
 dotenv_1.default.config();
 const cors = require("cors");
 const app = (0, express_1.default)();
@@ -27,6 +28,7 @@ app.use("/casesheets", CaseSheetRoutes_1.default);
 app.use("/depts", DepartmentsRoute_1.default);
 app.use("/accomdation", WardRoutes_1.default);
 app.use("/adms", AdmissionRoutes_1.default);
+app.use("/discharge", DischargeReasonsRoutes_1.default);
 app.use((err, req, res, next) => {
     console.error(err); // Logs error to console
     res.status(err.status || 500).json({

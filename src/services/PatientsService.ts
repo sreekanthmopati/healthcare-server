@@ -64,6 +64,7 @@ export const createPatient = async (patientData: {
   Status?: string;
   PatientRegistrationDate: Date; // Required
   Ptype: string; // Required (Inpatient/Outpatient)
+  Sponsor : string,
   Email?: string;
   AlternateNumber?: string;
   DOB?: Date;
@@ -83,7 +84,7 @@ export const createPatient = async (patientData: {
         Status: patientData.Status ?? "True", // Default to "True"
         PatientRegistrationDate: patientData.PatientRegistrationDate,
         Ptype: patientData.Ptype,
-
+        Sponsor : patientData.Sponsor,
       
         Email: patientData.Email,
         AlternateNumber: patientData.AlternateNumber,
