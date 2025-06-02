@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SessionService = void 0;
 const orm_1 = require("../../prisma/orm");
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 console.log("Initializing Prisma...");
 const prisma = new orm_1.PrismaClient({
@@ -19,8 +18,9 @@ class SessionService {
         if (!user) {
             throw { status: 400, message: "Invalid credentials" };
         }
-        const passwordMatch = await bcryptjs_1.default.compare(password, user.PasswordHash);
-        if (passwordMatch) {
+        // const passwordMatch = await bcrypt.compare(password, user.PasswordHash);
+        const passwordMatch = password === user.PasswordHash;
+        if (!passwordMatch) {
             throw { status: 400, message: "Invalid credentials" };
         }
         console.log("Prisma Query Result:", user);

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bulkDischargeAdmissions = exports.dischargeAdmission = exports.createBulkAdmissions = exports.getEligiblePatients = exports.generateBulkAdmissionNos = exports.getAllAdmissionsWithDetails = exports.deleteAdmission = exports.updateAdmission = exports.createAdmission = exports.getAdmissionById = exports.getAllAdmissions = void 0;
+exports.dischargeBulkAdmissions = exports.dischargeAdmission = exports.createBulkAdmissions = exports.getEligiblePatients = exports.generateBulkAdmissionNos = exports.getAllAdmissionsWithDetails = exports.deleteAdmission = exports.updateAdmission = exports.createAdmission = exports.getAdmissionById = exports.getAllAdmissions = void 0;
 const orm_1 = require("../../prisma/orm");
 const WardService_1 = require("./WardService");
 const prisma = new orm_1.PrismaClient();
@@ -247,6 +247,7 @@ const dischargeAdmission = async (admissionId, dischargeReasonId) => {
         data: {
             discharge_date: new Date(),
             dischargeReason: { connect: { id: dischargeReasonId } },
+            is_discharged: true,
         },
     });
     await prisma.bed.update({
@@ -256,24 +257,37 @@ const dischargeAdmission = async (admissionId, dischargeReasonId) => {
     return admission;
 };
 exports.dischargeAdmission = dischargeAdmission;
-// ✅ Bulk discharge with random reasons
-const bulkDischargeAdmissions = async (admissionIds) => {
-    const discharges = [];
-    for (const id of admissionIds) {
-        const reasonId = await getRandomDischargeReasonId();
-        const admission = await prisma.admissions.update({
-            where: { admission_id: id },
-            data: {
-                discharge_date: new Date(),
-                dischargeReason: reasonId ? { connect: { id: reasonId } } : undefined,
-            },
-        });
-        await prisma.bed.update({
-            where: { bed_id: admission.bed_id },
-            data: { occupied_status: "Vacant" },
-        });
-        discharges.push(admission);
+// Bulk discharge using random dischargeReasonId for each admission
+const dischargeBulkAdmissions = async (admissionIds) => {
+    if (!admissionIds.length)
+        return [];
+    // Fetch all discharge reasons
+    const dischargeReasons = await prisma.dischargeReason.findMany({
+        select: { id: true }
+    });
+    if (dischargeReasons.length === 0) {
+        throw new Error("No discharge reasons available in the database.");
     }
-    return discharges;
+    const dischargedAdmissions = [];
+    for (const admissionId of admissionIds) {
+        const randomReason = dischargeReasons[Math.floor(Math.random() * dischargeReasons.length)];
+        const result = await prisma.$transaction(async (tx) => {
+            const updatedAdmission = await tx.admissions.update({
+                where: { admission_id: admissionId },
+                data: {
+                    discharge_date: new Date(),
+                    dischargeReasonId: randomReason.id,
+                    is_discharged: true,
+                },
+            });
+            await tx.bed.update({
+                where: { bed_id: updatedAdmission.bed_id },
+                data: { occupied_status: "Vacant" },
+            });
+            return updatedAdmission;
+        });
+        dischargedAdmissions.push(result);
+    }
+    return dischargedAdmissions;
 };
-exports.bulkDischargeAdmissions = bulkDischargeAdmissions;
+exports.dischargeBulkAdmissions = dischargeBulkAdmissions;

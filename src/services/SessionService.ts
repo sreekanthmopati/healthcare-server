@@ -17,8 +17,10 @@ export class SessionService {
       throw { status: 400, message: "Invalid credentials" };
     }
     
-    const passwordMatch = await bcrypt.compare(password, user.PasswordHash);
-    if (passwordMatch) {
+    // const passwordMatch = await bcrypt.compare(password, user.PasswordHash);
+    const passwordMatch = password === user.PasswordHash;
+
+    if (!passwordMatch) {
       throw { status: 400, message: "Invalid credentials" };
     }
     console.log("Prisma Query Result:", user);

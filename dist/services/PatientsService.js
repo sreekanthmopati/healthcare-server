@@ -65,6 +65,7 @@ const createPatient = async (patientData) => {
                 Status: patientData.Status ?? "True", // Default to "True"
                 PatientRegistrationDate: patientData.PatientRegistrationDate,
                 Ptype: patientData.Ptype,
+                Sponsor: patientData.Sponsor,
                 Email: patientData.Email,
                 AlternateNumber: patientData.AlternateNumber,
                 DOB: patientData.DOB,
