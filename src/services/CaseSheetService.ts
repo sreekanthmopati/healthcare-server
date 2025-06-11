@@ -38,22 +38,32 @@ import { PrismaClient } from "../../prisma/orm";
 
 const prisma = new PrismaClient();
 
-// Fetch all case sheets with detailed information
-export const getAllCaseSheetsWithDetails = async () => {
-  return await prisma.caseSheets.findMany({
+export const getAllMedicalRecordsWithDetails = async () => {
+  return await prisma.medicalRecords.findMany({
     include: {
-      MedicalRecord: {
+      Patients: true,
+      Admissions: {
         include: {
-          Patients: true,
-          Admissions: {
+          bed: {
             include: {
-              diagnosis: true, // Correct field name from schema
-              bed: true,        // Include bed details if needed
-              patient: true,    // Include patient details if needed
+              room: {
+                include: {
+                  ward: true
+                }
+              }
             }
-          }
+          },
+          diagnosis: {
+            include: {
+              Departments: true
+            }
+          },
+          dischargeReason: true
         }
       }
+    },
+    orderBy: {
+      RecordDate: 'desc'
     }
   });
 };

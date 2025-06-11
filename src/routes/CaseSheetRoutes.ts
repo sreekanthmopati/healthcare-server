@@ -43,11 +43,11 @@
 
 
 import { Router } from "express";
-import { fetchAllCaseSheetsWithDetails } from "../controllers/CaseSheetController";
+import { fetchAllMedicalRecords } from "../controllers/CaseSheetController";
 
 const router = Router();
 
 // GET all case sheets with full relational data
-router.get("/fetchallcasesheetsinfo", fetchAllCaseSheetsWithDetails);
+router.get("/fetchallcasesheetsinfo", fetchAllMedicalRecords);
 
 export default router;

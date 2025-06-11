@@ -80,7 +80,7 @@ export const createPatient = async (patientData: {
         Gender: patientData.Gender,
         ContactNumber: patientData.ContactNumber,
         Address: patientData.Address,
-        DepartmentID: patientData.DepartmentID, // Default to "General Medicine"
+        DepartmentID: patientData.DepartmentID ?? null,  // fix here
         Status: patientData.Status ?? "True", // Default to "True"
         PatientRegistrationDate: patientData.PatientRegistrationDate,
         Ptype: patientData.Ptype,
@@ -102,6 +102,7 @@ export const createPatient = async (patientData: {
     throw new Error("Failed to create patient");
   }
 };
+
 
 // Fetch medical records based on a given field (e.g., PatientID, Diagnosis, etc.)
 export const getPatientWithRecords = async (id: string) => {
@@ -131,20 +132,65 @@ export const getPatientWithRecords = async (id: string) => {
 
 
 
-export const getTodaysPatientCountsByDepartment = async () => {
-  try {
-    const todayStart = new Date();
-    todayStart.setHours(0, 0, 0, 0);
+// export const getTodaysPatientCountsByDepartment = async () => {
+//   try {
+//     const todayStart = new Date();
+//     todayStart.setHours(0, 0, 0, 0);
 
-    const todayEnd = new Date();
-    todayEnd.setHours(23, 59, 59, 999);
+//     const todayEnd = new Date();
+//     todayEnd.setHours(23, 59, 59, 999);
+
+//     const result = await prisma.patients.groupBy({
+//       by: ['DepartmentID'],
+//       where: {
+//         PatientRegistrationDate: {
+//           gte: todayStart,
+//           lte: todayEnd
+//         },
+//         // Ptype: 'OP',
+//       },
+//       _count: {
+//         PatientID: true
+//       }
+//     });
+
+//     // Convert result to { DepartmentID: count } while skipping nulls
+//     const departmentCounts = result.reduce((acc, { DepartmentID, _count }) => {
+//       if (DepartmentID !== null) {
+//         acc[DepartmentID] = _count.PatientID;
+//       }
+//       return acc;
+//     }, {} as Record<number, number>);
+
+//     return departmentCounts;
+
+//   } catch (error) {
+//     console.error("Error fetching patient counts by department:", error);
+//     throw new Error("Failed to fetch patient counts by department");
+//   }
+// };
+export const getTodaysPatientCountsByDepartment = async (fromDate?: string, toDate?: string) => {
+  try {
+    let gte = new Date();
+    let lte = new Date();
+
+    if (fromDate && toDate) {
+      gte = new Date(fromDate);
+      gte.setHours(0, 0, 0, 0);
+
+      lte = new Date(toDate);
+      lte.setHours(23, 59, 59, 999);
+    } else {
+      gte.setHours(0, 0, 0, 0);
+      lte.setHours(23, 59, 59, 999);
+    }
 
     const result = await prisma.patients.groupBy({
       by: ['DepartmentID'],
       where: {
         PatientRegistrationDate: {
-          gte: todayStart,
-          lte: todayEnd
+          gte,
+          lte
         },
         Ptype: 'OP',
       },
@@ -153,7 +199,6 @@ export const getTodaysPatientCountsByDepartment = async () => {
       }
     });
 
-    // Convert result to { DepartmentID: count } while skipping nulls
     const departmentCounts = result.reduce((acc, { DepartmentID, _count }) => {
       if (DepartmentID !== null) {
         acc[DepartmentID] = _count.PatientID;

@@ -73,15 +73,31 @@ export const createPatientApi = async (req: Request, res: Response) => {
 
 
 
+// export const getTodaysPatientCountsByDepartmentController = async (req: Request, res: Response) => {
+//   try {
+//     const counts = await getTodaysPatientCountsByDepartment();
+//     res.status(200).json(counts); // Just send the counts directly
+//   } catch (error) {
+//     console.error("Error fetching patient counts:", error);
+//     res.status(500).json({ error: "Failed to fetch today's patient counts by department" });
+//   }
+// };
+
 export const getTodaysPatientCountsByDepartmentController = async (req: Request, res: Response) => {
   try {
-    const counts = await getTodaysPatientCountsByDepartment();
-    res.status(200).json(counts); // Just send the counts directly
+    const { fromDate, toDate } = req.query;
+
+    const counts = await getTodaysPatientCountsByDepartment(
+      fromDate?.toString(),
+      toDate?.toString()
+    );
+    res.status(200).json(counts);
   } catch (error) {
     console.error("Error fetching patient counts:", error);
-    res.status(500).json({ error: "Failed to fetch today's patient counts by department" });
+    res.status(500).json({ error: "Failed to fetch patient counts by department" });
   }
 };
+
 
 
 

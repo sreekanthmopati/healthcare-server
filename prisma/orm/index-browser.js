@@ -163,19 +163,15 @@ exports.Prisma.DoctorsScalarFieldEnum = {
 exports.Prisma.MedicalRecordsScalarFieldEnum = {
   RecordID: 'RecordID',
   PatientID: 'PatientID',
-  admission_no: 'admission_no',
   DiagnosisDetails: 'DiagnosisDetails',
   TreatmentPlan: 'TreatmentPlan',
-  medication: 'medication',
+  Medication: 'Medication',
   RecordDate: 'RecordDate',
-  CreatedAt: 'CreatedAt',
-  UpdatedAt: 'UpdatedAt'
-};
-
-exports.Prisma.CaseSheetsScalarFieldEnum = {
-  CaseSheetID: 'CaseSheetID',
   CaseSheet: 'CaseSheet',
-  RecordID: 'RecordID'
+  isIP: 'isIP',
+  CreatedAt: 'CreatedAt',
+  UpdatedAt: 'UpdatedAt',
+  AdmissionNo: 'AdmissionNo'
 };
 
 exports.Prisma.ServicesScalarFieldEnum = {
@@ -199,6 +195,7 @@ exports.Prisma.PatientsScalarFieldEnum = {
   Name: 'Name',
   Age: 'Age',
   Gender: 'Gender',
+  UMR: 'UMR',
   ContactNumber: 'ContactNumber',
   Address: 'Address',
   CreatedAt: 'CreatedAt',
@@ -206,12 +203,12 @@ exports.Prisma.PatientsScalarFieldEnum = {
   Status: 'Status',
   PatientRegistrationDate: 'PatientRegistrationDate',
   Ptype: 'Ptype',
-  Sponsor: 'Sponsor',
-  DepartmentID: 'DepartmentID',
   Email: 'Email',
   AlternateNumber: 'AlternateNumber',
   DOB: 'DOB',
-  BloodGroup: 'BloodGroup'
+  BloodGroup: 'BloodGroup',
+  DepartmentID: 'DepartmentID',
+  Sponsor: 'Sponsor'
 };
 
 exports.Prisma.WardScalarFieldEnum = {
@@ -249,11 +246,11 @@ exports.Prisma.AdmissionsScalarFieldEnum = {
   bed_id: 'bed_id',
   diagnosis_id: 'diagnosis_id',
   admission_date: 'admission_date',
-  is_discharged: 'is_discharged',
   discharge_date: 'discharge_date',
-  dischargeReasonId: 'dischargeReasonId',
   treatment_plan: 'treatment_plan',
-  remarks: 'remarks'
+  remarks: 'remarks',
+  dischargeReasonId: 'dischargeReasonId',
+  is_discharged: 'is_discharged'
 };
 
 exports.Prisma.DischargeReasonScalarFieldEnum = {
@@ -279,7 +276,6 @@ exports.Prisma.ModelName = {
   Diagnoses: 'Diagnoses',
   Doctors: 'Doctors',
   MedicalRecords: 'MedicalRecords',
-  CaseSheets: 'CaseSheets',
   Services: 'Services',
   Users: 'Users',
   Patients: 'Patients',

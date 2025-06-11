@@ -53,15 +53,14 @@
 //   }
 // }
 import { Request, Response } from "express";
-import { getAllCaseSheetsWithDetails } from "../services/CaseSheetService";
+import { getAllMedicalRecordsWithDetails } from "../services/CaseSheetService";
 
-// Fetch all case sheets with full relational data
-export const fetchAllCaseSheetsWithDetails = async (req: Request, res: Response) => {
+export const fetchAllMedicalRecords = async (req: Request, res: Response) => {
   try {
-    const caseSheets = await getAllCaseSheetsWithDetails();
-    res.status(200).json(caseSheets);
+    const records = await getAllMedicalRecordsWithDetails();
+    res.json(records);
   } catch (error) {
-    console.error("Error fetching case sheets:", error);
-    res.status(500).json({ message: "Failed to fetch case sheets" });
+    console.error("Error fetching medical records:", error);
+    res.status(500).json({ message: "Failed to fetch medical records" });
   }
 };

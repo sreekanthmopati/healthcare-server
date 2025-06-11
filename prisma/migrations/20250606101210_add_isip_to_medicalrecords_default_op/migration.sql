@@ -1,0 +1,22 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[MedicalRecords] ADD [isIP] BIT NOT NULL CONSTRAINT [MedicalRecords_isIP_df] DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE [dbo].[Patients] ADD CONSTRAINT [Patients_Ptype_df] DEFAULT 'OP' FOR [Ptype];
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH

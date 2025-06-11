@@ -44,11 +44,6 @@ export type Doctors = $Result.DefaultSelection<Prisma.$DoctorsPayload>
  */
 export type MedicalRecords = $Result.DefaultSelection<Prisma.$MedicalRecordsPayload>
 /**
- * Model CaseSheets
- * 
- */
-export type CaseSheets = $Result.DefaultSelection<Prisma.$CaseSheetsPayload>
-/**
  * Model Services
  * 
  */
@@ -273,16 +268,6 @@ export class PrismaClient<
     * ```
     */
   get medicalRecords(): Prisma.MedicalRecordsDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.caseSheets`: Exposes CRUD operations for the **CaseSheets** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more CaseSheets
-    * const caseSheets = await prisma.caseSheets.findMany()
-    * ```
-    */
-  get caseSheets(): Prisma.CaseSheetsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.services`: Exposes CRUD operations for the **Services** model.
@@ -809,7 +794,6 @@ export namespace Prisma {
     Diagnoses: 'Diagnoses',
     Doctors: 'Doctors',
     MedicalRecords: 'MedicalRecords',
-    CaseSheets: 'CaseSheets',
     Services: 'Services',
     Users: 'Users',
     Patients: 'Patients',
@@ -836,7 +820,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "appointments" | "bills" | "departments" | "diagnoses" | "doctors" | "medicalRecords" | "caseSheets" | "services" | "users" | "patients" | "ward" | "room" | "bed" | "admissions" | "dischargeReason"
+      modelProps: "appointments" | "bills" | "departments" | "diagnoses" | "doctors" | "medicalRecords" | "services" | "users" | "patients" | "ward" | "room" | "bed" | "admissions" | "dischargeReason"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1233,72 +1217,6 @@ export namespace Prisma {
           count: {
             args: Prisma.MedicalRecordsCountArgs<ExtArgs>
             result: $Utils.Optional<MedicalRecordsCountAggregateOutputType> | number
-          }
-        }
-      }
-      CaseSheets: {
-        payload: Prisma.$CaseSheetsPayload<ExtArgs>
-        fields: Prisma.CaseSheetsFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.CaseSheetsFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CaseSheetsPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.CaseSheetsFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CaseSheetsPayload>
-          }
-          findFirst: {
-            args: Prisma.CaseSheetsFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CaseSheetsPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.CaseSheetsFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CaseSheetsPayload>
-          }
-          findMany: {
-            args: Prisma.CaseSheetsFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CaseSheetsPayload>[]
-          }
-          create: {
-            args: Prisma.CaseSheetsCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CaseSheetsPayload>
-          }
-          createMany: {
-            args: Prisma.CaseSheetsCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          delete: {
-            args: Prisma.CaseSheetsDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CaseSheetsPayload>
-          }
-          update: {
-            args: Prisma.CaseSheetsUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CaseSheetsPayload>
-          }
-          deleteMany: {
-            args: Prisma.CaseSheetsDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.CaseSheetsUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          upsert: {
-            args: Prisma.CaseSheetsUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CaseSheetsPayload>
-          }
-          aggregate: {
-            args: Prisma.CaseSheetsAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCaseSheets>
-          }
-          groupBy: {
-            args: Prisma.CaseSheetsGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CaseSheetsGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.CaseSheetsCountArgs<ExtArgs>
-            result: $Utils.Optional<CaseSheetsCountAggregateOutputType> | number
           }
         }
       }
@@ -1920,7 +1838,6 @@ export namespace Prisma {
     diagnoses?: DiagnosesOmit
     doctors?: DoctorsOmit
     medicalRecords?: MedicalRecordsOmit
-    caseSheets?: CaseSheetsOmit
     services?: ServicesOmit
     users?: UsersOmit
     patients?: PatientsOmit
@@ -2134,17 +2051,17 @@ export namespace Prisma {
    */
 
   export type PatientsCountOutputType = {
+    Admissions: number
     Appointments: number
     Bills: number
     MedicalRecords: number
-    Admissions: number
   }
 
   export type PatientsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Admissions?: boolean | PatientsCountOutputTypeCountAdmissionsArgs
     Appointments?: boolean | PatientsCountOutputTypeCountAppointmentsArgs
     Bills?: boolean | PatientsCountOutputTypeCountBillsArgs
     MedicalRecords?: boolean | PatientsCountOutputTypeCountMedicalRecordsArgs
-    Admissions?: boolean | PatientsCountOutputTypeCountAdmissionsArgs
   }
 
   // Custom InputTypes
@@ -2156,6 +2073,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the PatientsCountOutputType
      */
     select?: PatientsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PatientsCountOutputType without action
+   */
+  export type PatientsCountOutputTypeCountAdmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdmissionsWhereInput
   }
 
   /**
@@ -2177,13 +2101,6 @@ export namespace Prisma {
    */
   export type PatientsCountOutputTypeCountMedicalRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MedicalRecordsWhereInput
-  }
-
-  /**
-   * PatientsCountOutputType without action
-   */
-  export type PatientsCountOutputTypeCountAdmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AdmissionsWhereInput
   }
 
 
@@ -5520,8 +5437,8 @@ export namespace Prisma {
     DepartmentID?: boolean
     DiagnosisName?: boolean
     CreatedAt?: boolean
-    Departments?: boolean | DepartmentsDefaultArgs<ExtArgs>
     admissions?: boolean | Diagnoses$admissionsArgs<ExtArgs>
+    Departments?: boolean | DepartmentsDefaultArgs<ExtArgs>
     _count?: boolean | DiagnosesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["diagnoses"]>
 
@@ -5536,16 +5453,16 @@ export namespace Prisma {
 
   export type DiagnosesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"DiagnosisID" | "DepartmentID" | "DiagnosisName" | "CreatedAt", ExtArgs["result"]["diagnoses"]>
   export type DiagnosesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Departments?: boolean | DepartmentsDefaultArgs<ExtArgs>
     admissions?: boolean | Diagnoses$admissionsArgs<ExtArgs>
+    Departments?: boolean | DepartmentsDefaultArgs<ExtArgs>
     _count?: boolean | DiagnosesCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $DiagnosesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Diagnoses"
     objects: {
-      Departments: Prisma.$DepartmentsPayload<ExtArgs>
       admissions: Prisma.$AdmissionsPayload<ExtArgs>[]
+      Departments: Prisma.$DepartmentsPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       DiagnosisID: number
@@ -5892,8 +5809,8 @@ export namespace Prisma {
    */
   export interface Prisma__DiagnosesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    Departments<T extends DepartmentsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DepartmentsDefaultArgs<ExtArgs>>): Prisma__DepartmentsClient<$Result.GetResult<Prisma.$DepartmentsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     admissions<T extends Diagnoses$admissionsArgs<ExtArgs> = {}>(args?: Subset<T, Diagnoses$admissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Departments<T extends DepartmentsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DepartmentsDefaultArgs<ExtArgs>>): Prisma__DepartmentsClient<$Result.GetResult<Prisma.$DepartmentsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7353,93 +7270,109 @@ export namespace Prisma {
   }
 
   export type MedicalRecordsAvgAggregateOutputType = {
-    admission_no: number | null
+    RecordID: number | null
+    AdmissionNo: number | null
   }
 
   export type MedicalRecordsSumAggregateOutputType = {
-    admission_no: number | null
+    RecordID: number | null
+    AdmissionNo: number | null
   }
 
   export type MedicalRecordsMinAggregateOutputType = {
-    RecordID: string | null
+    RecordID: number | null
     PatientID: string | null
-    admission_no: number | null
     DiagnosisDetails: string | null
     TreatmentPlan: string | null
-    medication: string | null
+    Medication: string | null
     RecordDate: Date | null
+    CaseSheet: string | null
+    isIP: boolean | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
+    AdmissionNo: number | null
   }
 
   export type MedicalRecordsMaxAggregateOutputType = {
-    RecordID: string | null
+    RecordID: number | null
     PatientID: string | null
-    admission_no: number | null
     DiagnosisDetails: string | null
     TreatmentPlan: string | null
-    medication: string | null
+    Medication: string | null
     RecordDate: Date | null
+    CaseSheet: string | null
+    isIP: boolean | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
+    AdmissionNo: number | null
   }
 
   export type MedicalRecordsCountAggregateOutputType = {
     RecordID: number
     PatientID: number
-    admission_no: number
     DiagnosisDetails: number
     TreatmentPlan: number
-    medication: number
+    Medication: number
     RecordDate: number
+    CaseSheet: number
+    isIP: number
     CreatedAt: number
     UpdatedAt: number
+    AdmissionNo: number
     _all: number
   }
 
 
   export type MedicalRecordsAvgAggregateInputType = {
-    admission_no?: true
+    RecordID?: true
+    AdmissionNo?: true
   }
 
   export type MedicalRecordsSumAggregateInputType = {
-    admission_no?: true
+    RecordID?: true
+    AdmissionNo?: true
   }
 
   export type MedicalRecordsMinAggregateInputType = {
     RecordID?: true
     PatientID?: true
-    admission_no?: true
     DiagnosisDetails?: true
     TreatmentPlan?: true
-    medication?: true
+    Medication?: true
     RecordDate?: true
+    CaseSheet?: true
+    isIP?: true
     CreatedAt?: true
     UpdatedAt?: true
+    AdmissionNo?: true
   }
 
   export type MedicalRecordsMaxAggregateInputType = {
     RecordID?: true
     PatientID?: true
-    admission_no?: true
     DiagnosisDetails?: true
     TreatmentPlan?: true
-    medication?: true
+    Medication?: true
     RecordDate?: true
+    CaseSheet?: true
+    isIP?: true
     CreatedAt?: true
     UpdatedAt?: true
+    AdmissionNo?: true
   }
 
   export type MedicalRecordsCountAggregateInputType = {
     RecordID?: true
     PatientID?: true
-    admission_no?: true
     DiagnosisDetails?: true
     TreatmentPlan?: true
-    medication?: true
+    Medication?: true
     RecordDate?: true
+    CaseSheet?: true
+    isIP?: true
     CreatedAt?: true
     UpdatedAt?: true
+    AdmissionNo?: true
     _all?: true
   }
 
@@ -7530,15 +7463,17 @@ export namespace Prisma {
   }
 
   export type MedicalRecordsGroupByOutputType = {
-    RecordID: string
+    RecordID: number
     PatientID: string | null
-    admission_no: number | null
     DiagnosisDetails: string | null
     TreatmentPlan: string | null
-    medication: string | null
+    Medication: string | null
     RecordDate: Date
+    CaseSheet: string | null
+    isIP: boolean
     CreatedAt: Date | null
     UpdatedAt: Date | null
+    AdmissionNo: number | null
     _count: MedicalRecordsCountAggregateOutputType | null
     _avg: MedicalRecordsAvgAggregateOutputType | null
     _sum: MedicalRecordsSumAggregateOutputType | null
@@ -7563,16 +7498,17 @@ export namespace Prisma {
   export type MedicalRecordsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     RecordID?: boolean
     PatientID?: boolean
-    admission_no?: boolean
     DiagnosisDetails?: boolean
     TreatmentPlan?: boolean
-    medication?: boolean
+    Medication?: boolean
     RecordDate?: boolean
+    CaseSheet?: boolean
+    isIP?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
-    CaseSheets?: boolean | MedicalRecords$CaseSheetsArgs<ExtArgs>
-    Patients?: boolean | MedicalRecords$PatientsArgs<ExtArgs>
+    AdmissionNo?: boolean
     Admissions?: boolean | MedicalRecords$AdmissionsArgs<ExtArgs>
+    Patients?: boolean | MedicalRecords$PatientsArgs<ExtArgs>
   }, ExtArgs["result"]["medicalRecords"]>
 
 
@@ -7580,39 +7516,41 @@ export namespace Prisma {
   export type MedicalRecordsSelectScalar = {
     RecordID?: boolean
     PatientID?: boolean
-    admission_no?: boolean
     DiagnosisDetails?: boolean
     TreatmentPlan?: boolean
-    medication?: boolean
+    Medication?: boolean
     RecordDate?: boolean
+    CaseSheet?: boolean
+    isIP?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    AdmissionNo?: boolean
   }
 
-  export type MedicalRecordsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"RecordID" | "PatientID" | "admission_no" | "DiagnosisDetails" | "TreatmentPlan" | "medication" | "RecordDate" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["medicalRecords"]>
+  export type MedicalRecordsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"RecordID" | "PatientID" | "DiagnosisDetails" | "TreatmentPlan" | "Medication" | "RecordDate" | "CaseSheet" | "isIP" | "CreatedAt" | "UpdatedAt" | "AdmissionNo", ExtArgs["result"]["medicalRecords"]>
   export type MedicalRecordsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    CaseSheets?: boolean | MedicalRecords$CaseSheetsArgs<ExtArgs>
-    Patients?: boolean | MedicalRecords$PatientsArgs<ExtArgs>
     Admissions?: boolean | MedicalRecords$AdmissionsArgs<ExtArgs>
+    Patients?: boolean | MedicalRecords$PatientsArgs<ExtArgs>
   }
 
   export type $MedicalRecordsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MedicalRecords"
     objects: {
-      CaseSheets: Prisma.$CaseSheetsPayload<ExtArgs> | null
-      Patients: Prisma.$PatientsPayload<ExtArgs> | null
       Admissions: Prisma.$AdmissionsPayload<ExtArgs> | null
+      Patients: Prisma.$PatientsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
-      RecordID: string
+      RecordID: number
       PatientID: string | null
-      admission_no: number | null
       DiagnosisDetails: string | null
       TreatmentPlan: string | null
-      medication: string | null
+      Medication: string | null
       RecordDate: Date
+      CaseSheet: string | null
+      isIP: boolean
       CreatedAt: Date | null
       UpdatedAt: Date | null
+      AdmissionNo: number | null
     }, ExtArgs["result"]["medicalRecords"]>
     composites: {}
   }
@@ -7953,9 +7891,8 @@ export namespace Prisma {
    */
   export interface Prisma__MedicalRecordsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    CaseSheets<T extends MedicalRecords$CaseSheetsArgs<ExtArgs> = {}>(args?: Subset<T, MedicalRecords$CaseSheetsArgs<ExtArgs>>): Prisma__CaseSheetsClient<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    Patients<T extends MedicalRecords$PatientsArgs<ExtArgs> = {}>(args?: Subset<T, MedicalRecords$PatientsArgs<ExtArgs>>): Prisma__PatientsClient<$Result.GetResult<Prisma.$PatientsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     Admissions<T extends MedicalRecords$AdmissionsArgs<ExtArgs> = {}>(args?: Subset<T, MedicalRecords$AdmissionsArgs<ExtArgs>>): Prisma__AdmissionsClient<$Result.GetResult<Prisma.$AdmissionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Patients<T extends MedicalRecords$PatientsArgs<ExtArgs> = {}>(args?: Subset<T, MedicalRecords$PatientsArgs<ExtArgs>>): Prisma__PatientsClient<$Result.GetResult<Prisma.$PatientsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7985,15 +7922,17 @@ export namespace Prisma {
    * Fields of the MedicalRecords model
    */ 
   interface MedicalRecordsFieldRefs {
-    readonly RecordID: FieldRef<"MedicalRecords", 'String'>
+    readonly RecordID: FieldRef<"MedicalRecords", 'Int'>
     readonly PatientID: FieldRef<"MedicalRecords", 'String'>
-    readonly admission_no: FieldRef<"MedicalRecords", 'Int'>
     readonly DiagnosisDetails: FieldRef<"MedicalRecords", 'String'>
     readonly TreatmentPlan: FieldRef<"MedicalRecords", 'String'>
-    readonly medication: FieldRef<"MedicalRecords", 'String'>
+    readonly Medication: FieldRef<"MedicalRecords", 'String'>
     readonly RecordDate: FieldRef<"MedicalRecords", 'DateTime'>
+    readonly CaseSheet: FieldRef<"MedicalRecords", 'String'>
+    readonly isIP: FieldRef<"MedicalRecords", 'Boolean'>
     readonly CreatedAt: FieldRef<"MedicalRecords", 'DateTime'>
     readonly UpdatedAt: FieldRef<"MedicalRecords", 'DateTime'>
+    readonly AdmissionNo: FieldRef<"MedicalRecords", 'Int'>
   }
     
 
@@ -8336,22 +8275,22 @@ export namespace Prisma {
   }
 
   /**
-   * MedicalRecords.CaseSheets
+   * MedicalRecords.Admissions
    */
-  export type MedicalRecords$CaseSheetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MedicalRecords$AdmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CaseSheets
+     * Select specific fields to fetch from the Admissions
      */
-    select?: CaseSheetsSelect<ExtArgs> | null
+    select?: AdmissionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CaseSheets
+     * Omit specific fields from the Admissions
      */
-    omit?: CaseSheetsOmit<ExtArgs> | null
+    omit?: AdmissionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    where?: CaseSheetsWhereInput
+    include?: AdmissionsInclude<ExtArgs> | null
+    where?: AdmissionsWhereInput
   }
 
   /**
@@ -8374,25 +8313,6 @@ export namespace Prisma {
   }
 
   /**
-   * MedicalRecords.Admissions
-   */
-  export type MedicalRecords$AdmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Admissions
-     */
-    select?: AdmissionsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Admissions
-     */
-    omit?: AdmissionsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AdmissionsInclude<ExtArgs> | null
-    where?: AdmissionsWhereInput
-  }
-
-  /**
    * MedicalRecords without action
    */
   export type MedicalRecordsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8408,912 +8328,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MedicalRecordsInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model CaseSheets
-   */
-
-  export type AggregateCaseSheets = {
-    _count: CaseSheetsCountAggregateOutputType | null
-    _min: CaseSheetsMinAggregateOutputType | null
-    _max: CaseSheetsMaxAggregateOutputType | null
-  }
-
-  export type CaseSheetsMinAggregateOutputType = {
-    CaseSheetID: string | null
-    CaseSheet: string | null
-    RecordID: string | null
-  }
-
-  export type CaseSheetsMaxAggregateOutputType = {
-    CaseSheetID: string | null
-    CaseSheet: string | null
-    RecordID: string | null
-  }
-
-  export type CaseSheetsCountAggregateOutputType = {
-    CaseSheetID: number
-    CaseSheet: number
-    RecordID: number
-    _all: number
-  }
-
-
-  export type CaseSheetsMinAggregateInputType = {
-    CaseSheetID?: true
-    CaseSheet?: true
-    RecordID?: true
-  }
-
-  export type CaseSheetsMaxAggregateInputType = {
-    CaseSheetID?: true
-    CaseSheet?: true
-    RecordID?: true
-  }
-
-  export type CaseSheetsCountAggregateInputType = {
-    CaseSheetID?: true
-    CaseSheet?: true
-    RecordID?: true
-    _all?: true
-  }
-
-  export type CaseSheetsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CaseSheets to aggregate.
-     */
-    where?: CaseSheetsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of CaseSheets to fetch.
-     */
-    orderBy?: CaseSheetsOrderByWithRelationInput | CaseSheetsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: CaseSheetsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` CaseSheets from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` CaseSheets.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned CaseSheets
-    **/
-    _count?: true | CaseSheetsCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: CaseSheetsMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: CaseSheetsMaxAggregateInputType
-  }
-
-  export type GetCaseSheetsAggregateType<T extends CaseSheetsAggregateArgs> = {
-        [P in keyof T & keyof AggregateCaseSheets]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateCaseSheets[P]>
-      : GetScalarType<T[P], AggregateCaseSheets[P]>
-  }
-
-
-
-
-  export type CaseSheetsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CaseSheetsWhereInput
-    orderBy?: CaseSheetsOrderByWithAggregationInput | CaseSheetsOrderByWithAggregationInput[]
-    by: CaseSheetsScalarFieldEnum[] | CaseSheetsScalarFieldEnum
-    having?: CaseSheetsScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: CaseSheetsCountAggregateInputType | true
-    _min?: CaseSheetsMinAggregateInputType
-    _max?: CaseSheetsMaxAggregateInputType
-  }
-
-  export type CaseSheetsGroupByOutputType = {
-    CaseSheetID: string
-    CaseSheet: string | null
-    RecordID: string
-    _count: CaseSheetsCountAggregateOutputType | null
-    _min: CaseSheetsMinAggregateOutputType | null
-    _max: CaseSheetsMaxAggregateOutputType | null
-  }
-
-  type GetCaseSheetsGroupByPayload<T extends CaseSheetsGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<CaseSheetsGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof CaseSheetsGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], CaseSheetsGroupByOutputType[P]>
-            : GetScalarType<T[P], CaseSheetsGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type CaseSheetsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    CaseSheetID?: boolean
-    CaseSheet?: boolean
-    RecordID?: boolean
-    MedicalRecord?: boolean | MedicalRecordsDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["caseSheets"]>
-
-
-
-  export type CaseSheetsSelectScalar = {
-    CaseSheetID?: boolean
-    CaseSheet?: boolean
-    RecordID?: boolean
-  }
-
-  export type CaseSheetsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"CaseSheetID" | "CaseSheet" | "RecordID", ExtArgs["result"]["caseSheets"]>
-  export type CaseSheetsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    MedicalRecord?: boolean | MedicalRecordsDefaultArgs<ExtArgs>
-  }
-
-  export type $CaseSheetsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "CaseSheets"
-    objects: {
-      MedicalRecord: Prisma.$MedicalRecordsPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      CaseSheetID: string
-      CaseSheet: string | null
-      RecordID: string
-    }, ExtArgs["result"]["caseSheets"]>
-    composites: {}
-  }
-
-  type CaseSheetsGetPayload<S extends boolean | null | undefined | CaseSheetsDefaultArgs> = $Result.GetResult<Prisma.$CaseSheetsPayload, S>
-
-  type CaseSheetsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CaseSheetsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CaseSheetsCountAggregateInputType | true
-    }
-
-  export interface CaseSheetsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CaseSheets'], meta: { name: 'CaseSheets' } }
-    /**
-     * Find zero or one CaseSheets that matches the filter.
-     * @param {CaseSheetsFindUniqueArgs} args - Arguments to find a CaseSheets
-     * @example
-     * // Get one CaseSheets
-     * const caseSheets = await prisma.caseSheets.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends CaseSheetsFindUniqueArgs>(args: SelectSubset<T, CaseSheetsFindUniqueArgs<ExtArgs>>): Prisma__CaseSheetsClient<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one CaseSheets that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {CaseSheetsFindUniqueOrThrowArgs} args - Arguments to find a CaseSheets
-     * @example
-     * // Get one CaseSheets
-     * const caseSheets = await prisma.caseSheets.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends CaseSheetsFindUniqueOrThrowArgs>(args: SelectSubset<T, CaseSheetsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CaseSheetsClient<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CaseSheets that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CaseSheetsFindFirstArgs} args - Arguments to find a CaseSheets
-     * @example
-     * // Get one CaseSheets
-     * const caseSheets = await prisma.caseSheets.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends CaseSheetsFindFirstArgs>(args?: SelectSubset<T, CaseSheetsFindFirstArgs<ExtArgs>>): Prisma__CaseSheetsClient<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first CaseSheets that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CaseSheetsFindFirstOrThrowArgs} args - Arguments to find a CaseSheets
-     * @example
-     * // Get one CaseSheets
-     * const caseSheets = await prisma.caseSheets.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends CaseSheetsFindFirstOrThrowArgs>(args?: SelectSubset<T, CaseSheetsFindFirstOrThrowArgs<ExtArgs>>): Prisma__CaseSheetsClient<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more CaseSheets that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CaseSheetsFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all CaseSheets
-     * const caseSheets = await prisma.caseSheets.findMany()
-     * 
-     * // Get first 10 CaseSheets
-     * const caseSheets = await prisma.caseSheets.findMany({ take: 10 })
-     * 
-     * // Only select the `CaseSheetID`
-     * const caseSheetsWithCaseSheetIDOnly = await prisma.caseSheets.findMany({ select: { CaseSheetID: true } })
-     * 
-     */
-    findMany<T extends CaseSheetsFindManyArgs>(args?: SelectSubset<T, CaseSheetsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a CaseSheets.
-     * @param {CaseSheetsCreateArgs} args - Arguments to create a CaseSheets.
-     * @example
-     * // Create one CaseSheets
-     * const CaseSheets = await prisma.caseSheets.create({
-     *   data: {
-     *     // ... data to create a CaseSheets
-     *   }
-     * })
-     * 
-     */
-    create<T extends CaseSheetsCreateArgs>(args: SelectSubset<T, CaseSheetsCreateArgs<ExtArgs>>): Prisma__CaseSheetsClient<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many CaseSheets.
-     * @param {CaseSheetsCreateManyArgs} args - Arguments to create many CaseSheets.
-     * @example
-     * // Create many CaseSheets
-     * const caseSheets = await prisma.caseSheets.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends CaseSheetsCreateManyArgs>(args?: SelectSubset<T, CaseSheetsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a CaseSheets.
-     * @param {CaseSheetsDeleteArgs} args - Arguments to delete one CaseSheets.
-     * @example
-     * // Delete one CaseSheets
-     * const CaseSheets = await prisma.caseSheets.delete({
-     *   where: {
-     *     // ... filter to delete one CaseSheets
-     *   }
-     * })
-     * 
-     */
-    delete<T extends CaseSheetsDeleteArgs>(args: SelectSubset<T, CaseSheetsDeleteArgs<ExtArgs>>): Prisma__CaseSheetsClient<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one CaseSheets.
-     * @param {CaseSheetsUpdateArgs} args - Arguments to update one CaseSheets.
-     * @example
-     * // Update one CaseSheets
-     * const caseSheets = await prisma.caseSheets.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends CaseSheetsUpdateArgs>(args: SelectSubset<T, CaseSheetsUpdateArgs<ExtArgs>>): Prisma__CaseSheetsClient<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more CaseSheets.
-     * @param {CaseSheetsDeleteManyArgs} args - Arguments to filter CaseSheets to delete.
-     * @example
-     * // Delete a few CaseSheets
-     * const { count } = await prisma.caseSheets.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends CaseSheetsDeleteManyArgs>(args?: SelectSubset<T, CaseSheetsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more CaseSheets.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CaseSheetsUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many CaseSheets
-     * const caseSheets = await prisma.caseSheets.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends CaseSheetsUpdateManyArgs>(args: SelectSubset<T, CaseSheetsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one CaseSheets.
-     * @param {CaseSheetsUpsertArgs} args - Arguments to update or create a CaseSheets.
-     * @example
-     * // Update or create a CaseSheets
-     * const caseSheets = await prisma.caseSheets.upsert({
-     *   create: {
-     *     // ... data to create a CaseSheets
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the CaseSheets we want to update
-     *   }
-     * })
-     */
-    upsert<T extends CaseSheetsUpsertArgs>(args: SelectSubset<T, CaseSheetsUpsertArgs<ExtArgs>>): Prisma__CaseSheetsClient<$Result.GetResult<Prisma.$CaseSheetsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of CaseSheets.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CaseSheetsCountArgs} args - Arguments to filter CaseSheets to count.
-     * @example
-     * // Count the number of CaseSheets
-     * const count = await prisma.caseSheets.count({
-     *   where: {
-     *     // ... the filter for the CaseSheets we want to count
-     *   }
-     * })
-    **/
-    count<T extends CaseSheetsCountArgs>(
-      args?: Subset<T, CaseSheetsCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], CaseSheetsCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a CaseSheets.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CaseSheetsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends CaseSheetsAggregateArgs>(args: Subset<T, CaseSheetsAggregateArgs>): Prisma.PrismaPromise<GetCaseSheetsAggregateType<T>>
-
-    /**
-     * Group by CaseSheets.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {CaseSheetsGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends CaseSheetsGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CaseSheetsGroupByArgs['orderBy'] }
-        : { orderBy?: CaseSheetsGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, CaseSheetsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCaseSheetsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the CaseSheets model
-   */
-  readonly fields: CaseSheetsFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for CaseSheets.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__CaseSheetsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    MedicalRecord<T extends MedicalRecordsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MedicalRecordsDefaultArgs<ExtArgs>>): Prisma__MedicalRecordsClient<$Result.GetResult<Prisma.$MedicalRecordsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the CaseSheets model
-   */ 
-  interface CaseSheetsFieldRefs {
-    readonly CaseSheetID: FieldRef<"CaseSheets", 'String'>
-    readonly CaseSheet: FieldRef<"CaseSheets", 'String'>
-    readonly RecordID: FieldRef<"CaseSheets", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * CaseSheets findUnique
-   */
-  export type CaseSheetsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    /**
-     * Filter, which CaseSheets to fetch.
-     */
-    where: CaseSheetsWhereUniqueInput
-  }
-
-  /**
-   * CaseSheets findUniqueOrThrow
-   */
-  export type CaseSheetsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    /**
-     * Filter, which CaseSheets to fetch.
-     */
-    where: CaseSheetsWhereUniqueInput
-  }
-
-  /**
-   * CaseSheets findFirst
-   */
-  export type CaseSheetsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    /**
-     * Filter, which CaseSheets to fetch.
-     */
-    where?: CaseSheetsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of CaseSheets to fetch.
-     */
-    orderBy?: CaseSheetsOrderByWithRelationInput | CaseSheetsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for CaseSheets.
-     */
-    cursor?: CaseSheetsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` CaseSheets from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` CaseSheets.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of CaseSheets.
-     */
-    distinct?: CaseSheetsScalarFieldEnum | CaseSheetsScalarFieldEnum[]
-  }
-
-  /**
-   * CaseSheets findFirstOrThrow
-   */
-  export type CaseSheetsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    /**
-     * Filter, which CaseSheets to fetch.
-     */
-    where?: CaseSheetsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of CaseSheets to fetch.
-     */
-    orderBy?: CaseSheetsOrderByWithRelationInput | CaseSheetsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for CaseSheets.
-     */
-    cursor?: CaseSheetsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` CaseSheets from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` CaseSheets.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of CaseSheets.
-     */
-    distinct?: CaseSheetsScalarFieldEnum | CaseSheetsScalarFieldEnum[]
-  }
-
-  /**
-   * CaseSheets findMany
-   */
-  export type CaseSheetsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    /**
-     * Filter, which CaseSheets to fetch.
-     */
-    where?: CaseSheetsWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of CaseSheets to fetch.
-     */
-    orderBy?: CaseSheetsOrderByWithRelationInput | CaseSheetsOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing CaseSheets.
-     */
-    cursor?: CaseSheetsWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` CaseSheets from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` CaseSheets.
-     */
-    skip?: number
-    distinct?: CaseSheetsScalarFieldEnum | CaseSheetsScalarFieldEnum[]
-  }
-
-  /**
-   * CaseSheets create
-   */
-  export type CaseSheetsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    /**
-     * The data needed to create a CaseSheets.
-     */
-    data: XOR<CaseSheetsCreateInput, CaseSheetsUncheckedCreateInput>
-  }
-
-  /**
-   * CaseSheets createMany
-   */
-  export type CaseSheetsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many CaseSheets.
-     */
-    data: CaseSheetsCreateManyInput | CaseSheetsCreateManyInput[]
-  }
-
-  /**
-   * CaseSheets update
-   */
-  export type CaseSheetsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    /**
-     * The data needed to update a CaseSheets.
-     */
-    data: XOR<CaseSheetsUpdateInput, CaseSheetsUncheckedUpdateInput>
-    /**
-     * Choose, which CaseSheets to update.
-     */
-    where: CaseSheetsWhereUniqueInput
-  }
-
-  /**
-   * CaseSheets updateMany
-   */
-  export type CaseSheetsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update CaseSheets.
-     */
-    data: XOR<CaseSheetsUpdateManyMutationInput, CaseSheetsUncheckedUpdateManyInput>
-    /**
-     * Filter which CaseSheets to update
-     */
-    where?: CaseSheetsWhereInput
-    /**
-     * Limit how many CaseSheets to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * CaseSheets upsert
-   */
-  export type CaseSheetsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    /**
-     * The filter to search for the CaseSheets to update in case it exists.
-     */
-    where: CaseSheetsWhereUniqueInput
-    /**
-     * In case the CaseSheets found by the `where` argument doesn't exist, create a new CaseSheets with this data.
-     */
-    create: XOR<CaseSheetsCreateInput, CaseSheetsUncheckedCreateInput>
-    /**
-     * In case the CaseSheets was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<CaseSheetsUpdateInput, CaseSheetsUncheckedUpdateInput>
-  }
-
-  /**
-   * CaseSheets delete
-   */
-  export type CaseSheetsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
-    /**
-     * Filter which CaseSheets to delete.
-     */
-    where: CaseSheetsWhereUniqueInput
-  }
-
-  /**
-   * CaseSheets deleteMany
-   */
-  export type CaseSheetsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which CaseSheets to delete
-     */
-    where?: CaseSheetsWhereInput
-    /**
-     * Limit how many CaseSheets to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * CaseSheets without action
-   */
-  export type CaseSheetsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CaseSheets
-     */
-    select?: CaseSheetsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CaseSheets
-     */
-    omit?: CaseSheetsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CaseSheetsInclude<ExtArgs> | null
   }
 
 
@@ -11172,6 +10186,7 @@ export namespace Prisma {
     Name: string | null
     Age: string | null
     Gender: string | null
+    UMR: string | null
     ContactNumber: string | null
     Address: string | null
     CreatedAt: Date | null
@@ -11179,12 +10194,12 @@ export namespace Prisma {
     Status: string | null
     PatientRegistrationDate: Date | null
     Ptype: string | null
-    Sponsor: string | null
-    DepartmentID: number | null
     Email: string | null
     AlternateNumber: string | null
     DOB: Date | null
     BloodGroup: string | null
+    DepartmentID: number | null
+    Sponsor: string | null
   }
 
   export type PatientsMaxAggregateOutputType = {
@@ -11192,6 +10207,7 @@ export namespace Prisma {
     Name: string | null
     Age: string | null
     Gender: string | null
+    UMR: string | null
     ContactNumber: string | null
     Address: string | null
     CreatedAt: Date | null
@@ -11199,12 +10215,12 @@ export namespace Prisma {
     Status: string | null
     PatientRegistrationDate: Date | null
     Ptype: string | null
-    Sponsor: string | null
-    DepartmentID: number | null
     Email: string | null
     AlternateNumber: string | null
     DOB: Date | null
     BloodGroup: string | null
+    DepartmentID: number | null
+    Sponsor: string | null
   }
 
   export type PatientsCountAggregateOutputType = {
@@ -11212,6 +10228,7 @@ export namespace Prisma {
     Name: number
     Age: number
     Gender: number
+    UMR: number
     ContactNumber: number
     Address: number
     CreatedAt: number
@@ -11219,12 +10236,12 @@ export namespace Prisma {
     Status: number
     PatientRegistrationDate: number
     Ptype: number
-    Sponsor: number
-    DepartmentID: number
     Email: number
     AlternateNumber: number
     DOB: number
     BloodGroup: number
+    DepartmentID: number
+    Sponsor: number
     _all: number
   }
 
@@ -11242,6 +10259,7 @@ export namespace Prisma {
     Name?: true
     Age?: true
     Gender?: true
+    UMR?: true
     ContactNumber?: true
     Address?: true
     CreatedAt?: true
@@ -11249,12 +10267,12 @@ export namespace Prisma {
     Status?: true
     PatientRegistrationDate?: true
     Ptype?: true
-    Sponsor?: true
-    DepartmentID?: true
     Email?: true
     AlternateNumber?: true
     DOB?: true
     BloodGroup?: true
+    DepartmentID?: true
+    Sponsor?: true
   }
 
   export type PatientsMaxAggregateInputType = {
@@ -11262,6 +10280,7 @@ export namespace Prisma {
     Name?: true
     Age?: true
     Gender?: true
+    UMR?: true
     ContactNumber?: true
     Address?: true
     CreatedAt?: true
@@ -11269,12 +10288,12 @@ export namespace Prisma {
     Status?: true
     PatientRegistrationDate?: true
     Ptype?: true
-    Sponsor?: true
-    DepartmentID?: true
     Email?: true
     AlternateNumber?: true
     DOB?: true
     BloodGroup?: true
+    DepartmentID?: true
+    Sponsor?: true
   }
 
   export type PatientsCountAggregateInputType = {
@@ -11282,6 +10301,7 @@ export namespace Prisma {
     Name?: true
     Age?: true
     Gender?: true
+    UMR?: true
     ContactNumber?: true
     Address?: true
     CreatedAt?: true
@@ -11289,12 +10309,12 @@ export namespace Prisma {
     Status?: true
     PatientRegistrationDate?: true
     Ptype?: true
-    Sponsor?: true
-    DepartmentID?: true
     Email?: true
     AlternateNumber?: true
     DOB?: true
     BloodGroup?: true
+    DepartmentID?: true
+    Sponsor?: true
     _all?: true
   }
 
@@ -11389,6 +10409,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR: string | null
     ContactNumber: string | null
     Address: string | null
     CreatedAt: Date | null
@@ -11396,12 +10417,12 @@ export namespace Prisma {
     Status: string | null
     PatientRegistrationDate: Date
     Ptype: string | null
-    Sponsor: string | null
-    DepartmentID: number | null
     Email: string | null
     AlternateNumber: string | null
     DOB: Date | null
     BloodGroup: string | null
+    DepartmentID: number | null
+    Sponsor: string | null
     _count: PatientsCountAggregateOutputType | null
     _avg: PatientsAvgAggregateOutputType | null
     _sum: PatientsSumAggregateOutputType | null
@@ -11428,6 +10449,7 @@ export namespace Prisma {
     Name?: boolean
     Age?: boolean
     Gender?: boolean
+    UMR?: boolean
     ContactNumber?: boolean
     Address?: boolean
     CreatedAt?: boolean
@@ -11435,17 +10457,17 @@ export namespace Prisma {
     Status?: boolean
     PatientRegistrationDate?: boolean
     Ptype?: boolean
-    Sponsor?: boolean
-    DepartmentID?: boolean
     Email?: boolean
     AlternateNumber?: boolean
     DOB?: boolean
     BloodGroup?: boolean
-    Department?: boolean | Patients$DepartmentArgs<ExtArgs>
+    DepartmentID?: boolean
+    Sponsor?: boolean
+    Admissions?: boolean | Patients$AdmissionsArgs<ExtArgs>
     Appointments?: boolean | Patients$AppointmentsArgs<ExtArgs>
     Bills?: boolean | Patients$BillsArgs<ExtArgs>
     MedicalRecords?: boolean | Patients$MedicalRecordsArgs<ExtArgs>
-    Admissions?: boolean | Patients$AdmissionsArgs<ExtArgs>
+    Department?: boolean | Patients$DepartmentArgs<ExtArgs>
     _count?: boolean | PatientsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["patients"]>
 
@@ -11456,6 +10478,7 @@ export namespace Prisma {
     Name?: boolean
     Age?: boolean
     Gender?: boolean
+    UMR?: boolean
     ContactNumber?: boolean
     Address?: boolean
     CreatedAt?: boolean
@@ -11463,38 +10486,39 @@ export namespace Prisma {
     Status?: boolean
     PatientRegistrationDate?: boolean
     Ptype?: boolean
-    Sponsor?: boolean
-    DepartmentID?: boolean
     Email?: boolean
     AlternateNumber?: boolean
     DOB?: boolean
     BloodGroup?: boolean
+    DepartmentID?: boolean
+    Sponsor?: boolean
   }
 
-  export type PatientsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"PatientID" | "Name" | "Age" | "Gender" | "ContactNumber" | "Address" | "CreatedAt" | "UpdatedAt" | "Status" | "PatientRegistrationDate" | "Ptype" | "Sponsor" | "DepartmentID" | "Email" | "AlternateNumber" | "DOB" | "BloodGroup", ExtArgs["result"]["patients"]>
+  export type PatientsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"PatientID" | "Name" | "Age" | "Gender" | "UMR" | "ContactNumber" | "Address" | "CreatedAt" | "UpdatedAt" | "Status" | "PatientRegistrationDate" | "Ptype" | "Email" | "AlternateNumber" | "DOB" | "BloodGroup" | "DepartmentID" | "Sponsor", ExtArgs["result"]["patients"]>
   export type PatientsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Department?: boolean | Patients$DepartmentArgs<ExtArgs>
+    Admissions?: boolean | Patients$AdmissionsArgs<ExtArgs>
     Appointments?: boolean | Patients$AppointmentsArgs<ExtArgs>
     Bills?: boolean | Patients$BillsArgs<ExtArgs>
     MedicalRecords?: boolean | Patients$MedicalRecordsArgs<ExtArgs>
-    Admissions?: boolean | Patients$AdmissionsArgs<ExtArgs>
+    Department?: boolean | Patients$DepartmentArgs<ExtArgs>
     _count?: boolean | PatientsCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $PatientsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Patients"
     objects: {
-      Department: Prisma.$DepartmentsPayload<ExtArgs> | null
+      Admissions: Prisma.$AdmissionsPayload<ExtArgs>[]
       Appointments: Prisma.$AppointmentsPayload<ExtArgs>[]
       Bills: Prisma.$BillsPayload<ExtArgs>[]
       MedicalRecords: Prisma.$MedicalRecordsPayload<ExtArgs>[]
-      Admissions: Prisma.$AdmissionsPayload<ExtArgs>[]
+      Department: Prisma.$DepartmentsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       PatientID: string
       Name: string
       Age: string
       Gender: string
+      UMR: string | null
       ContactNumber: string | null
       Address: string | null
       CreatedAt: Date | null
@@ -11502,12 +10526,12 @@ export namespace Prisma {
       Status: string | null
       PatientRegistrationDate: Date
       Ptype: string | null
-      Sponsor: string | null
-      DepartmentID: number | null
       Email: string | null
       AlternateNumber: string | null
       DOB: Date | null
       BloodGroup: string | null
+      DepartmentID: number | null
+      Sponsor: string | null
     }, ExtArgs["result"]["patients"]>
     composites: {}
   }
@@ -11848,11 +10872,11 @@ export namespace Prisma {
    */
   export interface Prisma__PatientsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    Department<T extends Patients$DepartmentArgs<ExtArgs> = {}>(args?: Subset<T, Patients$DepartmentArgs<ExtArgs>>): Prisma__DepartmentsClient<$Result.GetResult<Prisma.$DepartmentsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Admissions<T extends Patients$AdmissionsArgs<ExtArgs> = {}>(args?: Subset<T, Patients$AdmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Appointments<T extends Patients$AppointmentsArgs<ExtArgs> = {}>(args?: Subset<T, Patients$AppointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Bills<T extends Patients$BillsArgs<ExtArgs> = {}>(args?: Subset<T, Patients$BillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BillsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     MedicalRecords<T extends Patients$MedicalRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Patients$MedicalRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MedicalRecordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Admissions<T extends Patients$AdmissionsArgs<ExtArgs> = {}>(args?: Subset<T, Patients$AdmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Department<T extends Patients$DepartmentArgs<ExtArgs> = {}>(args?: Subset<T, Patients$DepartmentArgs<ExtArgs>>): Prisma__DepartmentsClient<$Result.GetResult<Prisma.$DepartmentsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11886,6 +10910,7 @@ export namespace Prisma {
     readonly Name: FieldRef<"Patients", 'String'>
     readonly Age: FieldRef<"Patients", 'String'>
     readonly Gender: FieldRef<"Patients", 'String'>
+    readonly UMR: FieldRef<"Patients", 'String'>
     readonly ContactNumber: FieldRef<"Patients", 'String'>
     readonly Address: FieldRef<"Patients", 'String'>
     readonly CreatedAt: FieldRef<"Patients", 'DateTime'>
@@ -11893,12 +10918,12 @@ export namespace Prisma {
     readonly Status: FieldRef<"Patients", 'String'>
     readonly PatientRegistrationDate: FieldRef<"Patients", 'DateTime'>
     readonly Ptype: FieldRef<"Patients", 'String'>
-    readonly Sponsor: FieldRef<"Patients", 'String'>
-    readonly DepartmentID: FieldRef<"Patients", 'Int'>
     readonly Email: FieldRef<"Patients", 'String'>
     readonly AlternateNumber: FieldRef<"Patients", 'String'>
     readonly DOB: FieldRef<"Patients", 'DateTime'>
     readonly BloodGroup: FieldRef<"Patients", 'String'>
+    readonly DepartmentID: FieldRef<"Patients", 'Int'>
+    readonly Sponsor: FieldRef<"Patients", 'String'>
   }
     
 
@@ -12241,22 +11266,27 @@ export namespace Prisma {
   }
 
   /**
-   * Patients.Department
+   * Patients.Admissions
    */
-  export type Patients$DepartmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Patients$AdmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Departments
+     * Select specific fields to fetch from the Admissions
      */
-    select?: DepartmentsSelect<ExtArgs> | null
+    select?: AdmissionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Departments
+     * Omit specific fields from the Admissions
      */
-    omit?: DepartmentsOmit<ExtArgs> | null
+    omit?: AdmissionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: DepartmentsInclude<ExtArgs> | null
-    where?: DepartmentsWhereInput
+    include?: AdmissionsInclude<ExtArgs> | null
+    where?: AdmissionsWhereInput
+    orderBy?: AdmissionsOrderByWithRelationInput | AdmissionsOrderByWithRelationInput[]
+    cursor?: AdmissionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdmissionsScalarFieldEnum | AdmissionsScalarFieldEnum[]
   }
 
   /**
@@ -12332,27 +11362,22 @@ export namespace Prisma {
   }
 
   /**
-   * Patients.Admissions
+   * Patients.Department
    */
-  export type Patients$AdmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Patients$DepartmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Admissions
+     * Select specific fields to fetch from the Departments
      */
-    select?: AdmissionsSelect<ExtArgs> | null
+    select?: DepartmentsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Admissions
+     * Omit specific fields from the Departments
      */
-    omit?: AdmissionsOmit<ExtArgs> | null
+    omit?: DepartmentsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AdmissionsInclude<ExtArgs> | null
-    where?: AdmissionsWhereInput
-    orderBy?: AdmissionsOrderByWithRelationInput | AdmissionsOrderByWithRelationInput[]
-    cursor?: AdmissionsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AdmissionsScalarFieldEnum | AdmissionsScalarFieldEnum[]
+    include?: DepartmentsInclude<ExtArgs> | null
+    where?: DepartmentsWhereInput
   }
 
   /**
@@ -13599,8 +12624,8 @@ export namespace Prisma {
     total_beds_in_room?: boolean
     created_at?: boolean
     updated_at?: boolean
-    ward?: boolean | WardDefaultArgs<ExtArgs>
     beds?: boolean | Room$bedsArgs<ExtArgs>
+    ward?: boolean | WardDefaultArgs<ExtArgs>
     _count?: boolean | RoomCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["room"]>
 
@@ -13618,16 +12643,16 @@ export namespace Prisma {
 
   export type RoomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"room_id" | "ward_id" | "room_number" | "floor_number" | "total_beds_in_room" | "created_at" | "updated_at", ExtArgs["result"]["room"]>
   export type RoomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    ward?: boolean | WardDefaultArgs<ExtArgs>
     beds?: boolean | Room$bedsArgs<ExtArgs>
+    ward?: boolean | WardDefaultArgs<ExtArgs>
     _count?: boolean | RoomCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $RoomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Room"
     objects: {
-      ward: Prisma.$WardPayload<ExtArgs>
       beds: Prisma.$BedPayload<ExtArgs>[]
+      ward: Prisma.$WardPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       room_id: number
@@ -13977,8 +13002,8 @@ export namespace Prisma {
    */
   export interface Prisma__RoomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    ward<T extends WardDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WardDefaultArgs<ExtArgs>>): Prisma__WardClient<$Result.GetResult<Prisma.$WardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     beds<T extends Room$bedsArgs<ExtArgs> = {}>(args?: Subset<T, Room$bedsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ward<T extends WardDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WardDefaultArgs<ExtArgs>>): Prisma__WardClient<$Result.GetResult<Prisma.$WardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14609,8 +13634,8 @@ export namespace Prisma {
     occupied_status?: boolean
     created_at?: boolean
     updated_at?: boolean
-    room?: boolean | RoomDefaultArgs<ExtArgs>
     Admissions?: boolean | Bed$AdmissionsArgs<ExtArgs>
+    room?: boolean | RoomDefaultArgs<ExtArgs>
     _count?: boolean | BedCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bed"]>
 
@@ -14627,16 +13652,16 @@ export namespace Prisma {
 
   export type BedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"bed_id" | "room_id" | "bed_number" | "occupied_status" | "created_at" | "updated_at", ExtArgs["result"]["bed"]>
   export type BedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    room?: boolean | RoomDefaultArgs<ExtArgs>
     Admissions?: boolean | Bed$AdmissionsArgs<ExtArgs>
+    room?: boolean | RoomDefaultArgs<ExtArgs>
     _count?: boolean | BedCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $BedPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Bed"
     objects: {
-      room: Prisma.$RoomPayload<ExtArgs>
       Admissions: Prisma.$AdmissionsPayload<ExtArgs>[]
+      room: Prisma.$RoomPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       bed_id: number
@@ -14985,8 +14010,8 @@ export namespace Prisma {
    */
   export interface Prisma__BedClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    room<T extends RoomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RoomDefaultArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     Admissions<T extends Bed$AdmissionsArgs<ExtArgs> = {}>(args?: Subset<T, Bed$AdmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdmissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    room<T extends RoomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RoomDefaultArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15441,11 +14466,11 @@ export namespace Prisma {
     bed_id: number | null
     diagnosis_id: number | null
     admission_date: Date | null
-    is_discharged: boolean | null
     discharge_date: Date | null
-    dischargeReasonId: number | null
     treatment_plan: string | null
     remarks: string | null
+    dischargeReasonId: number | null
+    is_discharged: boolean | null
   }
 
   export type AdmissionsMaxAggregateOutputType = {
@@ -15455,11 +14480,11 @@ export namespace Prisma {
     bed_id: number | null
     diagnosis_id: number | null
     admission_date: Date | null
-    is_discharged: boolean | null
     discharge_date: Date | null
-    dischargeReasonId: number | null
     treatment_plan: string | null
     remarks: string | null
+    dischargeReasonId: number | null
+    is_discharged: boolean | null
   }
 
   export type AdmissionsCountAggregateOutputType = {
@@ -15469,11 +14494,11 @@ export namespace Prisma {
     bed_id: number
     diagnosis_id: number
     admission_date: number
-    is_discharged: number
     discharge_date: number
-    dischargeReasonId: number
     treatment_plan: number
     remarks: number
+    dischargeReasonId: number
+    is_discharged: number
     _all: number
   }
 
@@ -15501,11 +14526,11 @@ export namespace Prisma {
     bed_id?: true
     diagnosis_id?: true
     admission_date?: true
-    is_discharged?: true
     discharge_date?: true
-    dischargeReasonId?: true
     treatment_plan?: true
     remarks?: true
+    dischargeReasonId?: true
+    is_discharged?: true
   }
 
   export type AdmissionsMaxAggregateInputType = {
@@ -15515,11 +14540,11 @@ export namespace Prisma {
     bed_id?: true
     diagnosis_id?: true
     admission_date?: true
-    is_discharged?: true
     discharge_date?: true
-    dischargeReasonId?: true
     treatment_plan?: true
     remarks?: true
+    dischargeReasonId?: true
+    is_discharged?: true
   }
 
   export type AdmissionsCountAggregateInputType = {
@@ -15529,11 +14554,11 @@ export namespace Prisma {
     bed_id?: true
     diagnosis_id?: true
     admission_date?: true
-    is_discharged?: true
     discharge_date?: true
-    dischargeReasonId?: true
     treatment_plan?: true
     remarks?: true
+    dischargeReasonId?: true
+    is_discharged?: true
     _all?: true
   }
 
@@ -15630,11 +14655,11 @@ export namespace Prisma {
     bed_id: number
     diagnosis_id: number
     admission_date: Date
-    is_discharged: boolean
     discharge_date: Date | null
-    dischargeReasonId: number | null
     treatment_plan: string | null
     remarks: string | null
+    dischargeReasonId: number | null
+    is_discharged: boolean
     _count: AdmissionsCountAggregateOutputType | null
     _avg: AdmissionsAvgAggregateOutputType | null
     _sum: AdmissionsSumAggregateOutputType | null
@@ -15663,15 +14688,15 @@ export namespace Prisma {
     bed_id?: boolean
     diagnosis_id?: boolean
     admission_date?: boolean
-    is_discharged?: boolean
     discharge_date?: boolean
-    dischargeReasonId?: boolean
     treatment_plan?: boolean
     remarks?: boolean
-    patient?: boolean | PatientsDefaultArgs<ExtArgs>
+    dischargeReasonId?: boolean
+    is_discharged?: boolean
     bed?: boolean | BedDefaultArgs<ExtArgs>
     diagnosis?: boolean | DiagnosesDefaultArgs<ExtArgs>
     dischargeReason?: boolean | Admissions$dischargeReasonArgs<ExtArgs>
+    patient?: boolean | PatientsDefaultArgs<ExtArgs>
     MedicalRecords?: boolean | Admissions$MedicalRecordsArgs<ExtArgs>
     _count?: boolean | AdmissionsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["admissions"]>
@@ -15685,19 +14710,19 @@ export namespace Prisma {
     bed_id?: boolean
     diagnosis_id?: boolean
     admission_date?: boolean
-    is_discharged?: boolean
     discharge_date?: boolean
-    dischargeReasonId?: boolean
     treatment_plan?: boolean
     remarks?: boolean
+    dischargeReasonId?: boolean
+    is_discharged?: boolean
   }
 
-  export type AdmissionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"admission_id" | "admission_no" | "PatientID" | "bed_id" | "diagnosis_id" | "admission_date" | "is_discharged" | "discharge_date" | "dischargeReasonId" | "treatment_plan" | "remarks", ExtArgs["result"]["admissions"]>
+  export type AdmissionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"admission_id" | "admission_no" | "PatientID" | "bed_id" | "diagnosis_id" | "admission_date" | "discharge_date" | "treatment_plan" | "remarks" | "dischargeReasonId" | "is_discharged", ExtArgs["result"]["admissions"]>
   export type AdmissionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    patient?: boolean | PatientsDefaultArgs<ExtArgs>
     bed?: boolean | BedDefaultArgs<ExtArgs>
     diagnosis?: boolean | DiagnosesDefaultArgs<ExtArgs>
     dischargeReason?: boolean | Admissions$dischargeReasonArgs<ExtArgs>
+    patient?: boolean | PatientsDefaultArgs<ExtArgs>
     MedicalRecords?: boolean | Admissions$MedicalRecordsArgs<ExtArgs>
     _count?: boolean | AdmissionsCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -15705,10 +14730,10 @@ export namespace Prisma {
   export type $AdmissionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Admissions"
     objects: {
-      patient: Prisma.$PatientsPayload<ExtArgs>
       bed: Prisma.$BedPayload<ExtArgs>
       diagnosis: Prisma.$DiagnosesPayload<ExtArgs>
       dischargeReason: Prisma.$DischargeReasonPayload<ExtArgs> | null
+      patient: Prisma.$PatientsPayload<ExtArgs>
       MedicalRecords: Prisma.$MedicalRecordsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -15718,11 +14743,11 @@ export namespace Prisma {
       bed_id: number
       diagnosis_id: number
       admission_date: Date
-      is_discharged: boolean
       discharge_date: Date | null
-      dischargeReasonId: number | null
       treatment_plan: string | null
       remarks: string | null
+      dischargeReasonId: number | null
+      is_discharged: boolean
     }, ExtArgs["result"]["admissions"]>
     composites: {}
   }
@@ -16063,10 +15088,10 @@ export namespace Prisma {
    */
   export interface Prisma__AdmissionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    patient<T extends PatientsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PatientsDefaultArgs<ExtArgs>>): Prisma__PatientsClient<$Result.GetResult<Prisma.$PatientsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     bed<T extends BedDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BedDefaultArgs<ExtArgs>>): Prisma__BedClient<$Result.GetResult<Prisma.$BedPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     diagnosis<T extends DiagnosesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DiagnosesDefaultArgs<ExtArgs>>): Prisma__DiagnosesClient<$Result.GetResult<Prisma.$DiagnosesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     dischargeReason<T extends Admissions$dischargeReasonArgs<ExtArgs> = {}>(args?: Subset<T, Admissions$dischargeReasonArgs<ExtArgs>>): Prisma__DischargeReasonClient<$Result.GetResult<Prisma.$DischargeReasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    patient<T extends PatientsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PatientsDefaultArgs<ExtArgs>>): Prisma__PatientsClient<$Result.GetResult<Prisma.$PatientsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     MedicalRecords<T extends Admissions$MedicalRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Admissions$MedicalRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MedicalRecordsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -16103,11 +15128,11 @@ export namespace Prisma {
     readonly bed_id: FieldRef<"Admissions", 'Int'>
     readonly diagnosis_id: FieldRef<"Admissions", 'Int'>
     readonly admission_date: FieldRef<"Admissions", 'DateTime'>
-    readonly is_discharged: FieldRef<"Admissions", 'Boolean'>
     readonly discharge_date: FieldRef<"Admissions", 'DateTime'>
-    readonly dischargeReasonId: FieldRef<"Admissions", 'Int'>
     readonly treatment_plan: FieldRef<"Admissions", 'String'>
     readonly remarks: FieldRef<"Admissions", 'String'>
+    readonly dischargeReasonId: FieldRef<"Admissions", 'Int'>
+    readonly is_discharged: FieldRef<"Admissions", 'Boolean'>
   }
     
 
@@ -17541,25 +16566,18 @@ export namespace Prisma {
   export const MedicalRecordsScalarFieldEnum: {
     RecordID: 'RecordID',
     PatientID: 'PatientID',
-    admission_no: 'admission_no',
     DiagnosisDetails: 'DiagnosisDetails',
     TreatmentPlan: 'TreatmentPlan',
-    medication: 'medication',
+    Medication: 'Medication',
     RecordDate: 'RecordDate',
+    CaseSheet: 'CaseSheet',
+    isIP: 'isIP',
     CreatedAt: 'CreatedAt',
-    UpdatedAt: 'UpdatedAt'
+    UpdatedAt: 'UpdatedAt',
+    AdmissionNo: 'AdmissionNo'
   };
 
   export type MedicalRecordsScalarFieldEnum = (typeof MedicalRecordsScalarFieldEnum)[keyof typeof MedicalRecordsScalarFieldEnum]
-
-
-  export const CaseSheetsScalarFieldEnum: {
-    CaseSheetID: 'CaseSheetID',
-    CaseSheet: 'CaseSheet',
-    RecordID: 'RecordID'
-  };
-
-  export type CaseSheetsScalarFieldEnum = (typeof CaseSheetsScalarFieldEnum)[keyof typeof CaseSheetsScalarFieldEnum]
 
 
   export const ServicesScalarFieldEnum: {
@@ -17589,6 +16607,7 @@ export namespace Prisma {
     Name: 'Name',
     Age: 'Age',
     Gender: 'Gender',
+    UMR: 'UMR',
     ContactNumber: 'ContactNumber',
     Address: 'Address',
     CreatedAt: 'CreatedAt',
@@ -17596,12 +16615,12 @@ export namespace Prisma {
     Status: 'Status',
     PatientRegistrationDate: 'PatientRegistrationDate',
     Ptype: 'Ptype',
-    Sponsor: 'Sponsor',
-    DepartmentID: 'DepartmentID',
     Email: 'Email',
     AlternateNumber: 'AlternateNumber',
     DOB: 'DOB',
-    BloodGroup: 'BloodGroup'
+    BloodGroup: 'BloodGroup',
+    DepartmentID: 'DepartmentID',
+    Sponsor: 'Sponsor'
   };
 
   export type PatientsScalarFieldEnum = (typeof PatientsScalarFieldEnum)[keyof typeof PatientsScalarFieldEnum]
@@ -17651,11 +16670,11 @@ export namespace Prisma {
     bed_id: 'bed_id',
     diagnosis_id: 'diagnosis_id',
     admission_date: 'admission_date',
-    is_discharged: 'is_discharged',
     discharge_date: 'discharge_date',
-    dischargeReasonId: 'dischargeReasonId',
     treatment_plan: 'treatment_plan',
-    remarks: 'remarks'
+    remarks: 'remarks',
+    dischargeReasonId: 'dischargeReasonId',
+    is_discharged: 'is_discharged'
   };
 
   export type AdmissionsScalarFieldEnum = (typeof AdmissionsScalarFieldEnum)[keyof typeof AdmissionsScalarFieldEnum]
@@ -17923,8 +16942,8 @@ export namespace Prisma {
     DepartmentID?: IntFilter<"Diagnoses"> | number
     DiagnosisName?: StringFilter<"Diagnoses"> | string
     CreatedAt?: DateTimeNullableFilter<"Diagnoses"> | Date | string | null
-    Departments?: XOR<DepartmentsScalarRelationFilter, DepartmentsWhereInput>
     admissions?: AdmissionsListRelationFilter
+    Departments?: XOR<DepartmentsScalarRelationFilter, DepartmentsWhereInput>
   }
 
   export type DiagnosesOrderByWithRelationInput = {
@@ -17932,8 +16951,8 @@ export namespace Prisma {
     DepartmentID?: SortOrder
     DiagnosisName?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
-    Departments?: DepartmentsOrderByWithRelationInput
     admissions?: AdmissionsOrderByRelationAggregateInput
+    Departments?: DepartmentsOrderByWithRelationInput
   }
 
   export type DiagnosesWhereUniqueInput = Prisma.AtLeast<{
@@ -17944,8 +16963,8 @@ export namespace Prisma {
     DepartmentID?: IntFilter<"Diagnoses"> | number
     DiagnosisName?: StringFilter<"Diagnoses"> | string
     CreatedAt?: DateTimeNullableFilter<"Diagnoses"> | Date | string | null
-    Departments?: XOR<DepartmentsScalarRelationFilter, DepartmentsWhereInput>
     admissions?: AdmissionsListRelationFilter
+    Departments?: XOR<DepartmentsScalarRelationFilter, DepartmentsWhereInput>
   }, "DiagnosisID">
 
   export type DiagnosesOrderByWithAggregationInput = {
@@ -18049,63 +17068,68 @@ export namespace Prisma {
     AND?: MedicalRecordsWhereInput | MedicalRecordsWhereInput[]
     OR?: MedicalRecordsWhereInput[]
     NOT?: MedicalRecordsWhereInput | MedicalRecordsWhereInput[]
-    RecordID?: StringFilter<"MedicalRecords"> | string
+    RecordID?: IntFilter<"MedicalRecords"> | number
     PatientID?: StringNullableFilter<"MedicalRecords"> | string | null
-    admission_no?: IntNullableFilter<"MedicalRecords"> | number | null
     DiagnosisDetails?: StringNullableFilter<"MedicalRecords"> | string | null
     TreatmentPlan?: StringNullableFilter<"MedicalRecords"> | string | null
-    medication?: StringNullableFilter<"MedicalRecords"> | string | null
+    Medication?: StringNullableFilter<"MedicalRecords"> | string | null
     RecordDate?: DateTimeFilter<"MedicalRecords"> | Date | string
+    CaseSheet?: StringNullableFilter<"MedicalRecords"> | string | null
+    isIP?: BoolFilter<"MedicalRecords"> | boolean
     CreatedAt?: DateTimeNullableFilter<"MedicalRecords"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"MedicalRecords"> | Date | string | null
-    CaseSheets?: XOR<CaseSheetsNullableScalarRelationFilter, CaseSheetsWhereInput> | null
-    Patients?: XOR<PatientsNullableScalarRelationFilter, PatientsWhereInput> | null
+    AdmissionNo?: IntNullableFilter<"MedicalRecords"> | number | null
     Admissions?: XOR<AdmissionsNullableScalarRelationFilter, AdmissionsWhereInput> | null
+    Patients?: XOR<PatientsNullableScalarRelationFilter, PatientsWhereInput> | null
   }
 
   export type MedicalRecordsOrderByWithRelationInput = {
     RecordID?: SortOrder
     PatientID?: SortOrderInput | SortOrder
-    admission_no?: SortOrderInput | SortOrder
     DiagnosisDetails?: SortOrderInput | SortOrder
     TreatmentPlan?: SortOrderInput | SortOrder
-    medication?: SortOrderInput | SortOrder
+    Medication?: SortOrderInput | SortOrder
     RecordDate?: SortOrder
+    CaseSheet?: SortOrderInput | SortOrder
+    isIP?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
-    CaseSheets?: CaseSheetsOrderByWithRelationInput
-    Patients?: PatientsOrderByWithRelationInput
+    AdmissionNo?: SortOrderInput | SortOrder
     Admissions?: AdmissionsOrderByWithRelationInput
+    Patients?: PatientsOrderByWithRelationInput
   }
 
   export type MedicalRecordsWhereUniqueInput = Prisma.AtLeast<{
-    RecordID?: string
+    RecordID?: number
     AND?: MedicalRecordsWhereInput | MedicalRecordsWhereInput[]
     OR?: MedicalRecordsWhereInput[]
     NOT?: MedicalRecordsWhereInput | MedicalRecordsWhereInput[]
     PatientID?: StringNullableFilter<"MedicalRecords"> | string | null
-    admission_no?: IntNullableFilter<"MedicalRecords"> | number | null
     DiagnosisDetails?: StringNullableFilter<"MedicalRecords"> | string | null
     TreatmentPlan?: StringNullableFilter<"MedicalRecords"> | string | null
-    medication?: StringNullableFilter<"MedicalRecords"> | string | null
+    Medication?: StringNullableFilter<"MedicalRecords"> | string | null
     RecordDate?: DateTimeFilter<"MedicalRecords"> | Date | string
+    CaseSheet?: StringNullableFilter<"MedicalRecords"> | string | null
+    isIP?: BoolFilter<"MedicalRecords"> | boolean
     CreatedAt?: DateTimeNullableFilter<"MedicalRecords"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"MedicalRecords"> | Date | string | null
-    CaseSheets?: XOR<CaseSheetsNullableScalarRelationFilter, CaseSheetsWhereInput> | null
-    Patients?: XOR<PatientsNullableScalarRelationFilter, PatientsWhereInput> | null
+    AdmissionNo?: IntNullableFilter<"MedicalRecords"> | number | null
     Admissions?: XOR<AdmissionsNullableScalarRelationFilter, AdmissionsWhereInput> | null
+    Patients?: XOR<PatientsNullableScalarRelationFilter, PatientsWhereInput> | null
   }, "RecordID">
 
   export type MedicalRecordsOrderByWithAggregationInput = {
     RecordID?: SortOrder
     PatientID?: SortOrderInput | SortOrder
-    admission_no?: SortOrderInput | SortOrder
     DiagnosisDetails?: SortOrderInput | SortOrder
     TreatmentPlan?: SortOrderInput | SortOrder
-    medication?: SortOrderInput | SortOrder
+    Medication?: SortOrderInput | SortOrder
     RecordDate?: SortOrder
+    CaseSheet?: SortOrderInput | SortOrder
+    isIP?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
+    AdmissionNo?: SortOrderInput | SortOrder
     _count?: MedicalRecordsCountOrderByAggregateInput
     _avg?: MedicalRecordsAvgOrderByAggregateInput
     _max?: MedicalRecordsMaxOrderByAggregateInput
@@ -18117,60 +17141,17 @@ export namespace Prisma {
     AND?: MedicalRecordsScalarWhereWithAggregatesInput | MedicalRecordsScalarWhereWithAggregatesInput[]
     OR?: MedicalRecordsScalarWhereWithAggregatesInput[]
     NOT?: MedicalRecordsScalarWhereWithAggregatesInput | MedicalRecordsScalarWhereWithAggregatesInput[]
-    RecordID?: StringWithAggregatesFilter<"MedicalRecords"> | string
+    RecordID?: IntWithAggregatesFilter<"MedicalRecords"> | number
     PatientID?: StringNullableWithAggregatesFilter<"MedicalRecords"> | string | null
-    admission_no?: IntNullableWithAggregatesFilter<"MedicalRecords"> | number | null
     DiagnosisDetails?: StringNullableWithAggregatesFilter<"MedicalRecords"> | string | null
     TreatmentPlan?: StringNullableWithAggregatesFilter<"MedicalRecords"> | string | null
-    medication?: StringNullableWithAggregatesFilter<"MedicalRecords"> | string | null
+    Medication?: StringNullableWithAggregatesFilter<"MedicalRecords"> | string | null
     RecordDate?: DateTimeWithAggregatesFilter<"MedicalRecords"> | Date | string
+    CaseSheet?: StringNullableWithAggregatesFilter<"MedicalRecords"> | string | null
+    isIP?: BoolWithAggregatesFilter<"MedicalRecords"> | boolean
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"MedicalRecords"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"MedicalRecords"> | Date | string | null
-  }
-
-  export type CaseSheetsWhereInput = {
-    AND?: CaseSheetsWhereInput | CaseSheetsWhereInput[]
-    OR?: CaseSheetsWhereInput[]
-    NOT?: CaseSheetsWhereInput | CaseSheetsWhereInput[]
-    CaseSheetID?: StringFilter<"CaseSheets"> | string
-    CaseSheet?: StringNullableFilter<"CaseSheets"> | string | null
-    RecordID?: StringFilter<"CaseSheets"> | string
-    MedicalRecord?: XOR<MedicalRecordsScalarRelationFilter, MedicalRecordsWhereInput>
-  }
-
-  export type CaseSheetsOrderByWithRelationInput = {
-    CaseSheetID?: SortOrder
-    CaseSheet?: SortOrderInput | SortOrder
-    RecordID?: SortOrder
-    MedicalRecord?: MedicalRecordsOrderByWithRelationInput
-  }
-
-  export type CaseSheetsWhereUniqueInput = Prisma.AtLeast<{
-    CaseSheetID?: string
-    RecordID?: string
-    AND?: CaseSheetsWhereInput | CaseSheetsWhereInput[]
-    OR?: CaseSheetsWhereInput[]
-    NOT?: CaseSheetsWhereInput | CaseSheetsWhereInput[]
-    CaseSheet?: StringNullableFilter<"CaseSheets"> | string | null
-    MedicalRecord?: XOR<MedicalRecordsScalarRelationFilter, MedicalRecordsWhereInput>
-  }, "CaseSheetID" | "RecordID">
-
-  export type CaseSheetsOrderByWithAggregationInput = {
-    CaseSheetID?: SortOrder
-    CaseSheet?: SortOrderInput | SortOrder
-    RecordID?: SortOrder
-    _count?: CaseSheetsCountOrderByAggregateInput
-    _max?: CaseSheetsMaxOrderByAggregateInput
-    _min?: CaseSheetsMinOrderByAggregateInput
-  }
-
-  export type CaseSheetsScalarWhereWithAggregatesInput = {
-    AND?: CaseSheetsScalarWhereWithAggregatesInput | CaseSheetsScalarWhereWithAggregatesInput[]
-    OR?: CaseSheetsScalarWhereWithAggregatesInput[]
-    NOT?: CaseSheetsScalarWhereWithAggregatesInput | CaseSheetsScalarWhereWithAggregatesInput[]
-    CaseSheetID?: StringWithAggregatesFilter<"CaseSheets"> | string
-    CaseSheet?: StringNullableWithAggregatesFilter<"CaseSheets"> | string | null
-    RecordID?: StringWithAggregatesFilter<"CaseSheets"> | string
+    AdmissionNo?: IntNullableWithAggregatesFilter<"MedicalRecords"> | number | null
   }
 
   export type ServicesWhereInput = {
@@ -18289,6 +17270,7 @@ export namespace Prisma {
     Name?: StringFilter<"Patients"> | string
     Age?: StringFilter<"Patients"> | string
     Gender?: StringFilter<"Patients"> | string
+    UMR?: StringNullableFilter<"Patients"> | string | null
     ContactNumber?: StringNullableFilter<"Patients"> | string | null
     Address?: StringNullableFilter<"Patients"> | string | null
     CreatedAt?: DateTimeNullableFilter<"Patients"> | Date | string | null
@@ -18296,17 +17278,17 @@ export namespace Prisma {
     Status?: StringNullableFilter<"Patients"> | string | null
     PatientRegistrationDate?: DateTimeFilter<"Patients"> | Date | string
     Ptype?: StringNullableFilter<"Patients"> | string | null
-    Sponsor?: StringNullableFilter<"Patients"> | string | null
-    DepartmentID?: IntNullableFilter<"Patients"> | number | null
     Email?: StringNullableFilter<"Patients"> | string | null
     AlternateNumber?: StringNullableFilter<"Patients"> | string | null
     DOB?: DateTimeNullableFilter<"Patients"> | Date | string | null
     BloodGroup?: StringNullableFilter<"Patients"> | string | null
-    Department?: XOR<DepartmentsNullableScalarRelationFilter, DepartmentsWhereInput> | null
+    DepartmentID?: IntNullableFilter<"Patients"> | number | null
+    Sponsor?: StringNullableFilter<"Patients"> | string | null
+    Admissions?: AdmissionsListRelationFilter
     Appointments?: AppointmentsListRelationFilter
     Bills?: BillsListRelationFilter
     MedicalRecords?: MedicalRecordsListRelationFilter
-    Admissions?: AdmissionsListRelationFilter
+    Department?: XOR<DepartmentsNullableScalarRelationFilter, DepartmentsWhereInput> | null
   }
 
   export type PatientsOrderByWithRelationInput = {
@@ -18314,6 +17296,7 @@ export namespace Prisma {
     Name?: SortOrder
     Age?: SortOrder
     Gender?: SortOrder
+    UMR?: SortOrderInput | SortOrder
     ContactNumber?: SortOrderInput | SortOrder
     Address?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
@@ -18321,21 +17304,22 @@ export namespace Prisma {
     Status?: SortOrderInput | SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrderInput | SortOrder
-    Sponsor?: SortOrderInput | SortOrder
-    DepartmentID?: SortOrderInput | SortOrder
     Email?: SortOrderInput | SortOrder
     AlternateNumber?: SortOrderInput | SortOrder
     DOB?: SortOrderInput | SortOrder
     BloodGroup?: SortOrderInput | SortOrder
-    Department?: DepartmentsOrderByWithRelationInput
+    DepartmentID?: SortOrderInput | SortOrder
+    Sponsor?: SortOrderInput | SortOrder
+    Admissions?: AdmissionsOrderByRelationAggregateInput
     Appointments?: AppointmentsOrderByRelationAggregateInput
     Bills?: BillsOrderByRelationAggregateInput
     MedicalRecords?: MedicalRecordsOrderByRelationAggregateInput
-    Admissions?: AdmissionsOrderByRelationAggregateInput
+    Department?: DepartmentsOrderByWithRelationInput
   }
 
   export type PatientsWhereUniqueInput = Prisma.AtLeast<{
     PatientID?: string
+    UMR?: string
     AND?: PatientsWhereInput | PatientsWhereInput[]
     OR?: PatientsWhereInput[]
     NOT?: PatientsWhereInput | PatientsWhereInput[]
@@ -18349,24 +17333,25 @@ export namespace Prisma {
     Status?: StringNullableFilter<"Patients"> | string | null
     PatientRegistrationDate?: DateTimeFilter<"Patients"> | Date | string
     Ptype?: StringNullableFilter<"Patients"> | string | null
-    Sponsor?: StringNullableFilter<"Patients"> | string | null
-    DepartmentID?: IntNullableFilter<"Patients"> | number | null
     Email?: StringNullableFilter<"Patients"> | string | null
     AlternateNumber?: StringNullableFilter<"Patients"> | string | null
     DOB?: DateTimeNullableFilter<"Patients"> | Date | string | null
     BloodGroup?: StringNullableFilter<"Patients"> | string | null
-    Department?: XOR<DepartmentsNullableScalarRelationFilter, DepartmentsWhereInput> | null
+    DepartmentID?: IntNullableFilter<"Patients"> | number | null
+    Sponsor?: StringNullableFilter<"Patients"> | string | null
+    Admissions?: AdmissionsListRelationFilter
     Appointments?: AppointmentsListRelationFilter
     Bills?: BillsListRelationFilter
     MedicalRecords?: MedicalRecordsListRelationFilter
-    Admissions?: AdmissionsListRelationFilter
-  }, "PatientID">
+    Department?: XOR<DepartmentsNullableScalarRelationFilter, DepartmentsWhereInput> | null
+  }, "PatientID" | "UMR">
 
   export type PatientsOrderByWithAggregationInput = {
     PatientID?: SortOrder
     Name?: SortOrder
     Age?: SortOrder
     Gender?: SortOrder
+    UMR?: SortOrderInput | SortOrder
     ContactNumber?: SortOrderInput | SortOrder
     Address?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
@@ -18374,12 +17359,12 @@ export namespace Prisma {
     Status?: SortOrderInput | SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrderInput | SortOrder
-    Sponsor?: SortOrderInput | SortOrder
-    DepartmentID?: SortOrderInput | SortOrder
     Email?: SortOrderInput | SortOrder
     AlternateNumber?: SortOrderInput | SortOrder
     DOB?: SortOrderInput | SortOrder
     BloodGroup?: SortOrderInput | SortOrder
+    DepartmentID?: SortOrderInput | SortOrder
+    Sponsor?: SortOrderInput | SortOrder
     _count?: PatientsCountOrderByAggregateInput
     _avg?: PatientsAvgOrderByAggregateInput
     _max?: PatientsMaxOrderByAggregateInput
@@ -18395,6 +17380,7 @@ export namespace Prisma {
     Name?: StringWithAggregatesFilter<"Patients"> | string
     Age?: StringWithAggregatesFilter<"Patients"> | string
     Gender?: StringWithAggregatesFilter<"Patients"> | string
+    UMR?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     ContactNumber?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     Address?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"Patients"> | Date | string | null
@@ -18402,12 +17388,12 @@ export namespace Prisma {
     Status?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     PatientRegistrationDate?: DateTimeWithAggregatesFilter<"Patients"> | Date | string
     Ptype?: StringNullableWithAggregatesFilter<"Patients"> | string | null
-    Sponsor?: StringNullableWithAggregatesFilter<"Patients"> | string | null
-    DepartmentID?: IntNullableWithAggregatesFilter<"Patients"> | number | null
     Email?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     AlternateNumber?: StringNullableWithAggregatesFilter<"Patients"> | string | null
     DOB?: DateTimeNullableWithAggregatesFilter<"Patients"> | Date | string | null
     BloodGroup?: StringNullableWithAggregatesFilter<"Patients"> | string | null
+    DepartmentID?: IntNullableWithAggregatesFilter<"Patients"> | number | null
+    Sponsor?: StringNullableWithAggregatesFilter<"Patients"> | string | null
   }
 
   export type WardWhereInput = {
@@ -18483,8 +17469,8 @@ export namespace Prisma {
     total_beds_in_room?: IntFilter<"Room"> | number
     created_at?: DateTimeFilter<"Room"> | Date | string
     updated_at?: DateTimeFilter<"Room"> | Date | string
-    ward?: XOR<WardScalarRelationFilter, WardWhereInput>
     beds?: BedListRelationFilter
+    ward?: XOR<WardScalarRelationFilter, WardWhereInput>
   }
 
   export type RoomOrderByWithRelationInput = {
@@ -18495,8 +17481,8 @@ export namespace Prisma {
     total_beds_in_room?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    ward?: WardOrderByWithRelationInput
     beds?: BedOrderByRelationAggregateInput
+    ward?: WardOrderByWithRelationInput
   }
 
   export type RoomWhereUniqueInput = Prisma.AtLeast<{
@@ -18510,8 +17496,8 @@ export namespace Prisma {
     total_beds_in_room?: IntFilter<"Room"> | number
     created_at?: DateTimeFilter<"Room"> | Date | string
     updated_at?: DateTimeFilter<"Room"> | Date | string
-    ward?: XOR<WardScalarRelationFilter, WardWhereInput>
     beds?: BedListRelationFilter
+    ward?: XOR<WardScalarRelationFilter, WardWhereInput>
   }, "room_id">
 
   export type RoomOrderByWithAggregationInput = {
@@ -18552,8 +17538,8 @@ export namespace Prisma {
     occupied_status?: StringFilter<"Bed"> | string
     created_at?: DateTimeFilter<"Bed"> | Date | string
     updated_at?: DateTimeFilter<"Bed"> | Date | string
-    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
     Admissions?: AdmissionsListRelationFilter
+    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
   }
 
   export type BedOrderByWithRelationInput = {
@@ -18563,8 +17549,8 @@ export namespace Prisma {
     occupied_status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    room?: RoomOrderByWithRelationInput
     Admissions?: AdmissionsOrderByRelationAggregateInput
+    room?: RoomOrderByWithRelationInput
   }
 
   export type BedWhereUniqueInput = Prisma.AtLeast<{
@@ -18577,8 +17563,8 @@ export namespace Prisma {
     occupied_status?: StringFilter<"Bed"> | string
     created_at?: DateTimeFilter<"Bed"> | Date | string
     updated_at?: DateTimeFilter<"Bed"> | Date | string
-    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
     Admissions?: AdmissionsListRelationFilter
+    room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
   }, "bed_id">
 
   export type BedOrderByWithAggregationInput = {
@@ -18617,15 +17603,15 @@ export namespace Prisma {
     bed_id?: IntFilter<"Admissions"> | number
     diagnosis_id?: IntFilter<"Admissions"> | number
     admission_date?: DateTimeFilter<"Admissions"> | Date | string
-    is_discharged?: BoolFilter<"Admissions"> | boolean
     discharge_date?: DateTimeNullableFilter<"Admissions"> | Date | string | null
-    dischargeReasonId?: IntNullableFilter<"Admissions"> | number | null
     treatment_plan?: StringNullableFilter<"Admissions"> | string | null
     remarks?: StringNullableFilter<"Admissions"> | string | null
-    patient?: XOR<PatientsScalarRelationFilter, PatientsWhereInput>
+    dischargeReasonId?: IntNullableFilter<"Admissions"> | number | null
+    is_discharged?: BoolFilter<"Admissions"> | boolean
     bed?: XOR<BedScalarRelationFilter, BedWhereInput>
     diagnosis?: XOR<DiagnosesScalarRelationFilter, DiagnosesWhereInput>
     dischargeReason?: XOR<DischargeReasonNullableScalarRelationFilter, DischargeReasonWhereInput> | null
+    patient?: XOR<PatientsScalarRelationFilter, PatientsWhereInput>
     MedicalRecords?: MedicalRecordsListRelationFilter
   }
 
@@ -18636,15 +17622,15 @@ export namespace Prisma {
     bed_id?: SortOrder
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
-    is_discharged?: SortOrder
     discharge_date?: SortOrderInput | SortOrder
-    dischargeReasonId?: SortOrderInput | SortOrder
     treatment_plan?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
-    patient?: PatientsOrderByWithRelationInput
+    dischargeReasonId?: SortOrderInput | SortOrder
+    is_discharged?: SortOrder
     bed?: BedOrderByWithRelationInput
     diagnosis?: DiagnosesOrderByWithRelationInput
     dischargeReason?: DischargeReasonOrderByWithRelationInput
+    patient?: PatientsOrderByWithRelationInput
     MedicalRecords?: MedicalRecordsOrderByRelationAggregateInput
   }
 
@@ -18658,15 +17644,15 @@ export namespace Prisma {
     bed_id?: IntFilter<"Admissions"> | number
     diagnosis_id?: IntFilter<"Admissions"> | number
     admission_date?: DateTimeFilter<"Admissions"> | Date | string
-    is_discharged?: BoolFilter<"Admissions"> | boolean
     discharge_date?: DateTimeNullableFilter<"Admissions"> | Date | string | null
-    dischargeReasonId?: IntNullableFilter<"Admissions"> | number | null
     treatment_plan?: StringNullableFilter<"Admissions"> | string | null
     remarks?: StringNullableFilter<"Admissions"> | string | null
-    patient?: XOR<PatientsScalarRelationFilter, PatientsWhereInput>
+    dischargeReasonId?: IntNullableFilter<"Admissions"> | number | null
+    is_discharged?: BoolFilter<"Admissions"> | boolean
     bed?: XOR<BedScalarRelationFilter, BedWhereInput>
     diagnosis?: XOR<DiagnosesScalarRelationFilter, DiagnosesWhereInput>
     dischargeReason?: XOR<DischargeReasonNullableScalarRelationFilter, DischargeReasonWhereInput> | null
+    patient?: XOR<PatientsScalarRelationFilter, PatientsWhereInput>
     MedicalRecords?: MedicalRecordsListRelationFilter
   }, "admission_id" | "admission_no">
 
@@ -18677,11 +17663,11 @@ export namespace Prisma {
     bed_id?: SortOrder
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
-    is_discharged?: SortOrder
     discharge_date?: SortOrderInput | SortOrder
-    dischargeReasonId?: SortOrderInput | SortOrder
     treatment_plan?: SortOrderInput | SortOrder
     remarks?: SortOrderInput | SortOrder
+    dischargeReasonId?: SortOrderInput | SortOrder
+    is_discharged?: SortOrder
     _count?: AdmissionsCountOrderByAggregateInput
     _avg?: AdmissionsAvgOrderByAggregateInput
     _max?: AdmissionsMaxOrderByAggregateInput
@@ -18699,11 +17685,11 @@ export namespace Prisma {
     bed_id?: IntWithAggregatesFilter<"Admissions"> | number
     diagnosis_id?: IntWithAggregatesFilter<"Admissions"> | number
     admission_date?: DateTimeWithAggregatesFilter<"Admissions"> | Date | string
-    is_discharged?: BoolWithAggregatesFilter<"Admissions"> | boolean
     discharge_date?: DateTimeNullableWithAggregatesFilter<"Admissions"> | Date | string | null
-    dischargeReasonId?: IntNullableWithAggregatesFilter<"Admissions"> | number | null
     treatment_plan?: StringNullableWithAggregatesFilter<"Admissions"> | string | null
     remarks?: StringNullableWithAggregatesFilter<"Admissions"> | string | null
+    dischargeReasonId?: IntNullableWithAggregatesFilter<"Admissions"> | number | null
+    is_discharged?: BoolWithAggregatesFilter<"Admissions"> | boolean
   }
 
   export type DischargeReasonWhereInput = {
@@ -18916,8 +17902,8 @@ export namespace Prisma {
   export type DiagnosesCreateInput = {
     DiagnosisName: string
     CreatedAt?: Date | string | null
-    Departments: DepartmentsCreateNestedOneWithoutDiagnosesInput
     admissions?: AdmissionsCreateNestedManyWithoutDiagnosisInput
+    Departments: DepartmentsCreateNestedOneWithoutDiagnosesInput
   }
 
   export type DiagnosesUncheckedCreateInput = {
@@ -18931,8 +17917,8 @@ export namespace Prisma {
   export type DiagnosesUpdateInput = {
     DiagnosisName?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Departments?: DepartmentsUpdateOneRequiredWithoutDiagnosesNestedInput
     admissions?: AdmissionsUpdateManyWithoutDiagnosisNestedInput
+    Departments?: DepartmentsUpdateOneRequiredWithoutDiagnosesNestedInput
   }
 
   export type DiagnosesUncheckedUpdateInput = {
@@ -19038,130 +18024,95 @@ export namespace Prisma {
   }
 
   export type MedicalRecordsCreateInput = {
-    RecordID: string
     DiagnosisDetails?: string | null
     TreatmentPlan?: string | null
-    medication?: string | null
+    Medication?: string | null
     RecordDate: Date | string
+    CaseSheet?: string | null
+    isIP?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    CaseSheets?: CaseSheetsCreateNestedOneWithoutMedicalRecordInput
-    Patients?: PatientsCreateNestedOneWithoutMedicalRecordsInput
     Admissions?: AdmissionsCreateNestedOneWithoutMedicalRecordsInput
+    Patients?: PatientsCreateNestedOneWithoutMedicalRecordsInput
   }
 
   export type MedicalRecordsUncheckedCreateInput = {
-    RecordID: string
+    RecordID?: number
     PatientID?: string | null
-    admission_no?: number | null
     DiagnosisDetails?: string | null
     TreatmentPlan?: string | null
-    medication?: string | null
+    Medication?: string | null
     RecordDate: Date | string
+    CaseSheet?: string | null
+    isIP?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    CaseSheets?: CaseSheetsUncheckedCreateNestedOneWithoutMedicalRecordInput
+    AdmissionNo?: number | null
   }
 
   export type MedicalRecordsUpdateInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    CaseSheets?: CaseSheetsUpdateOneWithoutMedicalRecordNestedInput
-    Patients?: PatientsUpdateOneWithoutMedicalRecordsNestedInput
     Admissions?: AdmissionsUpdateOneWithoutMedicalRecordsNestedInput
+    Patients?: PatientsUpdateOneWithoutMedicalRecordsNestedInput
   }
 
   export type MedicalRecordsUncheckedUpdateInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
+    RecordID?: IntFieldUpdateOperationsInput | number
     PatientID?: NullableStringFieldUpdateOperationsInput | string | null
-    admission_no?: NullableIntFieldUpdateOperationsInput | number | null
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    CaseSheets?: CaseSheetsUncheckedUpdateOneWithoutMedicalRecordNestedInput
+    AdmissionNo?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MedicalRecordsCreateManyInput = {
-    RecordID: string
     PatientID?: string | null
-    admission_no?: number | null
     DiagnosisDetails?: string | null
     TreatmentPlan?: string | null
-    medication?: string | null
+    Medication?: string | null
     RecordDate: Date | string
+    CaseSheet?: string | null
+    isIP?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    AdmissionNo?: number | null
   }
 
   export type MedicalRecordsUpdateManyMutationInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MedicalRecordsUncheckedUpdateManyInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
+    RecordID?: IntFieldUpdateOperationsInput | number
     PatientID?: NullableStringFieldUpdateOperationsInput | string | null
-    admission_no?: NullableIntFieldUpdateOperationsInput | number | null
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type CaseSheetsCreateInput = {
-    CaseSheetID?: string
-    CaseSheet?: string | null
-    MedicalRecord: MedicalRecordsCreateNestedOneWithoutCaseSheetsInput
-  }
-
-  export type CaseSheetsUncheckedCreateInput = {
-    CaseSheetID?: string
-    CaseSheet?: string | null
-    RecordID: string
-  }
-
-  export type CaseSheetsUpdateInput = {
-    CaseSheetID?: StringFieldUpdateOperationsInput | string
-    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
-    MedicalRecord?: MedicalRecordsUpdateOneRequiredWithoutCaseSheetsNestedInput
-  }
-
-  export type CaseSheetsUncheckedUpdateInput = {
-    CaseSheetID?: StringFieldUpdateOperationsInput | string
-    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
-    RecordID?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CaseSheetsCreateManyInput = {
-    CaseSheetID?: string
-    CaseSheet?: string | null
-    RecordID: string
-  }
-
-  export type CaseSheetsUpdateManyMutationInput = {
-    CaseSheetID?: StringFieldUpdateOperationsInput | string
-    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type CaseSheetsUncheckedUpdateManyInput = {
-    CaseSheetID?: StringFieldUpdateOperationsInput | string
-    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
-    RecordID?: StringFieldUpdateOperationsInput | string
+    AdmissionNo?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ServicesCreateInput = {
@@ -19273,6 +18224,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -19280,16 +18232,16 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
-    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
+    Sponsor?: string | null
+    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
     Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
     Bills?: BillsCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
   }
 
   export type PatientsUncheckedCreateInput = {
@@ -19297,6 +18249,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -19304,16 +18257,16 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
-    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    DepartmentID?: number | null
+    Sponsor?: string | null
+    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
     Appointments?: AppointmentsUncheckedCreateNestedManyWithoutPatientsInput
     Bills?: BillsUncheckedCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientsUpdateInput = {
@@ -19321,6 +18274,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19328,16 +18282,16 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
     Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
     Bills?: BillsUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
   }
 
   export type PatientsUncheckedUpdateInput = {
@@ -19345,6 +18299,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19352,16 +18307,16 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
-    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
     Appointments?: AppointmentsUncheckedUpdateManyWithoutPatientsNestedInput
     Bills?: BillsUncheckedUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientsCreateManyInput = {
@@ -19369,6 +18324,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -19376,12 +18332,12 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
-    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    DepartmentID?: number | null
+    Sponsor?: string | null
   }
 
   export type PatientsUpdateManyMutationInput = {
@@ -19389,6 +18345,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19396,11 +18353,11 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PatientsUncheckedUpdateManyInput = {
@@ -19408,6 +18365,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19415,12 +18373,12 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
-    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type WardCreateInput = {
@@ -19492,8 +18450,8 @@ export namespace Prisma {
     total_beds_in_room: number
     created_at?: Date | string
     updated_at?: Date | string
-    ward: WardCreateNestedOneWithoutRoomsInput
     beds?: BedCreateNestedManyWithoutRoomInput
+    ward: WardCreateNestedOneWithoutRoomsInput
   }
 
   export type RoomUncheckedCreateInput = {
@@ -19513,8 +18471,8 @@ export namespace Prisma {
     total_beds_in_room?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    ward?: WardUpdateOneRequiredWithoutRoomsNestedInput
     beds?: BedUpdateManyWithoutRoomNestedInput
+    ward?: WardUpdateOneRequiredWithoutRoomsNestedInput
   }
 
   export type RoomUncheckedUpdateInput = {
@@ -19560,8 +18518,8 @@ export namespace Prisma {
     occupied_status?: string
     created_at?: Date | string
     updated_at?: Date | string
-    room: RoomCreateNestedOneWithoutBedsInput
     Admissions?: AdmissionsCreateNestedManyWithoutBedInput
+    room: RoomCreateNestedOneWithoutBedsInput
   }
 
   export type BedUncheckedCreateInput = {
@@ -19579,8 +18537,8 @@ export namespace Prisma {
     occupied_status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    room?: RoomUpdateOneRequiredWithoutBedsNestedInput
     Admissions?: AdmissionsUpdateManyWithoutBedNestedInput
+    room?: RoomUpdateOneRequiredWithoutBedsNestedInput
   }
 
   export type BedUncheckedUpdateInput = {
@@ -19620,14 +18578,14 @@ export namespace Prisma {
   export type AdmissionsCreateInput = {
     admission_no: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
     treatment_plan?: string | null
     remarks?: string | null
-    patient: PatientsCreateNestedOneWithoutAdmissionsInput
+    is_discharged?: boolean
     bed: BedCreateNestedOneWithoutAdmissionsInput
     diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
     dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
+    patient: PatientsCreateNestedOneWithoutAdmissionsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
   }
 
@@ -19638,25 +18596,25 @@ export namespace Prisma {
     bed_id: number
     diagnosis_id: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
-    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
+    dischargeReasonId?: number | null
+    is_discharged?: boolean
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
   }
 
   export type AdmissionsUpdateInput = {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
     diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
     dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
+    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -19667,11 +18625,11 @@ export namespace Prisma {
     bed_id?: IntFieldUpdateOperationsInput | number
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -19681,20 +18639,20 @@ export namespace Prisma {
     bed_id: number
     diagnosis_id: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
-    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
+    dischargeReasonId?: number | null
+    is_discharged?: boolean
   }
 
   export type AdmissionsUpdateManyMutationInput = {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AdmissionsUncheckedUpdateManyInput = {
@@ -19704,11 +18662,11 @@ export namespace Prisma {
     bed_id?: IntFieldUpdateOperationsInput | number
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DischargeReasonCreateInput = {
@@ -20057,15 +19015,15 @@ export namespace Prisma {
     DepartmentID?: SortOrder
   }
 
-  export type DepartmentsScalarRelationFilter = {
-    is?: DepartmentsWhereInput
-    isNot?: DepartmentsWhereInput
-  }
-
   export type AdmissionsListRelationFilter = {
     every?: AdmissionsWhereInput
     some?: AdmissionsWhereInput
     none?: AdmissionsWhereInput
+  }
+
+  export type DepartmentsScalarRelationFilter = {
+    is?: DepartmentsWhereInput
+    isNot?: DepartmentsWhereInput
   }
 
   export type AdmissionsOrderByRelationAggregateInput = {
@@ -20156,6 +19114,11 @@ export namespace Prisma {
     DepartmentID?: SortOrder
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -20167,9 +19130,9 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type CaseSheetsNullableScalarRelationFilter = {
-    is?: CaseSheetsWhereInput | null
-    isNot?: CaseSheetsWhereInput | null
+  export type AdmissionsNullableScalarRelationFilter = {
+    is?: AdmissionsWhereInput | null
+    isNot?: AdmissionsWhereInput | null
   }
 
   export type PatientsNullableScalarRelationFilter = {
@@ -20177,53 +19140,64 @@ export namespace Prisma {
     isNot?: PatientsWhereInput | null
   }
 
-  export type AdmissionsNullableScalarRelationFilter = {
-    is?: AdmissionsWhereInput | null
-    isNot?: AdmissionsWhereInput | null
-  }
-
   export type MedicalRecordsCountOrderByAggregateInput = {
     RecordID?: SortOrder
     PatientID?: SortOrder
-    admission_no?: SortOrder
     DiagnosisDetails?: SortOrder
     TreatmentPlan?: SortOrder
-    medication?: SortOrder
+    Medication?: SortOrder
     RecordDate?: SortOrder
+    CaseSheet?: SortOrder
+    isIP?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+    AdmissionNo?: SortOrder
   }
 
   export type MedicalRecordsAvgOrderByAggregateInput = {
-    admission_no?: SortOrder
+    RecordID?: SortOrder
+    AdmissionNo?: SortOrder
   }
 
   export type MedicalRecordsMaxOrderByAggregateInput = {
     RecordID?: SortOrder
     PatientID?: SortOrder
-    admission_no?: SortOrder
     DiagnosisDetails?: SortOrder
     TreatmentPlan?: SortOrder
-    medication?: SortOrder
+    Medication?: SortOrder
     RecordDate?: SortOrder
+    CaseSheet?: SortOrder
+    isIP?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+    AdmissionNo?: SortOrder
   }
 
   export type MedicalRecordsMinOrderByAggregateInput = {
     RecordID?: SortOrder
     PatientID?: SortOrder
-    admission_no?: SortOrder
     DiagnosisDetails?: SortOrder
     TreatmentPlan?: SortOrder
-    medication?: SortOrder
+    Medication?: SortOrder
     RecordDate?: SortOrder
+    CaseSheet?: SortOrder
+    isIP?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+    AdmissionNo?: SortOrder
   }
 
   export type MedicalRecordsSumOrderByAggregateInput = {
-    admission_no?: SortOrder
+    RecordID?: SortOrder
+    AdmissionNo?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -20240,29 +19214,6 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type MedicalRecordsScalarRelationFilter = {
-    is?: MedicalRecordsWhereInput
-    isNot?: MedicalRecordsWhereInput
-  }
-
-  export type CaseSheetsCountOrderByAggregateInput = {
-    CaseSheetID?: SortOrder
-    CaseSheet?: SortOrder
-    RecordID?: SortOrder
-  }
-
-  export type CaseSheetsMaxOrderByAggregateInput = {
-    CaseSheetID?: SortOrder
-    CaseSheet?: SortOrder
-    RecordID?: SortOrder
-  }
-
-  export type CaseSheetsMinOrderByAggregateInput = {
-    CaseSheetID?: SortOrder
-    CaseSheet?: SortOrder
-    RecordID?: SortOrder
   }
 
   export type ServicesCountOrderByAggregateInput = {
@@ -20329,11 +19280,6 @@ export namespace Prisma {
     UserID?: SortOrder
   }
 
-  export type DepartmentsNullableScalarRelationFilter = {
-    is?: DepartmentsWhereInput | null
-    isNot?: DepartmentsWhereInput | null
-  }
-
   export type BillsListRelationFilter = {
     every?: BillsWhereInput
     some?: BillsWhereInput
@@ -20344,6 +19290,11 @@ export namespace Prisma {
     every?: MedicalRecordsWhereInput
     some?: MedicalRecordsWhereInput
     none?: MedicalRecordsWhereInput
+  }
+
+  export type DepartmentsNullableScalarRelationFilter = {
+    is?: DepartmentsWhereInput | null
+    isNot?: DepartmentsWhereInput | null
   }
 
   export type BillsOrderByRelationAggregateInput = {
@@ -20359,6 +19310,7 @@ export namespace Prisma {
     Name?: SortOrder
     Age?: SortOrder
     Gender?: SortOrder
+    UMR?: SortOrder
     ContactNumber?: SortOrder
     Address?: SortOrder
     CreatedAt?: SortOrder
@@ -20366,12 +19318,12 @@ export namespace Prisma {
     Status?: SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrder
-    Sponsor?: SortOrder
-    DepartmentID?: SortOrder
     Email?: SortOrder
     AlternateNumber?: SortOrder
     DOB?: SortOrder
     BloodGroup?: SortOrder
+    DepartmentID?: SortOrder
+    Sponsor?: SortOrder
   }
 
   export type PatientsAvgOrderByAggregateInput = {
@@ -20383,6 +19335,7 @@ export namespace Prisma {
     Name?: SortOrder
     Age?: SortOrder
     Gender?: SortOrder
+    UMR?: SortOrder
     ContactNumber?: SortOrder
     Address?: SortOrder
     CreatedAt?: SortOrder
@@ -20390,12 +19343,12 @@ export namespace Prisma {
     Status?: SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrder
-    Sponsor?: SortOrder
-    DepartmentID?: SortOrder
     Email?: SortOrder
     AlternateNumber?: SortOrder
     DOB?: SortOrder
     BloodGroup?: SortOrder
+    DepartmentID?: SortOrder
+    Sponsor?: SortOrder
   }
 
   export type PatientsMinOrderByAggregateInput = {
@@ -20403,6 +19356,7 @@ export namespace Prisma {
     Name?: SortOrder
     Age?: SortOrder
     Gender?: SortOrder
+    UMR?: SortOrder
     ContactNumber?: SortOrder
     Address?: SortOrder
     CreatedAt?: SortOrder
@@ -20410,12 +19364,12 @@ export namespace Prisma {
     Status?: SortOrder
     PatientRegistrationDate?: SortOrder
     Ptype?: SortOrder
-    Sponsor?: SortOrder
-    DepartmentID?: SortOrder
     Email?: SortOrder
     AlternateNumber?: SortOrder
     DOB?: SortOrder
     BloodGroup?: SortOrder
+    DepartmentID?: SortOrder
+    Sponsor?: SortOrder
   }
 
   export type PatientsSumOrderByAggregateInput = {
@@ -20467,15 +19421,15 @@ export namespace Prisma {
     ward_id?: SortOrder
   }
 
-  export type WardScalarRelationFilter = {
-    is?: WardWhereInput
-    isNot?: WardWhereInput
-  }
-
   export type BedListRelationFilter = {
     every?: BedWhereInput
     some?: BedWhereInput
     none?: BedWhereInput
+  }
+
+  export type WardScalarRelationFilter = {
+    is?: WardWhereInput
+    isNot?: WardWhereInput
   }
 
   export type BedOrderByRelationAggregateInput = {
@@ -20568,11 +19522,6 @@ export namespace Prisma {
     room_id?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type BedScalarRelationFilter = {
     is?: BedWhereInput
     isNot?: BedWhereInput
@@ -20595,11 +19544,11 @@ export namespace Prisma {
     bed_id?: SortOrder
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
-    is_discharged?: SortOrder
     discharge_date?: SortOrder
-    dischargeReasonId?: SortOrder
     treatment_plan?: SortOrder
     remarks?: SortOrder
+    dischargeReasonId?: SortOrder
+    is_discharged?: SortOrder
   }
 
   export type AdmissionsAvgOrderByAggregateInput = {
@@ -20617,11 +19566,11 @@ export namespace Prisma {
     bed_id?: SortOrder
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
-    is_discharged?: SortOrder
     discharge_date?: SortOrder
-    dischargeReasonId?: SortOrder
     treatment_plan?: SortOrder
     remarks?: SortOrder
+    dischargeReasonId?: SortOrder
+    is_discharged?: SortOrder
   }
 
   export type AdmissionsMinOrderByAggregateInput = {
@@ -20631,11 +19580,11 @@ export namespace Prisma {
     bed_id?: SortOrder
     diagnosis_id?: SortOrder
     admission_date?: SortOrder
-    is_discharged?: SortOrder
     discharge_date?: SortOrder
-    dischargeReasonId?: SortOrder
     treatment_plan?: SortOrder
     remarks?: SortOrder
+    dischargeReasonId?: SortOrder
+    is_discharged?: SortOrder
   }
 
   export type AdmissionsSumOrderByAggregateInput = {
@@ -20644,14 +19593,6 @@ export namespace Prisma {
     bed_id?: SortOrder
     diagnosis_id?: SortOrder
     dischargeReasonId?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DischargeReasonCountOrderByAggregateInput = {
@@ -20877,12 +19818,6 @@ export namespace Prisma {
     deleteMany?: PatientsScalarWhereInput | PatientsScalarWhereInput[]
   }
 
-  export type DepartmentsCreateNestedOneWithoutDiagnosesInput = {
-    create?: XOR<DepartmentsCreateWithoutDiagnosesInput, DepartmentsUncheckedCreateWithoutDiagnosesInput>
-    connectOrCreate?: DepartmentsCreateOrConnectWithoutDiagnosesInput
-    connect?: DepartmentsWhereUniqueInput
-  }
-
   export type AdmissionsCreateNestedManyWithoutDiagnosisInput = {
     create?: XOR<AdmissionsCreateWithoutDiagnosisInput, AdmissionsUncheckedCreateWithoutDiagnosisInput> | AdmissionsCreateWithoutDiagnosisInput[] | AdmissionsUncheckedCreateWithoutDiagnosisInput[]
     connectOrCreate?: AdmissionsCreateOrConnectWithoutDiagnosisInput | AdmissionsCreateOrConnectWithoutDiagnosisInput[]
@@ -20890,19 +19825,17 @@ export namespace Prisma {
     connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
   }
 
+  export type DepartmentsCreateNestedOneWithoutDiagnosesInput = {
+    create?: XOR<DepartmentsCreateWithoutDiagnosesInput, DepartmentsUncheckedCreateWithoutDiagnosesInput>
+    connectOrCreate?: DepartmentsCreateOrConnectWithoutDiagnosesInput
+    connect?: DepartmentsWhereUniqueInput
+  }
+
   export type AdmissionsUncheckedCreateNestedManyWithoutDiagnosisInput = {
     create?: XOR<AdmissionsCreateWithoutDiagnosisInput, AdmissionsUncheckedCreateWithoutDiagnosisInput> | AdmissionsCreateWithoutDiagnosisInput[] | AdmissionsUncheckedCreateWithoutDiagnosisInput[]
     connectOrCreate?: AdmissionsCreateOrConnectWithoutDiagnosisInput | AdmissionsCreateOrConnectWithoutDiagnosisInput[]
     createMany?: AdmissionsCreateManyDiagnosisInputEnvelope
     connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
-  }
-
-  export type DepartmentsUpdateOneRequiredWithoutDiagnosesNestedInput = {
-    create?: XOR<DepartmentsCreateWithoutDiagnosesInput, DepartmentsUncheckedCreateWithoutDiagnosesInput>
-    connectOrCreate?: DepartmentsCreateOrConnectWithoutDiagnosesInput
-    upsert?: DepartmentsUpsertWithoutDiagnosesInput
-    connect?: DepartmentsWhereUniqueInput
-    update?: XOR<XOR<DepartmentsUpdateToOneWithWhereWithoutDiagnosesInput, DepartmentsUpdateWithoutDiagnosesInput>, DepartmentsUncheckedUpdateWithoutDiagnosesInput>
   }
 
   export type AdmissionsUpdateManyWithoutDiagnosisNestedInput = {
@@ -20917,6 +19850,14 @@ export namespace Prisma {
     update?: AdmissionsUpdateWithWhereUniqueWithoutDiagnosisInput | AdmissionsUpdateWithWhereUniqueWithoutDiagnosisInput[]
     updateMany?: AdmissionsUpdateManyWithWhereWithoutDiagnosisInput | AdmissionsUpdateManyWithWhereWithoutDiagnosisInput[]
     deleteMany?: AdmissionsScalarWhereInput | AdmissionsScalarWhereInput[]
+  }
+
+  export type DepartmentsUpdateOneRequiredWithoutDiagnosesNestedInput = {
+    create?: XOR<DepartmentsCreateWithoutDiagnosesInput, DepartmentsUncheckedCreateWithoutDiagnosesInput>
+    connectOrCreate?: DepartmentsCreateOrConnectWithoutDiagnosesInput
+    upsert?: DepartmentsUpsertWithoutDiagnosesInput
+    connect?: DepartmentsWhereUniqueInput
+    update?: XOR<XOR<DepartmentsUpdateToOneWithWhereWithoutDiagnosesInput, DepartmentsUpdateWithoutDiagnosesInput>, DepartmentsUncheckedUpdateWithoutDiagnosesInput>
   }
 
   export type AdmissionsUncheckedUpdateManyWithoutDiagnosisNestedInput = {
@@ -20989,10 +19930,10 @@ export namespace Prisma {
     deleteMany?: AppointmentsScalarWhereInput | AppointmentsScalarWhereInput[]
   }
 
-  export type CaseSheetsCreateNestedOneWithoutMedicalRecordInput = {
-    create?: XOR<CaseSheetsCreateWithoutMedicalRecordInput, CaseSheetsUncheckedCreateWithoutMedicalRecordInput>
-    connectOrCreate?: CaseSheetsCreateOrConnectWithoutMedicalRecordInput
-    connect?: CaseSheetsWhereUniqueInput
+  export type AdmissionsCreateNestedOneWithoutMedicalRecordsInput = {
+    create?: XOR<AdmissionsCreateWithoutMedicalRecordsInput, AdmissionsUncheckedCreateWithoutMedicalRecordsInput>
+    connectOrCreate?: AdmissionsCreateOrConnectWithoutMedicalRecordsInput
+    connect?: AdmissionsWhereUniqueInput
   }
 
   export type PatientsCreateNestedOneWithoutMedicalRecordsInput = {
@@ -21001,36 +19942,8 @@ export namespace Prisma {
     connect?: PatientsWhereUniqueInput
   }
 
-  export type AdmissionsCreateNestedOneWithoutMedicalRecordsInput = {
-    create?: XOR<AdmissionsCreateWithoutMedicalRecordsInput, AdmissionsUncheckedCreateWithoutMedicalRecordsInput>
-    connectOrCreate?: AdmissionsCreateOrConnectWithoutMedicalRecordsInput
-    connect?: AdmissionsWhereUniqueInput
-  }
-
-  export type CaseSheetsUncheckedCreateNestedOneWithoutMedicalRecordInput = {
-    create?: XOR<CaseSheetsCreateWithoutMedicalRecordInput, CaseSheetsUncheckedCreateWithoutMedicalRecordInput>
-    connectOrCreate?: CaseSheetsCreateOrConnectWithoutMedicalRecordInput
-    connect?: CaseSheetsWhereUniqueInput
-  }
-
-  export type CaseSheetsUpdateOneWithoutMedicalRecordNestedInput = {
-    create?: XOR<CaseSheetsCreateWithoutMedicalRecordInput, CaseSheetsUncheckedCreateWithoutMedicalRecordInput>
-    connectOrCreate?: CaseSheetsCreateOrConnectWithoutMedicalRecordInput
-    upsert?: CaseSheetsUpsertWithoutMedicalRecordInput
-    disconnect?: CaseSheetsWhereInput | boolean
-    delete?: CaseSheetsWhereInput | boolean
-    connect?: CaseSheetsWhereUniqueInput
-    update?: XOR<XOR<CaseSheetsUpdateToOneWithWhereWithoutMedicalRecordInput, CaseSheetsUpdateWithoutMedicalRecordInput>, CaseSheetsUncheckedUpdateWithoutMedicalRecordInput>
-  }
-
-  export type PatientsUpdateOneWithoutMedicalRecordsNestedInput = {
-    create?: XOR<PatientsCreateWithoutMedicalRecordsInput, PatientsUncheckedCreateWithoutMedicalRecordsInput>
-    connectOrCreate?: PatientsCreateOrConnectWithoutMedicalRecordsInput
-    upsert?: PatientsUpsertWithoutMedicalRecordsInput
-    disconnect?: PatientsWhereInput | boolean
-    delete?: PatientsWhereInput | boolean
-    connect?: PatientsWhereUniqueInput
-    update?: XOR<XOR<PatientsUpdateToOneWithWhereWithoutMedicalRecordsInput, PatientsUpdateWithoutMedicalRecordsInput>, PatientsUncheckedUpdateWithoutMedicalRecordsInput>
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type AdmissionsUpdateOneWithoutMedicalRecordsNestedInput = {
@@ -21043,6 +19956,16 @@ export namespace Prisma {
     update?: XOR<XOR<AdmissionsUpdateToOneWithWhereWithoutMedicalRecordsInput, AdmissionsUpdateWithoutMedicalRecordsInput>, AdmissionsUncheckedUpdateWithoutMedicalRecordsInput>
   }
 
+  export type PatientsUpdateOneWithoutMedicalRecordsNestedInput = {
+    create?: XOR<PatientsCreateWithoutMedicalRecordsInput, PatientsUncheckedCreateWithoutMedicalRecordsInput>
+    connectOrCreate?: PatientsCreateOrConnectWithoutMedicalRecordsInput
+    upsert?: PatientsUpsertWithoutMedicalRecordsInput
+    disconnect?: PatientsWhereInput | boolean
+    delete?: PatientsWhereInput | boolean
+    connect?: PatientsWhereUniqueInput
+    update?: XOR<XOR<PatientsUpdateToOneWithWhereWithoutMedicalRecordsInput, PatientsUpdateWithoutMedicalRecordsInput>, PatientsUncheckedUpdateWithoutMedicalRecordsInput>
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -21051,34 +19974,11 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type CaseSheetsUncheckedUpdateOneWithoutMedicalRecordNestedInput = {
-    create?: XOR<CaseSheetsCreateWithoutMedicalRecordInput, CaseSheetsUncheckedCreateWithoutMedicalRecordInput>
-    connectOrCreate?: CaseSheetsCreateOrConnectWithoutMedicalRecordInput
-    upsert?: CaseSheetsUpsertWithoutMedicalRecordInput
-    disconnect?: CaseSheetsWhereInput | boolean
-    delete?: CaseSheetsWhereInput | boolean
-    connect?: CaseSheetsWhereUniqueInput
-    update?: XOR<XOR<CaseSheetsUpdateToOneWithWhereWithoutMedicalRecordInput, CaseSheetsUpdateWithoutMedicalRecordInput>, CaseSheetsUncheckedUpdateWithoutMedicalRecordInput>
-  }
-
-  export type MedicalRecordsCreateNestedOneWithoutCaseSheetsInput = {
-    create?: XOR<MedicalRecordsCreateWithoutCaseSheetsInput, MedicalRecordsUncheckedCreateWithoutCaseSheetsInput>
-    connectOrCreate?: MedicalRecordsCreateOrConnectWithoutCaseSheetsInput
-    connect?: MedicalRecordsWhereUniqueInput
-  }
-
-  export type MedicalRecordsUpdateOneRequiredWithoutCaseSheetsNestedInput = {
-    create?: XOR<MedicalRecordsCreateWithoutCaseSheetsInput, MedicalRecordsUncheckedCreateWithoutCaseSheetsInput>
-    connectOrCreate?: MedicalRecordsCreateOrConnectWithoutCaseSheetsInput
-    upsert?: MedicalRecordsUpsertWithoutCaseSheetsInput
-    connect?: MedicalRecordsWhereUniqueInput
-    update?: XOR<XOR<MedicalRecordsUpdateToOneWithWhereWithoutCaseSheetsInput, MedicalRecordsUpdateWithoutCaseSheetsInput>, MedicalRecordsUncheckedUpdateWithoutCaseSheetsInput>
-  }
-
-  export type DepartmentsCreateNestedOneWithoutPatientsInput = {
-    create?: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
-    connectOrCreate?: DepartmentsCreateOrConnectWithoutPatientsInput
-    connect?: DepartmentsWhereUniqueInput
+  export type AdmissionsCreateNestedManyWithoutPatientInput = {
+    create?: XOR<AdmissionsCreateWithoutPatientInput, AdmissionsUncheckedCreateWithoutPatientInput> | AdmissionsCreateWithoutPatientInput[] | AdmissionsUncheckedCreateWithoutPatientInput[]
+    connectOrCreate?: AdmissionsCreateOrConnectWithoutPatientInput | AdmissionsCreateOrConnectWithoutPatientInput[]
+    createMany?: AdmissionsCreateManyPatientInputEnvelope
+    connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
   }
 
   export type AppointmentsCreateNestedManyWithoutPatientsInput = {
@@ -21102,7 +20002,13 @@ export namespace Prisma {
     connect?: MedicalRecordsWhereUniqueInput | MedicalRecordsWhereUniqueInput[]
   }
 
-  export type AdmissionsCreateNestedManyWithoutPatientInput = {
+  export type DepartmentsCreateNestedOneWithoutPatientsInput = {
+    create?: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
+    connectOrCreate?: DepartmentsCreateOrConnectWithoutPatientsInput
+    connect?: DepartmentsWhereUniqueInput
+  }
+
+  export type AdmissionsUncheckedCreateNestedManyWithoutPatientInput = {
     create?: XOR<AdmissionsCreateWithoutPatientInput, AdmissionsUncheckedCreateWithoutPatientInput> | AdmissionsCreateWithoutPatientInput[] | AdmissionsUncheckedCreateWithoutPatientInput[]
     connectOrCreate?: AdmissionsCreateOrConnectWithoutPatientInput | AdmissionsCreateOrConnectWithoutPatientInput[]
     createMany?: AdmissionsCreateManyPatientInputEnvelope
@@ -21130,21 +20036,18 @@ export namespace Prisma {
     connect?: MedicalRecordsWhereUniqueInput | MedicalRecordsWhereUniqueInput[]
   }
 
-  export type AdmissionsUncheckedCreateNestedManyWithoutPatientInput = {
+  export type AdmissionsUpdateManyWithoutPatientNestedInput = {
     create?: XOR<AdmissionsCreateWithoutPatientInput, AdmissionsUncheckedCreateWithoutPatientInput> | AdmissionsCreateWithoutPatientInput[] | AdmissionsUncheckedCreateWithoutPatientInput[]
     connectOrCreate?: AdmissionsCreateOrConnectWithoutPatientInput | AdmissionsCreateOrConnectWithoutPatientInput[]
+    upsert?: AdmissionsUpsertWithWhereUniqueWithoutPatientInput | AdmissionsUpsertWithWhereUniqueWithoutPatientInput[]
     createMany?: AdmissionsCreateManyPatientInputEnvelope
+    set?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    disconnect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
+    delete?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
     connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
-  }
-
-  export type DepartmentsUpdateOneWithoutPatientsNestedInput = {
-    create?: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
-    connectOrCreate?: DepartmentsCreateOrConnectWithoutPatientsInput
-    upsert?: DepartmentsUpsertWithoutPatientsInput
-    disconnect?: DepartmentsWhereInput | boolean
-    delete?: DepartmentsWhereInput | boolean
-    connect?: DepartmentsWhereUniqueInput
-    update?: XOR<XOR<DepartmentsUpdateToOneWithWhereWithoutPatientsInput, DepartmentsUpdateWithoutPatientsInput>, DepartmentsUncheckedUpdateWithoutPatientsInput>
+    update?: AdmissionsUpdateWithWhereUniqueWithoutPatientInput | AdmissionsUpdateWithWhereUniqueWithoutPatientInput[]
+    updateMany?: AdmissionsUpdateManyWithWhereWithoutPatientInput | AdmissionsUpdateManyWithWhereWithoutPatientInput[]
+    deleteMany?: AdmissionsScalarWhereInput | AdmissionsScalarWhereInput[]
   }
 
   export type AppointmentsUpdateManyWithoutPatientsNestedInput = {
@@ -21189,7 +20092,17 @@ export namespace Prisma {
     deleteMany?: MedicalRecordsScalarWhereInput | MedicalRecordsScalarWhereInput[]
   }
 
-  export type AdmissionsUpdateManyWithoutPatientNestedInput = {
+  export type DepartmentsUpdateOneWithoutPatientsNestedInput = {
+    create?: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
+    connectOrCreate?: DepartmentsCreateOrConnectWithoutPatientsInput
+    upsert?: DepartmentsUpsertWithoutPatientsInput
+    disconnect?: DepartmentsWhereInput | boolean
+    delete?: DepartmentsWhereInput | boolean
+    connect?: DepartmentsWhereUniqueInput
+    update?: XOR<XOR<DepartmentsUpdateToOneWithWhereWithoutPatientsInput, DepartmentsUpdateWithoutPatientsInput>, DepartmentsUncheckedUpdateWithoutPatientsInput>
+  }
+
+  export type AdmissionsUncheckedUpdateManyWithoutPatientNestedInput = {
     create?: XOR<AdmissionsCreateWithoutPatientInput, AdmissionsUncheckedCreateWithoutPatientInput> | AdmissionsCreateWithoutPatientInput[] | AdmissionsUncheckedCreateWithoutPatientInput[]
     connectOrCreate?: AdmissionsCreateOrConnectWithoutPatientInput | AdmissionsCreateOrConnectWithoutPatientInput[]
     upsert?: AdmissionsUpsertWithWhereUniqueWithoutPatientInput | AdmissionsUpsertWithWhereUniqueWithoutPatientInput[]
@@ -21245,20 +20158,6 @@ export namespace Prisma {
     deleteMany?: MedicalRecordsScalarWhereInput | MedicalRecordsScalarWhereInput[]
   }
 
-  export type AdmissionsUncheckedUpdateManyWithoutPatientNestedInput = {
-    create?: XOR<AdmissionsCreateWithoutPatientInput, AdmissionsUncheckedCreateWithoutPatientInput> | AdmissionsCreateWithoutPatientInput[] | AdmissionsUncheckedCreateWithoutPatientInput[]
-    connectOrCreate?: AdmissionsCreateOrConnectWithoutPatientInput | AdmissionsCreateOrConnectWithoutPatientInput[]
-    upsert?: AdmissionsUpsertWithWhereUniqueWithoutPatientInput | AdmissionsUpsertWithWhereUniqueWithoutPatientInput[]
-    createMany?: AdmissionsCreateManyPatientInputEnvelope
-    set?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
-    disconnect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
-    delete?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
-    connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
-    update?: AdmissionsUpdateWithWhereUniqueWithoutPatientInput | AdmissionsUpdateWithWhereUniqueWithoutPatientInput[]
-    updateMany?: AdmissionsUpdateManyWithWhereWithoutPatientInput | AdmissionsUpdateManyWithWhereWithoutPatientInput[]
-    deleteMany?: AdmissionsScalarWhereInput | AdmissionsScalarWhereInput[]
-  }
-
   export type RoomCreateNestedManyWithoutWardInput = {
     create?: XOR<RoomCreateWithoutWardInput, RoomUncheckedCreateWithoutWardInput> | RoomCreateWithoutWardInput[] | RoomUncheckedCreateWithoutWardInput[]
     connectOrCreate?: RoomCreateOrConnectWithoutWardInput | RoomCreateOrConnectWithoutWardInput[]
@@ -21301,12 +20200,6 @@ export namespace Prisma {
     deleteMany?: RoomScalarWhereInput | RoomScalarWhereInput[]
   }
 
-  export type WardCreateNestedOneWithoutRoomsInput = {
-    create?: XOR<WardCreateWithoutRoomsInput, WardUncheckedCreateWithoutRoomsInput>
-    connectOrCreate?: WardCreateOrConnectWithoutRoomsInput
-    connect?: WardWhereUniqueInput
-  }
-
   export type BedCreateNestedManyWithoutRoomInput = {
     create?: XOR<BedCreateWithoutRoomInput, BedUncheckedCreateWithoutRoomInput> | BedCreateWithoutRoomInput[] | BedUncheckedCreateWithoutRoomInput[]
     connectOrCreate?: BedCreateOrConnectWithoutRoomInput | BedCreateOrConnectWithoutRoomInput[]
@@ -21314,19 +20207,17 @@ export namespace Prisma {
     connect?: BedWhereUniqueInput | BedWhereUniqueInput[]
   }
 
+  export type WardCreateNestedOneWithoutRoomsInput = {
+    create?: XOR<WardCreateWithoutRoomsInput, WardUncheckedCreateWithoutRoomsInput>
+    connectOrCreate?: WardCreateOrConnectWithoutRoomsInput
+    connect?: WardWhereUniqueInput
+  }
+
   export type BedUncheckedCreateNestedManyWithoutRoomInput = {
     create?: XOR<BedCreateWithoutRoomInput, BedUncheckedCreateWithoutRoomInput> | BedCreateWithoutRoomInput[] | BedUncheckedCreateWithoutRoomInput[]
     connectOrCreate?: BedCreateOrConnectWithoutRoomInput | BedCreateOrConnectWithoutRoomInput[]
     createMany?: BedCreateManyRoomInputEnvelope
     connect?: BedWhereUniqueInput | BedWhereUniqueInput[]
-  }
-
-  export type WardUpdateOneRequiredWithoutRoomsNestedInput = {
-    create?: XOR<WardCreateWithoutRoomsInput, WardUncheckedCreateWithoutRoomsInput>
-    connectOrCreate?: WardCreateOrConnectWithoutRoomsInput
-    upsert?: WardUpsertWithoutRoomsInput
-    connect?: WardWhereUniqueInput
-    update?: XOR<XOR<WardUpdateToOneWithWhereWithoutRoomsInput, WardUpdateWithoutRoomsInput>, WardUncheckedUpdateWithoutRoomsInput>
   }
 
   export type BedUpdateManyWithoutRoomNestedInput = {
@@ -21343,6 +20234,14 @@ export namespace Prisma {
     deleteMany?: BedScalarWhereInput | BedScalarWhereInput[]
   }
 
+  export type WardUpdateOneRequiredWithoutRoomsNestedInput = {
+    create?: XOR<WardCreateWithoutRoomsInput, WardUncheckedCreateWithoutRoomsInput>
+    connectOrCreate?: WardCreateOrConnectWithoutRoomsInput
+    upsert?: WardUpsertWithoutRoomsInput
+    connect?: WardWhereUniqueInput
+    update?: XOR<XOR<WardUpdateToOneWithWhereWithoutRoomsInput, WardUpdateWithoutRoomsInput>, WardUncheckedUpdateWithoutRoomsInput>
+  }
+
   export type BedUncheckedUpdateManyWithoutRoomNestedInput = {
     create?: XOR<BedCreateWithoutRoomInput, BedUncheckedCreateWithoutRoomInput> | BedCreateWithoutRoomInput[] | BedUncheckedCreateWithoutRoomInput[]
     connectOrCreate?: BedCreateOrConnectWithoutRoomInput | BedCreateOrConnectWithoutRoomInput[]
@@ -21357,12 +20256,6 @@ export namespace Prisma {
     deleteMany?: BedScalarWhereInput | BedScalarWhereInput[]
   }
 
-  export type RoomCreateNestedOneWithoutBedsInput = {
-    create?: XOR<RoomCreateWithoutBedsInput, RoomUncheckedCreateWithoutBedsInput>
-    connectOrCreate?: RoomCreateOrConnectWithoutBedsInput
-    connect?: RoomWhereUniqueInput
-  }
-
   export type AdmissionsCreateNestedManyWithoutBedInput = {
     create?: XOR<AdmissionsCreateWithoutBedInput, AdmissionsUncheckedCreateWithoutBedInput> | AdmissionsCreateWithoutBedInput[] | AdmissionsUncheckedCreateWithoutBedInput[]
     connectOrCreate?: AdmissionsCreateOrConnectWithoutBedInput | AdmissionsCreateOrConnectWithoutBedInput[]
@@ -21370,19 +20263,17 @@ export namespace Prisma {
     connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
   }
 
+  export type RoomCreateNestedOneWithoutBedsInput = {
+    create?: XOR<RoomCreateWithoutBedsInput, RoomUncheckedCreateWithoutBedsInput>
+    connectOrCreate?: RoomCreateOrConnectWithoutBedsInput
+    connect?: RoomWhereUniqueInput
+  }
+
   export type AdmissionsUncheckedCreateNestedManyWithoutBedInput = {
     create?: XOR<AdmissionsCreateWithoutBedInput, AdmissionsUncheckedCreateWithoutBedInput> | AdmissionsCreateWithoutBedInput[] | AdmissionsUncheckedCreateWithoutBedInput[]
     connectOrCreate?: AdmissionsCreateOrConnectWithoutBedInput | AdmissionsCreateOrConnectWithoutBedInput[]
     createMany?: AdmissionsCreateManyBedInputEnvelope
     connect?: AdmissionsWhereUniqueInput | AdmissionsWhereUniqueInput[]
-  }
-
-  export type RoomUpdateOneRequiredWithoutBedsNestedInput = {
-    create?: XOR<RoomCreateWithoutBedsInput, RoomUncheckedCreateWithoutBedsInput>
-    connectOrCreate?: RoomCreateOrConnectWithoutBedsInput
-    upsert?: RoomUpsertWithoutBedsInput
-    connect?: RoomWhereUniqueInput
-    update?: XOR<XOR<RoomUpdateToOneWithWhereWithoutBedsInput, RoomUpdateWithoutBedsInput>, RoomUncheckedUpdateWithoutBedsInput>
   }
 
   export type AdmissionsUpdateManyWithoutBedNestedInput = {
@@ -21399,6 +20290,14 @@ export namespace Prisma {
     deleteMany?: AdmissionsScalarWhereInput | AdmissionsScalarWhereInput[]
   }
 
+  export type RoomUpdateOneRequiredWithoutBedsNestedInput = {
+    create?: XOR<RoomCreateWithoutBedsInput, RoomUncheckedCreateWithoutBedsInput>
+    connectOrCreate?: RoomCreateOrConnectWithoutBedsInput
+    upsert?: RoomUpsertWithoutBedsInput
+    connect?: RoomWhereUniqueInput
+    update?: XOR<XOR<RoomUpdateToOneWithWhereWithoutBedsInput, RoomUpdateWithoutBedsInput>, RoomUncheckedUpdateWithoutBedsInput>
+  }
+
   export type AdmissionsUncheckedUpdateManyWithoutBedNestedInput = {
     create?: XOR<AdmissionsCreateWithoutBedInput, AdmissionsUncheckedCreateWithoutBedInput> | AdmissionsCreateWithoutBedInput[] | AdmissionsUncheckedCreateWithoutBedInput[]
     connectOrCreate?: AdmissionsCreateOrConnectWithoutBedInput | AdmissionsCreateOrConnectWithoutBedInput[]
@@ -21411,12 +20310,6 @@ export namespace Prisma {
     update?: AdmissionsUpdateWithWhereUniqueWithoutBedInput | AdmissionsUpdateWithWhereUniqueWithoutBedInput[]
     updateMany?: AdmissionsUpdateManyWithWhereWithoutBedInput | AdmissionsUpdateManyWithWhereWithoutBedInput[]
     deleteMany?: AdmissionsScalarWhereInput | AdmissionsScalarWhereInput[]
-  }
-
-  export type PatientsCreateNestedOneWithoutAdmissionsInput = {
-    create?: XOR<PatientsCreateWithoutAdmissionsInput, PatientsUncheckedCreateWithoutAdmissionsInput>
-    connectOrCreate?: PatientsCreateOrConnectWithoutAdmissionsInput
-    connect?: PatientsWhereUniqueInput
   }
 
   export type BedCreateNestedOneWithoutAdmissionsInput = {
@@ -21437,6 +20330,12 @@ export namespace Prisma {
     connect?: DischargeReasonWhereUniqueInput
   }
 
+  export type PatientsCreateNestedOneWithoutAdmissionsInput = {
+    create?: XOR<PatientsCreateWithoutAdmissionsInput, PatientsUncheckedCreateWithoutAdmissionsInput>
+    connectOrCreate?: PatientsCreateOrConnectWithoutAdmissionsInput
+    connect?: PatientsWhereUniqueInput
+  }
+
   export type MedicalRecordsCreateNestedManyWithoutAdmissionsInput = {
     create?: XOR<MedicalRecordsCreateWithoutAdmissionsInput, MedicalRecordsUncheckedCreateWithoutAdmissionsInput> | MedicalRecordsCreateWithoutAdmissionsInput[] | MedicalRecordsUncheckedCreateWithoutAdmissionsInput[]
     connectOrCreate?: MedicalRecordsCreateOrConnectWithoutAdmissionsInput | MedicalRecordsCreateOrConnectWithoutAdmissionsInput[]
@@ -21449,18 +20348,6 @@ export namespace Prisma {
     connectOrCreate?: MedicalRecordsCreateOrConnectWithoutAdmissionsInput | MedicalRecordsCreateOrConnectWithoutAdmissionsInput[]
     createMany?: MedicalRecordsCreateManyAdmissionsInputEnvelope
     connect?: MedicalRecordsWhereUniqueInput | MedicalRecordsWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
-  export type PatientsUpdateOneRequiredWithoutAdmissionsNestedInput = {
-    create?: XOR<PatientsCreateWithoutAdmissionsInput, PatientsUncheckedCreateWithoutAdmissionsInput>
-    connectOrCreate?: PatientsCreateOrConnectWithoutAdmissionsInput
-    upsert?: PatientsUpsertWithoutAdmissionsInput
-    connect?: PatientsWhereUniqueInput
-    update?: XOR<XOR<PatientsUpdateToOneWithWhereWithoutAdmissionsInput, PatientsUpdateWithoutAdmissionsInput>, PatientsUncheckedUpdateWithoutAdmissionsInput>
   }
 
   export type BedUpdateOneRequiredWithoutAdmissionsNestedInput = {
@@ -21487,6 +20374,14 @@ export namespace Prisma {
     delete?: DischargeReasonWhereInput | boolean
     connect?: DischargeReasonWhereUniqueInput
     update?: XOR<XOR<DischargeReasonUpdateToOneWithWhereWithoutAdmissionsInput, DischargeReasonUpdateWithoutAdmissionsInput>, DischargeReasonUncheckedUpdateWithoutAdmissionsInput>
+  }
+
+  export type PatientsUpdateOneRequiredWithoutAdmissionsNestedInput = {
+    create?: XOR<PatientsCreateWithoutAdmissionsInput, PatientsUncheckedCreateWithoutAdmissionsInput>
+    connectOrCreate?: PatientsCreateOrConnectWithoutAdmissionsInput
+    upsert?: PatientsUpsertWithoutAdmissionsInput
+    connect?: PatientsWhereUniqueInput
+    update?: XOR<XOR<PatientsUpdateToOneWithWhereWithoutAdmissionsInput, PatientsUpdateWithoutAdmissionsInput>, PatientsUncheckedUpdateWithoutAdmissionsInput>
   }
 
   export type MedicalRecordsUpdateManyWithoutAdmissionsNestedInput = {
@@ -21747,6 +20642,19 @@ export namespace Prisma {
     _max?: NestedDecimalFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -21772,19 +20680,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DoctorsCreateWithoutAppointmentsInput = {
@@ -21818,6 +20713,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -21825,15 +20721,15 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
-    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
+    Sponsor?: string | null
+    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
     Bills?: BillsCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
   }
 
   export type PatientsUncheckedCreateWithoutAppointmentsInput = {
@@ -21841,6 +20737,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -21848,15 +20745,15 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
-    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    DepartmentID?: number | null
+    Sponsor?: string | null
+    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
     Bills?: BillsUncheckedCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientsCreateOrConnectWithoutAppointmentsInput = {
@@ -21912,6 +20809,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21919,15 +20817,15 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
     Bills?: BillsUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
   }
 
   export type PatientsUncheckedUpdateWithoutAppointmentsInput = {
@@ -21935,6 +20833,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21942,15 +20841,15 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
-    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
     Bills?: BillsUncheckedUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientsCreateWithoutBillsInput = {
@@ -21958,6 +20857,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -21965,15 +20865,15 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
-    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
+    Sponsor?: string | null
+    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
     Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
   }
 
   export type PatientsUncheckedCreateWithoutBillsInput = {
@@ -21981,6 +20881,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -21988,15 +20889,15 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
-    DepartmentID?: number | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    DepartmentID?: number | null
+    Sponsor?: string | null
+    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
     Appointments?: AppointmentsUncheckedCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientsCreateOrConnectWithoutBillsInput = {
@@ -22020,6 +20921,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22027,15 +20929,15 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
     Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
   }
 
   export type PatientsUncheckedUpdateWithoutBillsInput = {
@@ -22043,6 +20945,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22050,15 +20953,15 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
-    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
     Appointments?: AppointmentsUncheckedUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type DiagnosesCreateWithoutDepartmentsInput = {
@@ -22118,6 +21021,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -22125,15 +21029,15 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    Sponsor?: string | null
+    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
     Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
     Bills?: BillsCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
   }
 
   export type PatientsUncheckedCreateWithoutDepartmentInput = {
@@ -22141,6 +21045,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -22148,15 +21053,15 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    Sponsor?: string | null
+    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
     Appointments?: AppointmentsUncheckedCreateNestedManyWithoutPatientsInput
     Bills?: BillsUncheckedCreateNestedManyWithoutPatientsInput
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
   }
 
   export type PatientsCreateOrConnectWithoutDepartmentInput = {
@@ -22248,6 +21153,7 @@ export namespace Prisma {
     Name?: StringFilter<"Patients"> | string
     Age?: StringFilter<"Patients"> | string
     Gender?: StringFilter<"Patients"> | string
+    UMR?: StringNullableFilter<"Patients"> | string | null
     ContactNumber?: StringNullableFilter<"Patients"> | string | null
     Address?: StringNullableFilter<"Patients"> | string | null
     CreatedAt?: DateTimeNullableFilter<"Patients"> | Date | string | null
@@ -22255,12 +21161,48 @@ export namespace Prisma {
     Status?: StringNullableFilter<"Patients"> | string | null
     PatientRegistrationDate?: DateTimeFilter<"Patients"> | Date | string
     Ptype?: StringNullableFilter<"Patients"> | string | null
-    Sponsor?: StringNullableFilter<"Patients"> | string | null
-    DepartmentID?: IntNullableFilter<"Patients"> | number | null
     Email?: StringNullableFilter<"Patients"> | string | null
     AlternateNumber?: StringNullableFilter<"Patients"> | string | null
     DOB?: DateTimeNullableFilter<"Patients"> | Date | string | null
     BloodGroup?: StringNullableFilter<"Patients"> | string | null
+    DepartmentID?: IntNullableFilter<"Patients"> | number | null
+    Sponsor?: StringNullableFilter<"Patients"> | string | null
+  }
+
+  export type AdmissionsCreateWithoutDiagnosisInput = {
+    admission_no: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+    is_discharged?: boolean
+    bed: BedCreateNestedOneWithoutAdmissionsInput
+    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
+    patient: PatientsCreateNestedOneWithoutAdmissionsInput
+    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
+  }
+
+  export type AdmissionsUncheckedCreateWithoutDiagnosisInput = {
+    admission_id?: number
+    admission_no: number
+    PatientID: string
+    bed_id: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+    dischargeReasonId?: number | null
+    is_discharged?: boolean
+    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
+  }
+
+  export type AdmissionsCreateOrConnectWithoutDiagnosisInput = {
+    where: AdmissionsWhereUniqueInput
+    create: XOR<AdmissionsCreateWithoutDiagnosisInput, AdmissionsUncheckedCreateWithoutDiagnosisInput>
+  }
+
+  export type AdmissionsCreateManyDiagnosisInputEnvelope = {
+    data: AdmissionsCreateManyDiagnosisInput | AdmissionsCreateManyDiagnosisInput[]
   }
 
   export type DepartmentsCreateWithoutDiagnosesInput = {
@@ -22279,66 +21221,6 @@ export namespace Prisma {
   export type DepartmentsCreateOrConnectWithoutDiagnosesInput = {
     where: DepartmentsWhereUniqueInput
     create: XOR<DepartmentsCreateWithoutDiagnosesInput, DepartmentsUncheckedCreateWithoutDiagnosesInput>
-  }
-
-  export type AdmissionsCreateWithoutDiagnosisInput = {
-    admission_no: number
-    admission_date: Date | string
-    is_discharged?: boolean
-    discharge_date?: Date | string | null
-    treatment_plan?: string | null
-    remarks?: string | null
-    patient: PatientsCreateNestedOneWithoutAdmissionsInput
-    bed: BedCreateNestedOneWithoutAdmissionsInput
-    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
-    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
-  }
-
-  export type AdmissionsUncheckedCreateWithoutDiagnosisInput = {
-    admission_id?: number
-    admission_no: number
-    PatientID: string
-    bed_id: number
-    admission_date: Date | string
-    is_discharged?: boolean
-    discharge_date?: Date | string | null
-    dischargeReasonId?: number | null
-    treatment_plan?: string | null
-    remarks?: string | null
-    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
-  }
-
-  export type AdmissionsCreateOrConnectWithoutDiagnosisInput = {
-    where: AdmissionsWhereUniqueInput
-    create: XOR<AdmissionsCreateWithoutDiagnosisInput, AdmissionsUncheckedCreateWithoutDiagnosisInput>
-  }
-
-  export type AdmissionsCreateManyDiagnosisInputEnvelope = {
-    data: AdmissionsCreateManyDiagnosisInput | AdmissionsCreateManyDiagnosisInput[]
-  }
-
-  export type DepartmentsUpsertWithoutDiagnosesInput = {
-    update: XOR<DepartmentsUpdateWithoutDiagnosesInput, DepartmentsUncheckedUpdateWithoutDiagnosesInput>
-    create: XOR<DepartmentsCreateWithoutDiagnosesInput, DepartmentsUncheckedCreateWithoutDiagnosesInput>
-    where?: DepartmentsWhereInput
-  }
-
-  export type DepartmentsUpdateToOneWithWhereWithoutDiagnosesInput = {
-    where?: DepartmentsWhereInput
-    data: XOR<DepartmentsUpdateWithoutDiagnosesInput, DepartmentsUncheckedUpdateWithoutDiagnosesInput>
-  }
-
-  export type DepartmentsUpdateWithoutDiagnosesInput = {
-    DepartmentName?: StringFieldUpdateOperationsInput | string
-    Doctors?: DoctorsUpdateManyWithoutDepartmentsNestedInput
-    Patients?: PatientsUpdateManyWithoutDepartmentNestedInput
-  }
-
-  export type DepartmentsUncheckedUpdateWithoutDiagnosesInput = {
-    DepartmentID?: IntFieldUpdateOperationsInput | number
-    DepartmentName?: StringFieldUpdateOperationsInput | string
-    Doctors?: DoctorsUncheckedUpdateManyWithoutDepartmentsNestedInput
-    Patients?: PatientsUncheckedUpdateManyWithoutDepartmentNestedInput
   }
 
   export type AdmissionsUpsertWithWhereUniqueWithoutDiagnosisInput = {
@@ -22367,11 +21249,35 @@ export namespace Prisma {
     bed_id?: IntFilter<"Admissions"> | number
     diagnosis_id?: IntFilter<"Admissions"> | number
     admission_date?: DateTimeFilter<"Admissions"> | Date | string
-    is_discharged?: BoolFilter<"Admissions"> | boolean
     discharge_date?: DateTimeNullableFilter<"Admissions"> | Date | string | null
-    dischargeReasonId?: IntNullableFilter<"Admissions"> | number | null
     treatment_plan?: StringNullableFilter<"Admissions"> | string | null
     remarks?: StringNullableFilter<"Admissions"> | string | null
+    dischargeReasonId?: IntNullableFilter<"Admissions"> | number | null
+    is_discharged?: BoolFilter<"Admissions"> | boolean
+  }
+
+  export type DepartmentsUpsertWithoutDiagnosesInput = {
+    update: XOR<DepartmentsUpdateWithoutDiagnosesInput, DepartmentsUncheckedUpdateWithoutDiagnosesInput>
+    create: XOR<DepartmentsCreateWithoutDiagnosesInput, DepartmentsUncheckedCreateWithoutDiagnosesInput>
+    where?: DepartmentsWhereInput
+  }
+
+  export type DepartmentsUpdateToOneWithWhereWithoutDiagnosesInput = {
+    where?: DepartmentsWhereInput
+    data: XOR<DepartmentsUpdateWithoutDiagnosesInput, DepartmentsUncheckedUpdateWithoutDiagnosesInput>
+  }
+
+  export type DepartmentsUpdateWithoutDiagnosesInput = {
+    DepartmentName?: StringFieldUpdateOperationsInput | string
+    Doctors?: DoctorsUpdateManyWithoutDepartmentsNestedInput
+    Patients?: PatientsUpdateManyWithoutDepartmentNestedInput
+  }
+
+  export type DepartmentsUncheckedUpdateWithoutDiagnosesInput = {
+    DepartmentID?: IntFieldUpdateOperationsInput | number
+    DepartmentName?: StringFieldUpdateOperationsInput | string
+    Doctors?: DoctorsUncheckedUpdateManyWithoutDepartmentsNestedInput
+    Patients?: PatientsUncheckedUpdateManyWithoutDepartmentNestedInput
   }
 
   export type AppointmentsCreateWithoutDoctorsInput = {
@@ -22474,83 +21380,17 @@ export namespace Prisma {
     Patients?: PatientsUncheckedUpdateManyWithoutDepartmentNestedInput
   }
 
-  export type CaseSheetsCreateWithoutMedicalRecordInput = {
-    CaseSheetID?: string
-    CaseSheet?: string | null
-  }
-
-  export type CaseSheetsUncheckedCreateWithoutMedicalRecordInput = {
-    CaseSheetID?: string
-    CaseSheet?: string | null
-  }
-
-  export type CaseSheetsCreateOrConnectWithoutMedicalRecordInput = {
-    where: CaseSheetsWhereUniqueInput
-    create: XOR<CaseSheetsCreateWithoutMedicalRecordInput, CaseSheetsUncheckedCreateWithoutMedicalRecordInput>
-  }
-
-  export type PatientsCreateWithoutMedicalRecordsInput = {
-    PatientID: string
-    Name: string
-    Age: string
-    Gender: string
-    ContactNumber?: string | null
-    Address?: string | null
-    CreatedAt?: Date | string | null
-    UpdatedAt?: Date | string | null
-    Status?: string | null
-    PatientRegistrationDate: Date | string
-    Ptype?: string | null
-    Sponsor?: string | null
-    Email?: string | null
-    AlternateNumber?: string | null
-    DOB?: Date | string | null
-    BloodGroup?: string | null
-    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
-    Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
-    Bills?: BillsCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
-  }
-
-  export type PatientsUncheckedCreateWithoutMedicalRecordsInput = {
-    PatientID: string
-    Name: string
-    Age: string
-    Gender: string
-    ContactNumber?: string | null
-    Address?: string | null
-    CreatedAt?: Date | string | null
-    UpdatedAt?: Date | string | null
-    Status?: string | null
-    PatientRegistrationDate: Date | string
-    Ptype?: string | null
-    Sponsor?: string | null
-    DepartmentID?: number | null
-    Email?: string | null
-    AlternateNumber?: string | null
-    DOB?: Date | string | null
-    BloodGroup?: string | null
-    Appointments?: AppointmentsUncheckedCreateNestedManyWithoutPatientsInput
-    Bills?: BillsUncheckedCreateNestedManyWithoutPatientsInput
-    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
-  }
-
-  export type PatientsCreateOrConnectWithoutMedicalRecordsInput = {
-    where: PatientsWhereUniqueInput
-    create: XOR<PatientsCreateWithoutMedicalRecordsInput, PatientsUncheckedCreateWithoutMedicalRecordsInput>
-  }
-
   export type AdmissionsCreateWithoutMedicalRecordsInput = {
     admission_no: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
     treatment_plan?: string | null
     remarks?: string | null
-    patient: PatientsCreateNestedOneWithoutAdmissionsInput
+    is_discharged?: boolean
     bed: BedCreateNestedOneWithoutAdmissionsInput
     diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
     dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
+    patient: PatientsCreateNestedOneWithoutAdmissionsInput
   }
 
   export type AdmissionsUncheckedCreateWithoutMedicalRecordsInput = {
@@ -22560,11 +21400,11 @@ export namespace Prisma {
     bed_id: number
     diagnosis_id: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
-    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
+    dischargeReasonId?: number | null
+    is_discharged?: boolean
   }
 
   export type AdmissionsCreateOrConnectWithoutMedicalRecordsInput = {
@@ -22572,25 +21412,95 @@ export namespace Prisma {
     create: XOR<AdmissionsCreateWithoutMedicalRecordsInput, AdmissionsUncheckedCreateWithoutMedicalRecordsInput>
   }
 
-  export type CaseSheetsUpsertWithoutMedicalRecordInput = {
-    update: XOR<CaseSheetsUpdateWithoutMedicalRecordInput, CaseSheetsUncheckedUpdateWithoutMedicalRecordInput>
-    create: XOR<CaseSheetsCreateWithoutMedicalRecordInput, CaseSheetsUncheckedCreateWithoutMedicalRecordInput>
-    where?: CaseSheetsWhereInput
+  export type PatientsCreateWithoutMedicalRecordsInput = {
+    PatientID: string
+    Name: string
+    Age: string
+    Gender: string
+    UMR?: string | null
+    ContactNumber?: string | null
+    Address?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Status?: string | null
+    PatientRegistrationDate: Date | string
+    Ptype?: string | null
+    Email?: string | null
+    AlternateNumber?: string | null
+    DOB?: Date | string | null
+    BloodGroup?: string | null
+    Sponsor?: string | null
+    Admissions?: AdmissionsCreateNestedManyWithoutPatientInput
+    Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
+    Bills?: BillsCreateNestedManyWithoutPatientsInput
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
   }
 
-  export type CaseSheetsUpdateToOneWithWhereWithoutMedicalRecordInput = {
-    where?: CaseSheetsWhereInput
-    data: XOR<CaseSheetsUpdateWithoutMedicalRecordInput, CaseSheetsUncheckedUpdateWithoutMedicalRecordInput>
+  export type PatientsUncheckedCreateWithoutMedicalRecordsInput = {
+    PatientID: string
+    Name: string
+    Age: string
+    Gender: string
+    UMR?: string | null
+    ContactNumber?: string | null
+    Address?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Status?: string | null
+    PatientRegistrationDate: Date | string
+    Ptype?: string | null
+    Email?: string | null
+    AlternateNumber?: string | null
+    DOB?: Date | string | null
+    BloodGroup?: string | null
+    DepartmentID?: number | null
+    Sponsor?: string | null
+    Admissions?: AdmissionsUncheckedCreateNestedManyWithoutPatientInput
+    Appointments?: AppointmentsUncheckedCreateNestedManyWithoutPatientsInput
+    Bills?: BillsUncheckedCreateNestedManyWithoutPatientsInput
   }
 
-  export type CaseSheetsUpdateWithoutMedicalRecordInput = {
-    CaseSheetID?: StringFieldUpdateOperationsInput | string
-    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+  export type PatientsCreateOrConnectWithoutMedicalRecordsInput = {
+    where: PatientsWhereUniqueInput
+    create: XOR<PatientsCreateWithoutMedicalRecordsInput, PatientsUncheckedCreateWithoutMedicalRecordsInput>
   }
 
-  export type CaseSheetsUncheckedUpdateWithoutMedicalRecordInput = {
-    CaseSheetID?: StringFieldUpdateOperationsInput | string
-    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+  export type AdmissionsUpsertWithoutMedicalRecordsInput = {
+    update: XOR<AdmissionsUpdateWithoutMedicalRecordsInput, AdmissionsUncheckedUpdateWithoutMedicalRecordsInput>
+    create: XOR<AdmissionsCreateWithoutMedicalRecordsInput, AdmissionsUncheckedCreateWithoutMedicalRecordsInput>
+    where?: AdmissionsWhereInput
+  }
+
+  export type AdmissionsUpdateToOneWithWhereWithoutMedicalRecordsInput = {
+    where?: AdmissionsWhereInput
+    data: XOR<AdmissionsUpdateWithoutMedicalRecordsInput, AdmissionsUncheckedUpdateWithoutMedicalRecordsInput>
+  }
+
+  export type AdmissionsUpdateWithoutMedicalRecordsInput = {
+    admission_no?: IntFieldUpdateOperationsInput | number
+    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
+    bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
+    diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
+    dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
+    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
+  }
+
+  export type AdmissionsUncheckedUpdateWithoutMedicalRecordsInput = {
+    admission_id?: IntFieldUpdateOperationsInput | number
+    admission_no?: IntFieldUpdateOperationsInput | number
+    PatientID?: StringFieldUpdateOperationsInput | string
+    bed_id?: IntFieldUpdateOperationsInput | number
+    diagnosis_id?: IntFieldUpdateOperationsInput | number
+    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PatientsUpsertWithoutMedicalRecordsInput = {
@@ -22609,6 +21519,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22616,15 +21527,15 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
     Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
     Bills?: BillsUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
   }
 
   export type PatientsUncheckedUpdateWithoutMedicalRecordsInput = {
@@ -22632,6 +21543,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22639,135 +21551,51 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
-    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
     Appointments?: AppointmentsUncheckedUpdateManyWithoutPatientsNestedInput
     Bills?: BillsUncheckedUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
   }
 
-  export type AdmissionsUpsertWithoutMedicalRecordsInput = {
-    update: XOR<AdmissionsUpdateWithoutMedicalRecordsInput, AdmissionsUncheckedUpdateWithoutMedicalRecordsInput>
-    create: XOR<AdmissionsCreateWithoutMedicalRecordsInput, AdmissionsUncheckedCreateWithoutMedicalRecordsInput>
-    where?: AdmissionsWhereInput
+  export type AdmissionsCreateWithoutPatientInput = {
+    admission_no: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+    is_discharged?: boolean
+    bed: BedCreateNestedOneWithoutAdmissionsInput
+    diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
+    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
+    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
   }
 
-  export type AdmissionsUpdateToOneWithWhereWithoutMedicalRecordsInput = {
-    where?: AdmissionsWhereInput
-    data: XOR<AdmissionsUpdateWithoutMedicalRecordsInput, AdmissionsUncheckedUpdateWithoutMedicalRecordsInput>
+  export type AdmissionsUncheckedCreateWithoutPatientInput = {
+    admission_id?: number
+    admission_no: number
+    bed_id: number
+    diagnosis_id: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+    dischargeReasonId?: number | null
+    is_discharged?: boolean
+    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
   }
 
-  export type AdmissionsUpdateWithoutMedicalRecordsInput = {
-    admission_no?: IntFieldUpdateOperationsInput | number
-    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
-    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
-    bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
-    diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
-    dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
+  export type AdmissionsCreateOrConnectWithoutPatientInput = {
+    where: AdmissionsWhereUniqueInput
+    create: XOR<AdmissionsCreateWithoutPatientInput, AdmissionsUncheckedCreateWithoutPatientInput>
   }
 
-  export type AdmissionsUncheckedUpdateWithoutMedicalRecordsInput = {
-    admission_id?: IntFieldUpdateOperationsInput | number
-    admission_no?: IntFieldUpdateOperationsInput | number
-    PatientID?: StringFieldUpdateOperationsInput | string
-    bed_id?: IntFieldUpdateOperationsInput | number
-    diagnosis_id?: IntFieldUpdateOperationsInput | number
-    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
-    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
-    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type MedicalRecordsCreateWithoutCaseSheetsInput = {
-    RecordID: string
-    DiagnosisDetails?: string | null
-    TreatmentPlan?: string | null
-    medication?: string | null
-    RecordDate: Date | string
-    CreatedAt?: Date | string | null
-    UpdatedAt?: Date | string | null
-    Patients?: PatientsCreateNestedOneWithoutMedicalRecordsInput
-    Admissions?: AdmissionsCreateNestedOneWithoutMedicalRecordsInput
-  }
-
-  export type MedicalRecordsUncheckedCreateWithoutCaseSheetsInput = {
-    RecordID: string
-    PatientID?: string | null
-    admission_no?: number | null
-    DiagnosisDetails?: string | null
-    TreatmentPlan?: string | null
-    medication?: string | null
-    RecordDate: Date | string
-    CreatedAt?: Date | string | null
-    UpdatedAt?: Date | string | null
-  }
-
-  export type MedicalRecordsCreateOrConnectWithoutCaseSheetsInput = {
-    where: MedicalRecordsWhereUniqueInput
-    create: XOR<MedicalRecordsCreateWithoutCaseSheetsInput, MedicalRecordsUncheckedCreateWithoutCaseSheetsInput>
-  }
-
-  export type MedicalRecordsUpsertWithoutCaseSheetsInput = {
-    update: XOR<MedicalRecordsUpdateWithoutCaseSheetsInput, MedicalRecordsUncheckedUpdateWithoutCaseSheetsInput>
-    create: XOR<MedicalRecordsCreateWithoutCaseSheetsInput, MedicalRecordsUncheckedCreateWithoutCaseSheetsInput>
-    where?: MedicalRecordsWhereInput
-  }
-
-  export type MedicalRecordsUpdateToOneWithWhereWithoutCaseSheetsInput = {
-    where?: MedicalRecordsWhereInput
-    data: XOR<MedicalRecordsUpdateWithoutCaseSheetsInput, MedicalRecordsUncheckedUpdateWithoutCaseSheetsInput>
-  }
-
-  export type MedicalRecordsUpdateWithoutCaseSheetsInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
-    DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
-    TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
-    RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Patients?: PatientsUpdateOneWithoutMedicalRecordsNestedInput
-    Admissions?: AdmissionsUpdateOneWithoutMedicalRecordsNestedInput
-  }
-
-  export type MedicalRecordsUncheckedUpdateWithoutCaseSheetsInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
-    PatientID?: NullableStringFieldUpdateOperationsInput | string | null
-    admission_no?: NullableIntFieldUpdateOperationsInput | number | null
-    DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
-    TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
-    RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type DepartmentsCreateWithoutPatientsInput = {
-    DepartmentName: string
-    Diagnoses?: DiagnosesCreateNestedManyWithoutDepartmentsInput
-    Doctors?: DoctorsCreateNestedManyWithoutDepartmentsInput
-  }
-
-  export type DepartmentsUncheckedCreateWithoutPatientsInput = {
-    DepartmentID?: number
-    DepartmentName: string
-    Diagnoses?: DiagnosesUncheckedCreateNestedManyWithoutDepartmentsInput
-    Doctors?: DoctorsUncheckedCreateNestedManyWithoutDepartmentsInput
-  }
-
-  export type DepartmentsCreateOrConnectWithoutPatientsInput = {
-    where: DepartmentsWhereUniqueInput
-    create: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
+  export type AdmissionsCreateManyPatientInputEnvelope = {
+    data: AdmissionsCreateManyPatientInput | AdmissionsCreateManyPatientInput[]
   }
 
   export type AppointmentsCreateWithoutPatientsInput = {
@@ -22821,27 +21649,28 @@ export namespace Prisma {
   }
 
   export type MedicalRecordsCreateWithoutPatientsInput = {
-    RecordID: string
     DiagnosisDetails?: string | null
     TreatmentPlan?: string | null
-    medication?: string | null
+    Medication?: string | null
     RecordDate: Date | string
+    CaseSheet?: string | null
+    isIP?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    CaseSheets?: CaseSheetsCreateNestedOneWithoutMedicalRecordInput
     Admissions?: AdmissionsCreateNestedOneWithoutMedicalRecordsInput
   }
 
   export type MedicalRecordsUncheckedCreateWithoutPatientsInput = {
-    RecordID: string
-    admission_no?: number | null
+    RecordID?: number
     DiagnosisDetails?: string | null
     TreatmentPlan?: string | null
-    medication?: string | null
+    Medication?: string | null
     RecordDate: Date | string
+    CaseSheet?: string | null
+    isIP?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    CaseSheets?: CaseSheetsUncheckedCreateNestedOneWithoutMedicalRecordInput
+    AdmissionNo?: number | null
   }
 
   export type MedicalRecordsCreateOrConnectWithoutPatientsInput = {
@@ -22853,64 +21682,38 @@ export namespace Prisma {
     data: MedicalRecordsCreateManyPatientsInput | MedicalRecordsCreateManyPatientsInput[]
   }
 
-  export type AdmissionsCreateWithoutPatientInput = {
-    admission_no: number
-    admission_date: Date | string
-    is_discharged?: boolean
-    discharge_date?: Date | string | null
-    treatment_plan?: string | null
-    remarks?: string | null
-    bed: BedCreateNestedOneWithoutAdmissionsInput
-    diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
-    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
-    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
+  export type DepartmentsCreateWithoutPatientsInput = {
+    DepartmentName: string
+    Diagnoses?: DiagnosesCreateNestedManyWithoutDepartmentsInput
+    Doctors?: DoctorsCreateNestedManyWithoutDepartmentsInput
   }
 
-  export type AdmissionsUncheckedCreateWithoutPatientInput = {
-    admission_id?: number
-    admission_no: number
-    bed_id: number
-    diagnosis_id: number
-    admission_date: Date | string
-    is_discharged?: boolean
-    discharge_date?: Date | string | null
-    dischargeReasonId?: number | null
-    treatment_plan?: string | null
-    remarks?: string | null
-    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
+  export type DepartmentsUncheckedCreateWithoutPatientsInput = {
+    DepartmentID?: number
+    DepartmentName: string
+    Diagnoses?: DiagnosesUncheckedCreateNestedManyWithoutDepartmentsInput
+    Doctors?: DoctorsUncheckedCreateNestedManyWithoutDepartmentsInput
   }
 
-  export type AdmissionsCreateOrConnectWithoutPatientInput = {
+  export type DepartmentsCreateOrConnectWithoutPatientsInput = {
+    where: DepartmentsWhereUniqueInput
+    create: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
+  }
+
+  export type AdmissionsUpsertWithWhereUniqueWithoutPatientInput = {
     where: AdmissionsWhereUniqueInput
+    update: XOR<AdmissionsUpdateWithoutPatientInput, AdmissionsUncheckedUpdateWithoutPatientInput>
     create: XOR<AdmissionsCreateWithoutPatientInput, AdmissionsUncheckedCreateWithoutPatientInput>
   }
 
-  export type AdmissionsCreateManyPatientInputEnvelope = {
-    data: AdmissionsCreateManyPatientInput | AdmissionsCreateManyPatientInput[]
+  export type AdmissionsUpdateWithWhereUniqueWithoutPatientInput = {
+    where: AdmissionsWhereUniqueInput
+    data: XOR<AdmissionsUpdateWithoutPatientInput, AdmissionsUncheckedUpdateWithoutPatientInput>
   }
 
-  export type DepartmentsUpsertWithoutPatientsInput = {
-    update: XOR<DepartmentsUpdateWithoutPatientsInput, DepartmentsUncheckedUpdateWithoutPatientsInput>
-    create: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
-    where?: DepartmentsWhereInput
-  }
-
-  export type DepartmentsUpdateToOneWithWhereWithoutPatientsInput = {
-    where?: DepartmentsWhereInput
-    data: XOR<DepartmentsUpdateWithoutPatientsInput, DepartmentsUncheckedUpdateWithoutPatientsInput>
-  }
-
-  export type DepartmentsUpdateWithoutPatientsInput = {
-    DepartmentName?: StringFieldUpdateOperationsInput | string
-    Diagnoses?: DiagnosesUpdateManyWithoutDepartmentsNestedInput
-    Doctors?: DoctorsUpdateManyWithoutDepartmentsNestedInput
-  }
-
-  export type DepartmentsUncheckedUpdateWithoutPatientsInput = {
-    DepartmentID?: IntFieldUpdateOperationsInput | number
-    DepartmentName?: StringFieldUpdateOperationsInput | string
-    Diagnoses?: DiagnosesUncheckedUpdateManyWithoutDepartmentsNestedInput
-    Doctors?: DoctorsUncheckedUpdateManyWithoutDepartmentsNestedInput
+  export type AdmissionsUpdateManyWithWhereWithoutPatientInput = {
+    where: AdmissionsScalarWhereInput
+    data: XOR<AdmissionsUpdateManyMutationInput, AdmissionsUncheckedUpdateManyWithoutPatientInput>
   }
 
   export type AppointmentsUpsertWithWhereUniqueWithoutPatientsInput = {
@@ -22976,31 +21779,41 @@ export namespace Prisma {
     AND?: MedicalRecordsScalarWhereInput | MedicalRecordsScalarWhereInput[]
     OR?: MedicalRecordsScalarWhereInput[]
     NOT?: MedicalRecordsScalarWhereInput | MedicalRecordsScalarWhereInput[]
-    RecordID?: StringFilter<"MedicalRecords"> | string
+    RecordID?: IntFilter<"MedicalRecords"> | number
     PatientID?: StringNullableFilter<"MedicalRecords"> | string | null
-    admission_no?: IntNullableFilter<"MedicalRecords"> | number | null
     DiagnosisDetails?: StringNullableFilter<"MedicalRecords"> | string | null
     TreatmentPlan?: StringNullableFilter<"MedicalRecords"> | string | null
-    medication?: StringNullableFilter<"MedicalRecords"> | string | null
+    Medication?: StringNullableFilter<"MedicalRecords"> | string | null
     RecordDate?: DateTimeFilter<"MedicalRecords"> | Date | string
+    CaseSheet?: StringNullableFilter<"MedicalRecords"> | string | null
+    isIP?: BoolFilter<"MedicalRecords"> | boolean
     CreatedAt?: DateTimeNullableFilter<"MedicalRecords"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"MedicalRecords"> | Date | string | null
+    AdmissionNo?: IntNullableFilter<"MedicalRecords"> | number | null
   }
 
-  export type AdmissionsUpsertWithWhereUniqueWithoutPatientInput = {
-    where: AdmissionsWhereUniqueInput
-    update: XOR<AdmissionsUpdateWithoutPatientInput, AdmissionsUncheckedUpdateWithoutPatientInput>
-    create: XOR<AdmissionsCreateWithoutPatientInput, AdmissionsUncheckedCreateWithoutPatientInput>
+  export type DepartmentsUpsertWithoutPatientsInput = {
+    update: XOR<DepartmentsUpdateWithoutPatientsInput, DepartmentsUncheckedUpdateWithoutPatientsInput>
+    create: XOR<DepartmentsCreateWithoutPatientsInput, DepartmentsUncheckedCreateWithoutPatientsInput>
+    where?: DepartmentsWhereInput
   }
 
-  export type AdmissionsUpdateWithWhereUniqueWithoutPatientInput = {
-    where: AdmissionsWhereUniqueInput
-    data: XOR<AdmissionsUpdateWithoutPatientInput, AdmissionsUncheckedUpdateWithoutPatientInput>
+  export type DepartmentsUpdateToOneWithWhereWithoutPatientsInput = {
+    where?: DepartmentsWhereInput
+    data: XOR<DepartmentsUpdateWithoutPatientsInput, DepartmentsUncheckedUpdateWithoutPatientsInput>
   }
 
-  export type AdmissionsUpdateManyWithWhereWithoutPatientInput = {
-    where: AdmissionsScalarWhereInput
-    data: XOR<AdmissionsUpdateManyMutationInput, AdmissionsUncheckedUpdateManyWithoutPatientInput>
+  export type DepartmentsUpdateWithoutPatientsInput = {
+    DepartmentName?: StringFieldUpdateOperationsInput | string
+    Diagnoses?: DiagnosesUpdateManyWithoutDepartmentsNestedInput
+    Doctors?: DoctorsUpdateManyWithoutDepartmentsNestedInput
+  }
+
+  export type DepartmentsUncheckedUpdateWithoutPatientsInput = {
+    DepartmentID?: IntFieldUpdateOperationsInput | number
+    DepartmentName?: StringFieldUpdateOperationsInput | string
+    Diagnoses?: DiagnosesUncheckedUpdateManyWithoutDepartmentsNestedInput
+    Doctors?: DoctorsUncheckedUpdateManyWithoutDepartmentsNestedInput
   }
 
   export type RoomCreateWithoutWardInput = {
@@ -23060,28 +21873,6 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Room"> | Date | string
   }
 
-  export type WardCreateWithoutRoomsInput = {
-    ward_name: string
-    ward_type: string
-    nurse_station_number?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type WardUncheckedCreateWithoutRoomsInput = {
-    ward_id?: number
-    ward_name: string
-    ward_type: string
-    nurse_station_number?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type WardCreateOrConnectWithoutRoomsInput = {
-    where: WardWhereUniqueInput
-    create: XOR<WardCreateWithoutRoomsInput, WardUncheckedCreateWithoutRoomsInput>
-  }
-
   export type BedCreateWithoutRoomInput = {
     bed_number: string
     occupied_status?: string
@@ -23108,32 +21899,26 @@ export namespace Prisma {
     data: BedCreateManyRoomInput | BedCreateManyRoomInput[]
   }
 
-  export type WardUpsertWithoutRoomsInput = {
-    update: XOR<WardUpdateWithoutRoomsInput, WardUncheckedUpdateWithoutRoomsInput>
+  export type WardCreateWithoutRoomsInput = {
+    ward_name: string
+    ward_type: string
+    nurse_station_number?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type WardUncheckedCreateWithoutRoomsInput = {
+    ward_id?: number
+    ward_name: string
+    ward_type: string
+    nurse_station_number?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type WardCreateOrConnectWithoutRoomsInput = {
+    where: WardWhereUniqueInput
     create: XOR<WardCreateWithoutRoomsInput, WardUncheckedCreateWithoutRoomsInput>
-    where?: WardWhereInput
-  }
-
-  export type WardUpdateToOneWithWhereWithoutRoomsInput = {
-    where?: WardWhereInput
-    data: XOR<WardUpdateWithoutRoomsInput, WardUncheckedUpdateWithoutRoomsInput>
-  }
-
-  export type WardUpdateWithoutRoomsInput = {
-    ward_name?: StringFieldUpdateOperationsInput | string
-    ward_type?: StringFieldUpdateOperationsInput | string
-    nurse_station_number?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type WardUncheckedUpdateWithoutRoomsInput = {
-    ward_id?: IntFieldUpdateOperationsInput | number
-    ward_name?: StringFieldUpdateOperationsInput | string
-    ward_type?: StringFieldUpdateOperationsInput | string
-    nurse_station_number?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BedUpsertWithWhereUniqueWithoutRoomInput = {
@@ -23164,6 +21949,70 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Bed"> | Date | string
   }
 
+  export type WardUpsertWithoutRoomsInput = {
+    update: XOR<WardUpdateWithoutRoomsInput, WardUncheckedUpdateWithoutRoomsInput>
+    create: XOR<WardCreateWithoutRoomsInput, WardUncheckedCreateWithoutRoomsInput>
+    where?: WardWhereInput
+  }
+
+  export type WardUpdateToOneWithWhereWithoutRoomsInput = {
+    where?: WardWhereInput
+    data: XOR<WardUpdateWithoutRoomsInput, WardUncheckedUpdateWithoutRoomsInput>
+  }
+
+  export type WardUpdateWithoutRoomsInput = {
+    ward_name?: StringFieldUpdateOperationsInput | string
+    ward_type?: StringFieldUpdateOperationsInput | string
+    nurse_station_number?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WardUncheckedUpdateWithoutRoomsInput = {
+    ward_id?: IntFieldUpdateOperationsInput | number
+    ward_name?: StringFieldUpdateOperationsInput | string
+    ward_type?: StringFieldUpdateOperationsInput | string
+    nurse_station_number?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdmissionsCreateWithoutBedInput = {
+    admission_no: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+    is_discharged?: boolean
+    diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
+    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
+    patient: PatientsCreateNestedOneWithoutAdmissionsInput
+    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
+  }
+
+  export type AdmissionsUncheckedCreateWithoutBedInput = {
+    admission_id?: number
+    admission_no: number
+    PatientID: string
+    diagnosis_id: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+    dischargeReasonId?: number | null
+    is_discharged?: boolean
+    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
+  }
+
+  export type AdmissionsCreateOrConnectWithoutBedInput = {
+    where: AdmissionsWhereUniqueInput
+    create: XOR<AdmissionsCreateWithoutBedInput, AdmissionsUncheckedCreateWithoutBedInput>
+  }
+
+  export type AdmissionsCreateManyBedInputEnvelope = {
+    data: AdmissionsCreateManyBedInput | AdmissionsCreateManyBedInput[]
+  }
+
   export type RoomCreateWithoutBedsInput = {
     room_number: string
     floor_number: number
@@ -23188,40 +22037,20 @@ export namespace Prisma {
     create: XOR<RoomCreateWithoutBedsInput, RoomUncheckedCreateWithoutBedsInput>
   }
 
-  export type AdmissionsCreateWithoutBedInput = {
-    admission_no: number
-    admission_date: Date | string
-    is_discharged?: boolean
-    discharge_date?: Date | string | null
-    treatment_plan?: string | null
-    remarks?: string | null
-    patient: PatientsCreateNestedOneWithoutAdmissionsInput
-    diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
-    dischargeReason?: DischargeReasonCreateNestedOneWithoutAdmissionsInput
-    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
-  }
-
-  export type AdmissionsUncheckedCreateWithoutBedInput = {
-    admission_id?: number
-    admission_no: number
-    PatientID: string
-    diagnosis_id: number
-    admission_date: Date | string
-    is_discharged?: boolean
-    discharge_date?: Date | string | null
-    dischargeReasonId?: number | null
-    treatment_plan?: string | null
-    remarks?: string | null
-    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
-  }
-
-  export type AdmissionsCreateOrConnectWithoutBedInput = {
+  export type AdmissionsUpsertWithWhereUniqueWithoutBedInput = {
     where: AdmissionsWhereUniqueInput
+    update: XOR<AdmissionsUpdateWithoutBedInput, AdmissionsUncheckedUpdateWithoutBedInput>
     create: XOR<AdmissionsCreateWithoutBedInput, AdmissionsUncheckedCreateWithoutBedInput>
   }
 
-  export type AdmissionsCreateManyBedInputEnvelope = {
-    data: AdmissionsCreateManyBedInput | AdmissionsCreateManyBedInput[]
+  export type AdmissionsUpdateWithWhereUniqueWithoutBedInput = {
+    where: AdmissionsWhereUniqueInput
+    data: XOR<AdmissionsUpdateWithoutBedInput, AdmissionsUncheckedUpdateWithoutBedInput>
+  }
+
+  export type AdmissionsUpdateManyWithWhereWithoutBedInput = {
+    where: AdmissionsScalarWhereInput
+    data: XOR<AdmissionsUpdateManyMutationInput, AdmissionsUncheckedUpdateManyWithoutBedInput>
   }
 
   export type RoomUpsertWithoutBedsInput = {
@@ -23252,73 +22081,6 @@ export namespace Prisma {
     total_beds_in_room?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AdmissionsUpsertWithWhereUniqueWithoutBedInput = {
-    where: AdmissionsWhereUniqueInput
-    update: XOR<AdmissionsUpdateWithoutBedInput, AdmissionsUncheckedUpdateWithoutBedInput>
-    create: XOR<AdmissionsCreateWithoutBedInput, AdmissionsUncheckedCreateWithoutBedInput>
-  }
-
-  export type AdmissionsUpdateWithWhereUniqueWithoutBedInput = {
-    where: AdmissionsWhereUniqueInput
-    data: XOR<AdmissionsUpdateWithoutBedInput, AdmissionsUncheckedUpdateWithoutBedInput>
-  }
-
-  export type AdmissionsUpdateManyWithWhereWithoutBedInput = {
-    where: AdmissionsScalarWhereInput
-    data: XOR<AdmissionsUpdateManyMutationInput, AdmissionsUncheckedUpdateManyWithoutBedInput>
-  }
-
-  export type PatientsCreateWithoutAdmissionsInput = {
-    PatientID: string
-    Name: string
-    Age: string
-    Gender: string
-    ContactNumber?: string | null
-    Address?: string | null
-    CreatedAt?: Date | string | null
-    UpdatedAt?: Date | string | null
-    Status?: string | null
-    PatientRegistrationDate: Date | string
-    Ptype?: string | null
-    Sponsor?: string | null
-    Email?: string | null
-    AlternateNumber?: string | null
-    DOB?: Date | string | null
-    BloodGroup?: string | null
-    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
-    Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
-    Bills?: BillsCreateNestedManyWithoutPatientsInput
-    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
-  }
-
-  export type PatientsUncheckedCreateWithoutAdmissionsInput = {
-    PatientID: string
-    Name: string
-    Age: string
-    Gender: string
-    ContactNumber?: string | null
-    Address?: string | null
-    CreatedAt?: Date | string | null
-    UpdatedAt?: Date | string | null
-    Status?: string | null
-    PatientRegistrationDate: Date | string
-    Ptype?: string | null
-    Sponsor?: string | null
-    DepartmentID?: number | null
-    Email?: string | null
-    AlternateNumber?: string | null
-    DOB?: Date | string | null
-    BloodGroup?: string | null
-    Appointments?: AppointmentsUncheckedCreateNestedManyWithoutPatientsInput
-    Bills?: BillsUncheckedCreateNestedManyWithoutPatientsInput
-    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutPatientsInput
-  }
-
-  export type PatientsCreateOrConnectWithoutAdmissionsInput = {
-    where: PatientsWhereUniqueInput
-    create: XOR<PatientsCreateWithoutAdmissionsInput, PatientsUncheckedCreateWithoutAdmissionsInput>
   }
 
   export type BedCreateWithoutAdmissionsInput = {
@@ -23375,28 +22137,82 @@ export namespace Prisma {
     create: XOR<DischargeReasonCreateWithoutAdmissionsInput, DischargeReasonUncheckedCreateWithoutAdmissionsInput>
   }
 
-  export type MedicalRecordsCreateWithoutAdmissionsInput = {
-    RecordID: string
-    DiagnosisDetails?: string | null
-    TreatmentPlan?: string | null
-    medication?: string | null
-    RecordDate: Date | string
+  export type PatientsCreateWithoutAdmissionsInput = {
+    PatientID: string
+    Name: string
+    Age: string
+    Gender: string
+    UMR?: string | null
+    ContactNumber?: string | null
+    Address?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    CaseSheets?: CaseSheetsCreateNestedOneWithoutMedicalRecordInput
+    Status?: string | null
+    PatientRegistrationDate: Date | string
+    Ptype?: string | null
+    Email?: string | null
+    AlternateNumber?: string | null
+    DOB?: Date | string | null
+    BloodGroup?: string | null
+    Sponsor?: string | null
+    Appointments?: AppointmentsCreateNestedManyWithoutPatientsInput
+    Bills?: BillsCreateNestedManyWithoutPatientsInput
+    MedicalRecords?: MedicalRecordsCreateNestedManyWithoutPatientsInput
+    Department?: DepartmentsCreateNestedOneWithoutPatientsInput
+  }
+
+  export type PatientsUncheckedCreateWithoutAdmissionsInput = {
+    PatientID: string
+    Name: string
+    Age: string
+    Gender: string
+    UMR?: string | null
+    ContactNumber?: string | null
+    Address?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Status?: string | null
+    PatientRegistrationDate: Date | string
+    Ptype?: string | null
+    Email?: string | null
+    AlternateNumber?: string | null
+    DOB?: Date | string | null
+    BloodGroup?: string | null
+    DepartmentID?: number | null
+    Sponsor?: string | null
+    Appointments?: AppointmentsUncheckedCreateNestedManyWithoutPatientsInput
+    Bills?: BillsUncheckedCreateNestedManyWithoutPatientsInput
+    MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutPatientsInput
+  }
+
+  export type PatientsCreateOrConnectWithoutAdmissionsInput = {
+    where: PatientsWhereUniqueInput
+    create: XOR<PatientsCreateWithoutAdmissionsInput, PatientsUncheckedCreateWithoutAdmissionsInput>
+  }
+
+  export type MedicalRecordsCreateWithoutAdmissionsInput = {
+    DiagnosisDetails?: string | null
+    TreatmentPlan?: string | null
+    Medication?: string | null
+    RecordDate: Date | string
+    CaseSheet?: string | null
+    isIP?: boolean
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
     Patients?: PatientsCreateNestedOneWithoutMedicalRecordsInput
   }
 
   export type MedicalRecordsUncheckedCreateWithoutAdmissionsInput = {
-    RecordID: string
+    RecordID?: number
     PatientID?: string | null
     DiagnosisDetails?: string | null
     TreatmentPlan?: string | null
-    medication?: string | null
+    Medication?: string | null
     RecordDate: Date | string
+    CaseSheet?: string | null
+    isIP?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    CaseSheets?: CaseSheetsUncheckedCreateNestedOneWithoutMedicalRecordInput
   }
 
   export type MedicalRecordsCreateOrConnectWithoutAdmissionsInput = {
@@ -23406,63 +22222,6 @@ export namespace Prisma {
 
   export type MedicalRecordsCreateManyAdmissionsInputEnvelope = {
     data: MedicalRecordsCreateManyAdmissionsInput | MedicalRecordsCreateManyAdmissionsInput[]
-  }
-
-  export type PatientsUpsertWithoutAdmissionsInput = {
-    update: XOR<PatientsUpdateWithoutAdmissionsInput, PatientsUncheckedUpdateWithoutAdmissionsInput>
-    create: XOR<PatientsCreateWithoutAdmissionsInput, PatientsUncheckedCreateWithoutAdmissionsInput>
-    where?: PatientsWhereInput
-  }
-
-  export type PatientsUpdateToOneWithWhereWithoutAdmissionsInput = {
-    where?: PatientsWhereInput
-    data: XOR<PatientsUpdateWithoutAdmissionsInput, PatientsUncheckedUpdateWithoutAdmissionsInput>
-  }
-
-  export type PatientsUpdateWithoutAdmissionsInput = {
-    PatientID?: StringFieldUpdateOperationsInput | string
-    Name?: StringFieldUpdateOperationsInput | string
-    Age?: StringFieldUpdateOperationsInput | string
-    Gender?: StringFieldUpdateOperationsInput | string
-    ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    Address?: NullableStringFieldUpdateOperationsInput | string | null
-    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Status?: NullableStringFieldUpdateOperationsInput | string | null
-    PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
-    Email?: NullableStringFieldUpdateOperationsInput | string | null
-    AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
-    Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
-    Bills?: BillsUpdateManyWithoutPatientsNestedInput
-    MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
-  }
-
-  export type PatientsUncheckedUpdateWithoutAdmissionsInput = {
-    PatientID?: StringFieldUpdateOperationsInput | string
-    Name?: StringFieldUpdateOperationsInput | string
-    Age?: StringFieldUpdateOperationsInput | string
-    Gender?: StringFieldUpdateOperationsInput | string
-    ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    Address?: NullableStringFieldUpdateOperationsInput | string | null
-    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Status?: NullableStringFieldUpdateOperationsInput | string | null
-    PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
-    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
-    Email?: NullableStringFieldUpdateOperationsInput | string | null
-    AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
-    Appointments?: AppointmentsUncheckedUpdateManyWithoutPatientsNestedInput
-    Bills?: BillsUncheckedUpdateManyWithoutPatientsNestedInput
-    MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutPatientsNestedInput
   }
 
   export type BedUpsertWithoutAdmissionsInput = {
@@ -23537,6 +22296,65 @@ export namespace Prisma {
     reason?: StringFieldUpdateOperationsInput | string
   }
 
+  export type PatientsUpsertWithoutAdmissionsInput = {
+    update: XOR<PatientsUpdateWithoutAdmissionsInput, PatientsUncheckedUpdateWithoutAdmissionsInput>
+    create: XOR<PatientsCreateWithoutAdmissionsInput, PatientsUncheckedCreateWithoutAdmissionsInput>
+    where?: PatientsWhereInput
+  }
+
+  export type PatientsUpdateToOneWithWhereWithoutAdmissionsInput = {
+    where?: PatientsWhereInput
+    data: XOR<PatientsUpdateWithoutAdmissionsInput, PatientsUncheckedUpdateWithoutAdmissionsInput>
+  }
+
+  export type PatientsUpdateWithoutAdmissionsInput = {
+    PatientID?: StringFieldUpdateOperationsInput | string
+    Name?: StringFieldUpdateOperationsInput | string
+    Age?: StringFieldUpdateOperationsInput | string
+    Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
+    ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    Address?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Status?: NullableStringFieldUpdateOperationsInput | string | null
+    PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    Email?: NullableStringFieldUpdateOperationsInput | string | null
+    AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
+    Bills?: BillsUpdateManyWithoutPatientsNestedInput
+    MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
+    Department?: DepartmentsUpdateOneWithoutPatientsNestedInput
+  }
+
+  export type PatientsUncheckedUpdateWithoutAdmissionsInput = {
+    PatientID?: StringFieldUpdateOperationsInput | string
+    Name?: StringFieldUpdateOperationsInput | string
+    Age?: StringFieldUpdateOperationsInput | string
+    Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
+    ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    Address?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Status?: NullableStringFieldUpdateOperationsInput | string | null
+    PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    Ptype?: NullableStringFieldUpdateOperationsInput | string | null
+    Email?: NullableStringFieldUpdateOperationsInput | string | null
+    AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    DepartmentID?: NullableIntFieldUpdateOperationsInput | number | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Appointments?: AppointmentsUncheckedUpdateManyWithoutPatientsNestedInput
+    Bills?: BillsUncheckedUpdateManyWithoutPatientsNestedInput
+    MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutPatientsNestedInput
+  }
+
   export type MedicalRecordsUpsertWithWhereUniqueWithoutAdmissionsInput = {
     where: MedicalRecordsWhereUniqueInput
     update: XOR<MedicalRecordsUpdateWithoutAdmissionsInput, MedicalRecordsUncheckedUpdateWithoutAdmissionsInput>
@@ -23556,13 +22374,13 @@ export namespace Prisma {
   export type AdmissionsCreateWithoutDischargeReasonInput = {
     admission_no: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
     treatment_plan?: string | null
     remarks?: string | null
-    patient: PatientsCreateNestedOneWithoutAdmissionsInput
+    is_discharged?: boolean
     bed: BedCreateNestedOneWithoutAdmissionsInput
     diagnosis: DiagnosesCreateNestedOneWithoutAdmissionsInput
+    patient: PatientsCreateNestedOneWithoutAdmissionsInput
     MedicalRecords?: MedicalRecordsCreateNestedManyWithoutAdmissionsInput
   }
 
@@ -23573,10 +22391,10 @@ export namespace Prisma {
     bed_id: number
     diagnosis_id: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
     treatment_plan?: string | null
     remarks?: string | null
+    is_discharged?: boolean
     MedicalRecords?: MedicalRecordsUncheckedCreateNestedManyWithoutAdmissionsInput
   }
 
@@ -23624,6 +22442,7 @@ export namespace Prisma {
     Name: string
     Age: string
     Gender: string
+    UMR?: string | null
     ContactNumber?: string | null
     Address?: string | null
     CreatedAt?: Date | string | null
@@ -23631,11 +22450,11 @@ export namespace Prisma {
     Status?: string | null
     PatientRegistrationDate: Date | string
     Ptype?: string | null
-    Sponsor?: string | null
     Email?: string | null
     AlternateNumber?: string | null
     DOB?: Date | string | null
     BloodGroup?: string | null
+    Sponsor?: string | null
   }
 
   export type DiagnosesUpdateWithoutDepartmentsInput = {
@@ -23693,6 +22512,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23700,15 +22520,15 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
     Appointments?: AppointmentsUpdateManyWithoutPatientsNestedInput
     Bills?: BillsUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientsUncheckedUpdateWithoutDepartmentInput = {
@@ -23716,6 +22536,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23723,15 +22544,15 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
+    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
     Appointments?: AppointmentsUncheckedUpdateManyWithoutPatientsNestedInput
     Bills?: BillsUncheckedUpdateManyWithoutPatientsNestedInput
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutPatientsNestedInput
-    Admissions?: AdmissionsUncheckedUpdateManyWithoutPatientNestedInput
   }
 
   export type PatientsUncheckedUpdateManyWithoutDepartmentInput = {
@@ -23739,6 +22560,7 @@ export namespace Prisma {
     Name?: StringFieldUpdateOperationsInput | string
     Age?: StringFieldUpdateOperationsInput | string
     Gender?: StringFieldUpdateOperationsInput | string
+    UMR?: NullableStringFieldUpdateOperationsInput | string | null
     ContactNumber?: NullableStringFieldUpdateOperationsInput | string | null
     Address?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23746,11 +22568,11 @@ export namespace Prisma {
     Status?: NullableStringFieldUpdateOperationsInput | string | null
     PatientRegistrationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     Ptype?: NullableStringFieldUpdateOperationsInput | string | null
-    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     Email?: NullableStringFieldUpdateOperationsInput | string | null
     AlternateNumber?: NullableStringFieldUpdateOperationsInput | string | null
     DOB?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BloodGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Sponsor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdmissionsCreateManyDiagnosisInput = {
@@ -23758,23 +22580,23 @@ export namespace Prisma {
     PatientID: string
     bed_id: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
-    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
+    dischargeReasonId?: number | null
+    is_discharged?: boolean
   }
 
   export type AdmissionsUpdateWithoutDiagnosisInput = {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
     dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
+    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -23784,11 +22606,11 @@ export namespace Prisma {
     PatientID?: StringFieldUpdateOperationsInput | string
     bed_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -23798,11 +22620,11 @@ export namespace Prisma {
     PatientID?: StringFieldUpdateOperationsInput | string
     bed_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AppointmentsCreateManyDoctorsInput = {
@@ -23843,6 +22665,18 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type AdmissionsCreateManyPatientInput = {
+    admission_no: number
+    bed_id: number
+    diagnosis_id: number
+    admission_date: Date | string
+    discharge_date?: Date | string | null
+    treatment_plan?: string | null
+    remarks?: string | null
+    dischargeReasonId?: number | null
+    is_discharged?: boolean
+  }
+
   export type AppointmentsCreateManyPatientsInput = {
     DoctorID: number
     AppointmentDate: Date | string
@@ -23859,26 +22693,55 @@ export namespace Prisma {
   }
 
   export type MedicalRecordsCreateManyPatientsInput = {
-    RecordID: string
-    admission_no?: number | null
     DiagnosisDetails?: string | null
     TreatmentPlan?: string | null
-    medication?: string | null
+    Medication?: string | null
     RecordDate: Date | string
+    CaseSheet?: string | null
+    isIP?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    AdmissionNo?: number | null
   }
 
-  export type AdmissionsCreateManyPatientInput = {
-    admission_no: number
-    bed_id: number
-    diagnosis_id: number
-    admission_date: Date | string
-    is_discharged?: boolean
-    discharge_date?: Date | string | null
-    dischargeReasonId?: number | null
-    treatment_plan?: string | null
-    remarks?: string | null
+  export type AdmissionsUpdateWithoutPatientInput = {
+    admission_no?: IntFieldUpdateOperationsInput | number
+    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
+    bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
+    diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
+    dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
+    MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
+  }
+
+  export type AdmissionsUncheckedUpdateWithoutPatientInput = {
+    admission_id?: IntFieldUpdateOperationsInput | number
+    admission_no?: IntFieldUpdateOperationsInput | number
+    bed_id?: IntFieldUpdateOperationsInput | number
+    diagnosis_id?: IntFieldUpdateOperationsInput | number
+    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
+    MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
+  }
+
+  export type AdmissionsUncheckedUpdateManyWithoutPatientInput = {
+    admission_id?: IntFieldUpdateOperationsInput | number
+    admission_no?: IntFieldUpdateOperationsInput | number
+    bed_id?: IntFieldUpdateOperationsInput | number
+    diagnosis_id?: IntFieldUpdateOperationsInput | number
+    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
+    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AppointmentsUpdateWithoutPatientsInput = {
@@ -23931,78 +22794,41 @@ export namespace Prisma {
   }
 
   export type MedicalRecordsUpdateWithoutPatientsInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    CaseSheets?: CaseSheetsUpdateOneWithoutMedicalRecordNestedInput
     Admissions?: AdmissionsUpdateOneWithoutMedicalRecordsNestedInput
   }
 
   export type MedicalRecordsUncheckedUpdateWithoutPatientsInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
-    admission_no?: NullableIntFieldUpdateOperationsInput | number | null
+    RecordID?: IntFieldUpdateOperationsInput | number
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    CaseSheets?: CaseSheetsUncheckedUpdateOneWithoutMedicalRecordNestedInput
+    AdmissionNo?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MedicalRecordsUncheckedUpdateManyWithoutPatientsInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
-    admission_no?: NullableIntFieldUpdateOperationsInput | number | null
+    RecordID?: IntFieldUpdateOperationsInput | number
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type AdmissionsUpdateWithoutPatientInput = {
-    admission_no?: IntFieldUpdateOperationsInput | number
-    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
-    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
-    diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
-    dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
-    MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
-  }
-
-  export type AdmissionsUncheckedUpdateWithoutPatientInput = {
-    admission_id?: IntFieldUpdateOperationsInput | number
-    admission_no?: IntFieldUpdateOperationsInput | number
-    bed_id?: IntFieldUpdateOperationsInput | number
-    diagnosis_id?: IntFieldUpdateOperationsInput | number
-    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
-    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
-    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
-  }
-
-  export type AdmissionsUncheckedUpdateManyWithoutPatientInput = {
-    admission_id?: IntFieldUpdateOperationsInput | number
-    admission_no?: IntFieldUpdateOperationsInput | number
-    bed_id?: IntFieldUpdateOperationsInput | number
-    diagnosis_id?: IntFieldUpdateOperationsInput | number
-    admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
-    discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
-    treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    AdmissionNo?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type RoomCreateManyWardInput = {
@@ -24078,23 +22904,23 @@ export namespace Prisma {
     PatientID: string
     diagnosis_id: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
-    dischargeReasonId?: number | null
     treatment_plan?: string | null
     remarks?: string | null
+    dischargeReasonId?: number | null
+    is_discharged?: boolean
   }
 
   export type AdmissionsUpdateWithoutBedInput = {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
     dischargeReason?: DischargeReasonUpdateOneWithoutAdmissionsNestedInput
+    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -24104,11 +22930,11 @@ export namespace Prisma {
     PatientID?: StringFieldUpdateOperationsInput | string
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -24118,55 +22944,59 @@ export namespace Prisma {
     PatientID?: StringFieldUpdateOperationsInput | string
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    dischargeReasonId?: NullableIntFieldUpdateOperationsInput | number | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type MedicalRecordsCreateManyAdmissionsInput = {
-    RecordID: string
     PatientID?: string | null
     DiagnosisDetails?: string | null
     TreatmentPlan?: string | null
-    medication?: string | null
+    Medication?: string | null
     RecordDate: Date | string
+    CaseSheet?: string | null
+    isIP?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
 
   export type MedicalRecordsUpdateWithoutAdmissionsInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    CaseSheets?: CaseSheetsUpdateOneWithoutMedicalRecordNestedInput
     Patients?: PatientsUpdateOneWithoutMedicalRecordsNestedInput
   }
 
   export type MedicalRecordsUncheckedUpdateWithoutAdmissionsInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
+    RecordID?: IntFieldUpdateOperationsInput | number
     PatientID?: NullableStringFieldUpdateOperationsInput | string | null
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    CaseSheets?: CaseSheetsUncheckedUpdateOneWithoutMedicalRecordNestedInput
   }
 
   export type MedicalRecordsUncheckedUpdateManyWithoutAdmissionsInput = {
-    RecordID?: StringFieldUpdateOperationsInput | string
+    RecordID?: IntFieldUpdateOperationsInput | number
     PatientID?: NullableStringFieldUpdateOperationsInput | string | null
     DiagnosisDetails?: NullableStringFieldUpdateOperationsInput | string | null
     TreatmentPlan?: NullableStringFieldUpdateOperationsInput | string | null
-    medication?: NullableStringFieldUpdateOperationsInput | string | null
+    Medication?: NullableStringFieldUpdateOperationsInput | string | null
     RecordDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    CaseSheet?: NullableStringFieldUpdateOperationsInput | string | null
+    isIP?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -24177,22 +23007,22 @@ export namespace Prisma {
     bed_id: number
     diagnosis_id: number
     admission_date: Date | string
-    is_discharged?: boolean
     discharge_date?: Date | string | null
     treatment_plan?: string | null
     remarks?: string | null
+    is_discharged?: boolean
   }
 
   export type AdmissionsUpdateWithoutDischargeReasonInput = {
     admission_no?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     bed?: BedUpdateOneRequiredWithoutAdmissionsNestedInput
     diagnosis?: DiagnosesUpdateOneRequiredWithoutAdmissionsNestedInput
+    patient?: PatientsUpdateOneRequiredWithoutAdmissionsNestedInput
     MedicalRecords?: MedicalRecordsUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -24203,10 +23033,10 @@ export namespace Prisma {
     bed_id?: IntFieldUpdateOperationsInput | number
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     MedicalRecords?: MedicalRecordsUncheckedUpdateManyWithoutAdmissionsNestedInput
   }
 
@@ -24217,10 +23047,10 @@ export namespace Prisma {
     bed_id?: IntFieldUpdateOperationsInput | number
     diagnosis_id?: IntFieldUpdateOperationsInput | number
     admission_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_discharged?: BoolFieldUpdateOperationsInput | boolean
     discharge_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     treatment_plan?: NullableStringFieldUpdateOperationsInput | string | null
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
+    is_discharged?: BoolFieldUpdateOperationsInput | boolean
   }
 
 
