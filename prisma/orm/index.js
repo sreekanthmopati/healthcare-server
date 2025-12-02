@@ -269,7 +269,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\projects\\healthcare-api\\prisma\\orm",
+      "value": "C:\\projects\\Medical Leave\\healthcare-api\\prisma\\orm",
       "fromEnvVar": null
     },
     "config": {
@@ -287,7 +287,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\projects\\healthcare-api\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\projects\\Medical Leave\\healthcare-api\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

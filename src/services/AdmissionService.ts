@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 // 1. Get all admissions
 export const getAllAdmissions = async () => {
   return await prisma.admissions.findMany({
+   
     include: {
       patient: true,
       bed: {

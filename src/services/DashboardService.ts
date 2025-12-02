@@ -46,7 +46,11 @@ export const getDepartmentCounts = async () => {
     include: {
       Diagnoses: {
         include: {
-          admissions: true,
+          admissions: {
+            where: {
+              is_discharged: false, // ⬅️ Only include active admissions
+            },
+          },
         },
       },
     },
@@ -64,3 +68,4 @@ export const getDepartmentCounts = async () => {
 
   return result;
 };
+
