@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getPatients, getPatientWithRecords, createPatient, getTodaysPatientCountsByDepartment} from "../services/PatientsService"; // ✅ Correct import
+import { getPatients, getPatientWithRecords, createPatient, getTodaysPatientCountsByDepartment,getPatientsByMobile} from "../services/PatientsService"; // ✅ Correct import
 import { PrismaClient } from "../../prisma/orm"; 
 
 export const getAllPatients = async (req: Request, res: Response) => {
@@ -101,21 +101,6 @@ export const getTodaysPatientCountsByDepartmentController = async (req: Request,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // export const createPatientApi = async (req: Request, res: Response) => {
 //   try {
 //     const patientData = req.body;
@@ -129,3 +114,28 @@ export const getTodaysPatientCountsByDepartmentController = async (req: Request,
 //     res.status(500).json({ message: "Failed to create patient" });
 //   }
 // };
+
+
+export const getPatientsByMobileController = async (req: Request, res: Response) => {
+  console.log("🟡 [CONTROLLER] query:", req.query);
+
+  try {
+    const mobile = String(req.query.mobile || "");
+
+    if (mobile.length < 3 || !/^\d+$/.test(mobile)) {
+       res.status(200).json([]);
+       return
+    }
+
+    const patients = await getPatientsByMobile(mobile);
+     res.status(200).json(patients);
+  } catch (error) {
+    console.error("🔴 [CONTROLLER ERROR]:", error);
+    res.status(500).json({ message: "Mobile search failed" });
+  }
+};
+
+
+
+
+

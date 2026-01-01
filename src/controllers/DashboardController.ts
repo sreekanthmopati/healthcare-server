@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DashboardService, getDepartmentCounts  } from "../services/DashboardService";
+import { DashboardService, getDepartmentCounts, getDashboardSummary  } from "../services/DashboardService";
 
 export class DashboardController {
     static async getDashboard(req: Request, res: Response) {
@@ -12,17 +12,6 @@ export class DashboardController {
     }
 }
 
-// export const fetchDepartmentCounts = async (req: Request, res: Response) => {
-//     try {
-//       const counts = await getDepartmentCounts();
-//       console.log("At line 18: in DBC controller.ts", counts);
-//       res.status(200).json(counts);
-//     } catch (error) {
-//       console.error("Error in fetchDepartmentCounts:", error);
-//       res.status(500).json({ error: "Internal Server Error" });
-//     }
-//   };
-
 
 export const fetchDepartmentCounts = async (req: Request, res: Response) => {
   try {
@@ -33,3 +22,34 @@ export const fetchDepartmentCounts = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to fetch admission counts by department" });
   }
 };
+
+
+
+
+
+
+export const fetchDashboardSummary = async (req: Request, res: Response) => {
+  try {
+    const summary = await getDashboardSummary();
+    res.status(200).json(summary);
+  } catch (error) {
+    console.error("Dashboard summary error:", error);
+    res.status(500).json({ message: "Failed to load dashboard summary" });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -204,7 +204,7 @@ const assignBeds = async (wardId: number, count: number) => {
   });
 };
 
-// Process single department admission with batch operations
+// Process single department admisiio
 const processDepartmentAdmission = async (
   departmentId: number,
   wardId: number,
@@ -263,6 +263,27 @@ const admissionNos = await generateBulkAdmissionNos(batchCount);
   const createdAdmissions = await tx.admissions.createMany({
     data: admissionsData,
   });
+
+  // 🔥 6.5 Attach admission_no to today's OP case sheets (OP → IP)
+await Promise.all(
+  admissionsData.map((admission) =>
+    tx.medicalRecords.updateMany({
+      where: {
+        PatientID: admission.PatientID,
+        AdmissionNo: null, // OP case sheet
+        RecordDate: {
+          gte: new Date(new Date(admissionDate).setHours(0, 0, 0, 0)),
+          lte: new Date(new Date(admissionDate).setHours(23, 59, 59, 999)),
+        },
+      },
+      data: {
+        AdmissionNo: admission.admission_no,
+        isIP: true,
+      },
+    })
+  )
+);
+
 
   // 7. Batch update beds status in parallel
   await Promise.all(

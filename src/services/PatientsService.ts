@@ -213,3 +213,51 @@ export const getTodaysPatientCountsByDepartment = async (fromDate?: string, toDa
     throw new Error("Failed to fetch patient counts by department");
   }
 };
+
+
+
+
+
+export const getPatientsByMobile = async (mobile: string) => {
+  console.log("🟡 [SERVICE] mobile:", mobile);
+
+  try {
+    const result = await prisma.$queryRaw<
+      {
+        PatientID: string;
+        Name: string;
+        Gender: string;
+        Age: string;
+        ContactNumber: string;
+        PatientRegistrationDate: Date;
+      }[]
+    >`
+      SELECT TOP 5
+        PatientID,
+        Name,
+        Gender,
+        Age,
+        ContactNumber,
+        PatientRegistrationDate
+      FROM Patients
+      WHERE ContactNumber IS NOT NULL
+        AND ContactNumber LIKE ${"%" + mobile + "%"}
+      ORDER BY PatientRegistrationDate DESC
+    `;
+
+    console.log("🟢 [SERVICE] rows:", result.length);
+    return result;
+  } catch (err) {
+    console.error("🔴 [SERVICE] SQL ERROR:", err);
+    throw err;
+  }
+};
+
+
+
+
+
+
+
+
+

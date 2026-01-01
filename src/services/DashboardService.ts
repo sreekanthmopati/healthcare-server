@@ -12,33 +12,6 @@ export class DashboardService {
     }
 }
 
-// export const getDepartmentCounts = async () => {
-//     try {
-//       const dentalCount = await prisma.patients.count({ where: { DepartmentName: "Dental" } });
-//       const entCount = await prisma.patients.count({ where: { DepartmentName: "ENT" } });
-//       const cardioCount = await prisma.patients.count({ where: { DepartmentName: "Cardiology" } } );
-//       const dermaCount = await prisma.patients.count({ where: { DepartmentName: "Dermatology" } });
-//       const neuroCount = await prisma.patients.count({ where: { DepartmentName: "Neurology" } });
-//       const opthaCount = await prisma.patients.count({ where: { DepartmentName: "Opthamology" } } );
-//       const pulmaCount = await prisma.patients.count({ where: { DepartmentName: "Pulmanology" } });
-//       const gynaCount = await prisma.patients.count({ where: { DepartmentName: "Gynacology" } });
-//       const generalMedCount = await prisma.patients.count({ where: { DepartmentName: "General Medicine" } } );
-//       const otrhoCount = await prisma.patients.count({ where: { DepartmentName: "Ortho" } });
-//       const dvlCount = await prisma.patients.count({ where: { DepartmentName: "DVL" } } );
-//       console.log("At line 28: in DBC services.ts", generalMedCount);
-//       return { dental: dentalCount, ent: entCount, cardio: cardioCount, derma: dermaCount, neuro: neuroCount, 
-//         pulmna: pulmaCount, gyna: gynaCount, generalmed: generalMedCount, ortho: otrhoCount, dvl: dvlCount, optha: opthaCount          };
-//     } catch (error) {
-//       console.error("Error fetching department counts:", error);
-//       throw new Error("Database query failed");
-//     }
-//   };
-
-
-
-
-
-
 
 export const getDepartmentCounts = async () => {
   // Get all departments
@@ -69,3 +42,102 @@ export const getDepartmentCounts = async () => {
   return result;
 };
 
+
+
+
+
+
+
+
+export const getDashboardSummary = async () => {
+  // 1️⃣ Define today boundaries (IMPORTANT)
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+
+  const todayEnd = new Date();
+  todayEnd.setHours(23, 59, 59, 999);
+
+  // 2️⃣ Run all queries in ONE transaction
+  const [
+    umrToday,
+    ipToday,
+    dischargesToday,
+    occupiedBeds,
+    departments
+  ] = await prisma.$transaction([
+    // UMR registered today
+    prisma.patients.count({
+      where: {
+        PatientRegistrationDate: {
+          gte: todayStart,
+          lte: todayEnd,
+        },
+      },
+    }),
+
+    // IP admissions today
+    prisma.admissions.count({
+      where: {
+        admission_date: {
+          gte: todayStart,
+          lte: todayEnd,
+        },
+      },
+    }),
+
+    // Discharges today
+    prisma.admissions.count({
+      where: {
+        discharge_date: {
+          gte: todayStart,
+          lte: todayEnd,
+        },
+      },
+    }),
+
+    // On-bed count (CURRENT)
+    prisma.bed.count({
+      where: {
+        occupied_status: "Occupied",
+      },
+    }),
+
+    // Department-wise CURRENT IP
+    prisma.departments.findMany({
+      select: {
+        DepartmentName: true,
+        Diagnoses: {
+          select: {
+            admissions: {
+              where: {
+                discharge_date: null,
+              },
+            },
+          },
+        },
+      },
+    }),
+  ]);
+
+  // 3️⃣ Transform department-wise data
+  const departmentCounts = departments.map((dept) => ({
+    name: dept.DepartmentName,
+    count: dept.Diagnoses.reduce(
+      (sum, d) => sum + d.admissions.length,
+      0
+    ),
+  }));
+
+  // 4️⃣ Derived values (NO frontend logic)
+  const opToday = umrToday - ipToday;
+
+  return {
+    umrToday,
+    ipToday,
+    opToday,
+    opBills: opToday, // free hospital rule
+    dischargesToday,
+    onBedCount: occupiedBeds,
+    departmentCounts,
+  };
+};
